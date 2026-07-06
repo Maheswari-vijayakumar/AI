@@ -1,16 +1,14 @@
-# Real-Time Data Science Use Case
+# Real-Time Data Science Example
 
 ## Company: Netflix
 
 ### Business Problem
 
-Netflix wants to answer a simple question:
+Netflix wants to understand **how engaged its users are**.
 
-> **"How engaged are our users?"**
+The data science team collects the daily watch time (in minutes) for a group of users.
 
-To answer this, the data science team analyzes the daily watch time of users.
-
-Suppose they collect the following data.
+## Dataset
 
 | User | Watch Time (Minutes) |
 |------|----------------------:|
@@ -20,209 +18,122 @@ Suppose they collect the following data.
 | D | 128 |
 | E | 950 |
 
-At first glance, User **E** looks like an extremely active user.
+At first glance, User **E** appears to be a very active user.
 
-But is this real?
-
-The data scientist starts investigating.
+But is this genuine engagement or an unusual case?
 
 ---
 
-# Step 1: Calculate the Mean
+## Descriptive Statistics
 
-The first thing they calculate is the **Mean**.
+| Measure | Calculation | Result | Observation |
+|---------|-------------|-------:|-------------|
+| **Mean** | (120 + 125 + 130 + 128 + 950) / 5 | **290.6** | The average is much higher than expected. |
+| **Median** | Middle value after sorting | **128** | A typical user watches about 128 minutes. |
+| **Mode** | Most frequent value | **No Mode** | Every user has a different watch time. |
+| **Range** | 950 − 120 | **830** | There is a very large spread in watch time. |
+| **IQR** | Q3 − Q1 | **5** | Most users have very similar watch times. |
+| **Standard Deviation** | √Variance | **≈ 366.9** | Watch times vary significantly. |
 
-```text
-Mean = (120 + 125 + 130 + 128 + 950) / 5
+---
 
-Mean = 290.6 minutes
+## What Does This Tell the Data Scientist?
+
+| Measure | Business Insight | Next Action |
+|---------|------------------|-------------|
+| **Mean** | The average watch time is unusually high. | Verify whether the average is inflated by an unusual user. |
+| **Median** | Most users watch around **2 hours**, not **5 hours**. | Compare with the mean to identify possible outliers. |
+| **Mode** | There is no common viewing pattern. | User behavior varies from person to person. |
+| **Range** | One user is much different from the others. | Investigate the user with the highest watch time. |
+| **IQR** | The middle 50% of users have similar watch times. | Confirm that the extreme value is not representative of normal users. |
+| **Standard Deviation** | The dataset has high variability. | Investigate unusual sessions before reporting business metrics. |
+
+---
+
+# Real Python Implementation
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    "user": ["A", "B", "C", "D", "E"],
+    "watch_time": [120, 125, 130, 128, 950]
+})
 ```
 
-### Observation
+## Educational Approach
 
-The average watch time is **291 minutes** (almost 5 hours).
+```python
+print("Mean:", df["watch_time"].mean())
+print("Median:", df["watch_time"].median())
+print("Mode:", df["watch_time"].mode().tolist())
+print("Range:", df["watch_time"].max() - df["watch_time"].min())
 
-The data scientist immediately asks:
+Q1 = df["watch_time"].quantile(0.25)
+Q3 = df["watch_time"].quantile(0.75)
 
-> "Do users really watch Netflix for nearly 5 hours every day?"
+print("IQR:", Q3 - Q1)
 
-The average seems unusually high.
-
----
-
-# Step 2: Calculate the Median
-
-Now they calculate the median.
-
-Sorted data:
-
-```text
-120, 125, 128, 130, 950
+print("Standard Deviation:", df["watch_time"].std())
 ```
 
-Median:
+---
 
-```text
-128 minutes
+# Real Industry Approach ⭐
+
+Experienced data scientists usually don't calculate each statistic one by one.
+
+They start with:
+
+```python
+df["watch_time"].describe()
 ```
 
-### Observation
-
-The median is only **128 minutes**.
-
-This is much lower than the mean.
-
-The large difference between the **Mean** and **Median** suggests that one unusually large value is pulling the average upward.
-
-This is the first sign of a possible outlier.
-
----
-
-# Step 3: Calculate the Mode
-
-Next, they check the mode.
+Output
 
 ```text
-120, 125, 128, 130, 950
+count      5
+mean     290.6
+std      366.9
+min      120
+25%      125
+50%      128
+75%      130
+max      950
 ```
 
-Every value appears only once.
+From a single command, they immediately know:
+
+- Average watch time (**Mean**)
+- Standard deviation (**Std**)
+- Minimum value (**Min**)
+- First Quartile (**25%**)
+- Median (**50%**)
+- Third Quartile (**75%**)
+- Maximum value (**Max**)
+
+The first thing they notice is:
 
 ```text
-Mode = No Mode
+Maximum = 950
+75% = 130
 ```
 
-### Observation
+This huge gap tells them:
 
-There is no most common watch time.
+> "One user behaves very differently from everyone else."
 
-This tells the data scientist that users have different viewing habits.
+The next step is to investigate that user.
 
----
-
-# Step 4: Calculate the Range
-
-Now they measure the spread.
-
-```text
-Range = Maximum − Minimum
-
-Range = 950 − 120
-
-Range = 830
+```python
+df.sort_values("watch_time", ascending=False)
 ```
 
-### Observation
+Then they query detailed watch logs to understand whether the user genuinely watched for **950 minutes** or whether Netflix autoplay continued overnight.
 
-The watch time varies by **830 minutes**.
+Finally, they decide whether to:
 
-This is a very large spread.
-
-Something unusual may be happening.
-
----
-
-# Step 5: Calculate the IQR
-
-The data scientist now checks the **middle 50%** of the data.
-
-Sorted data:
-
-```text
-120, 125, 128, 130, 950
-```
-
-The middle values are all close together.
-
-The IQR is relatively small.
-
-### Observation
-
-Most users have similar watch times.
-
-Only one value is very different.
-
-This confirms that the large spread seen in the range is caused by an extreme value.
-
----
-
-# Step 6: Calculate the Standard Deviation
-
-Finally, they calculate the standard deviation.
-
-The result is very high.
-
-### Observation
-
-A high standard deviation tells the data scientist that the watch times are highly spread out.
-
-Now they decide to investigate the unusual user.
-
----
-
-# Step 7: Investigate the Outlier
-
-The data scientist looks at User **E**.
-
-Instead of only looking at the summary table, they check the detailed watch logs.
-
-| User | Movie | Start Time | End Time |
-|------|-------|------------|----------|
-| E | Stranger Things | 8:00 PM | 11:30 AM |
-
-The session lasted more than **15 hours**.
-
-They check additional information.
-
-| Event | Value |
-|-------|-------|
-| Last Click | 8:20 PM |
-| Pause Count | 0 |
-| AutoPlay | Yes |
-
-### Observation
-
-The user stopped interacting after **8:20 PM**, but Netflix continued playing episodes automatically.
-
-The data scientist concludes:
-
-> **The user most likely fell asleep, and autoplay continued overnight.**
-
----
-
-# Step 8: Business Decision
-
-Instead of deleting the data immediately, the data scientist discusses it with the product team.
-
-The team decides to:
-
-- Flag sessions longer than 8 hours.
-- Exclude autoplay sessions when calculating engagement.
-- Improve recommendation models using cleaned data.
-
----
-
-# How Each Measure Helped
-
-| Measure | Purpose | What It Told the Data Scientist |
-|----------|---------|---------------------------------|
-| **Mean** | Average watch time | The average looked unusually high. |
-| **Median** | Middle watch time | Most users watched around 2 hours, not 5 hours. |
-| **Mode** | Most common value | There was no common watch time. |
-| **Range** | Overall spread | One user caused a very large spread. |
-| **IQR** | Spread of the middle 50% | Most users had similar watch times. |
-| **Standard Deviation** | Overall variability | The data had unusually high variation. |
-
----
-
-# Final Conclusion
-
-Descriptive statistics did not tell the data scientist **what happened**.
-
-Instead, it answered a different question:
-
-> **"Is something unusual happening in the data?"**
-
-Once the statistics revealed an unusual pattern, the data scientist investigated the records, understood the reason, and helped the business make a better decision.
-
-This is how descriptive statistics is used in real-world data science.
+- Keep the data
+- Remove the data
+- Flag it as an autoplay session
+- Exclude it from engagement metrics

@@ -85,8 +85,35 @@ Experienced data scientists usually don't calculate each statistic one by one.
 
 They start with:
 
+# Step 1: Summary Statistics
+
 ```python
-df["watch_time"].describe()
+import pandas as pd
+
+watch_summary = pd.DataFrame({
+    "user_id": [101, 102, 103, 104, 105],
+    "watch_time": [120, 125, 130, 128, 950]
+})
+
+watch_summary
+```
+
+Output
+
+| user_id | watch_time |
+|--------:|-----------:|
+|101|120|
+|102|125|
+|103|130|
+|104|128|
+|105|950|
+
+---
+
+## Step 2: Explore the Data
+
+```python
+watch_summary.describe()
 ```
 
 Output
@@ -102,38 +129,245 @@ min      120
 max      950
 ```
 
-From a single command, they immediately know:
-
-- Average watch time (**Mean**)
-- Standard deviation (**Std**)
-- Minimum value (**Min**)
-- First Quartile (**25%**)
-- Median (**50%**)
-- Third Quartile (**75%**)
-- Maximum value (**Max**)
-
-The first thing they notice is:
+Immediately, the data scientist notices
 
 ```text
-Maximum = 950
-75% = 130
+Mean = 290.6
+Median = 128
+Max = 950
 ```
 
-This huge gap tells them:
+Observation:
 
-> "One user behaves very differently from everyone else."
+> One user behaves very differently from everyone else.
 
-The next step is to investigate that user.
+---
+
+## Step 3: Find the Suspicious User
 
 ```python
-df.sort_values("watch_time", ascending=False)
+suspect = watch_summary.sort_values(
+    by="watch_time",
+    ascending=False
+)
+
+suspect
 ```
 
-Then they query detailed watch logs to understand whether the user genuinely watched for **950 minutes** or whether Netflix autoplay continued overnight.
+Output
 
-Finally, they decide whether to:
+| user_id | watch_time |
+|--------:|-----------:|
+|105|950|
+|103|130|
+|104|128|
+|102|125|
+|101|120|
 
-- Keep the data
-- Remove the data
-- Flag it as an autoplay session
-- Exclude it from engagement metrics
+Now the investigation begins.
+
+---
+
+# Step 4: Query Watch Logs
+
+The summary table only tells us **how long** someone watched.
+
+Now we need to know **what actually happened**.
+
+```python
+watch_logs = pd.DataFrame({
+    "user_id":[105,105,105],
+    "episode":[1,2,3],
+    "start_time":[
+        "2026-01-10 20:00",
+        "2026-01-10 20:45",
+        "2026-01-10 21:30"
+    ],
+    "end_time":[
+        "2026-01-10 20:45",
+        "2026-01-10 21:30",
+        "2026-01-11 11:30"
+    ]
+})
+
+watch_logs
+```
+
+Output
+
+|Episode|Start|End|
+|-------|------|------|
+|1|8:00 PM|8:45 PM|
+|2|8:45 PM|9:30 PM|
+|3|9:30 PM|11:30 AM|
+
+Immediately something looks strange.
+
+Episode 3 lasted
+
+```text
+14 Hours
+```
+
+---
+
+# Step 5: Calculate Session Duration
+
+```python
+watch_logs["start_time"] = pd.to_datetime(
+    watch_logs["start_time"]
+)
+
+watch_logs["end_time"] = pd.to_datetime(
+    watch_logs["end_time"]
+)
+
+watch_logs["duration"] = (
+    watch_logs["end_time"] -
+    watch_logs["start_time"]
+)
+
+watch_logs
+```
+
+Output
+
+|Episode|Duration|
+|-------|---------|
+|1|45 min|
+|2|45 min|
+|3|14 hours|
+
+Observation
+
+> Nobody normally watches one episode for 14 hours.
+
+---
+
+# Step 6: Check User Activity
+
+Netflix stores every click.
+
+```python
+user_events = pd.DataFrame({
+    "user_id":[105],
+    "last_click":[
+        "2026-01-10 21:35"
+    ],
+    "pause_count":[0],
+    "autoplay":[True]
+})
+
+user_events
+```
+
+Output
+
+|Last Click|Pause Count|Autoplay|
+|----------|-----------|---------|
+|9:35 PM|0|True|
+
+Observation
+
+- Last interaction happened at **9:35 PM**
+- No pauses
+- Autoplay continued
+
+This suggests the user stopped interacting.
+
+---
+
+# Step 7: Check Device Information
+
+```python
+device_info = pd.DataFrame({
+    "user_id":[105],
+    "device":["Smart TV"],
+    "screen_status":["ON"]
+})
+
+device_info
+```
+
+Output
+
+|Device|Screen Status|
+|------|-------------|
+|Smart TV|ON|
+
+Observation
+
+The TV remained on overnight.
+
+---
+
+# Step 8: Combine All the Evidence
+
+| Investigation | Observation |
+|---------------|-------------|
+| Summary Statistics | Mean much higher than Median |
+| Watch Time | 950 minutes |
+| Longest Session | 14 hours |
+| Last Click | 9:35 PM |
+| Pause Count | 0 |
+| Autoplay | Enabled |
+| Device | Smart TV remained ON |
+
+---
+
+# Step 9: Business Conclusion
+
+The data scientist **does not** immediately remove the record.
+
+Instead, they write their findings.
+
+```text
+Investigation Summary
+
+• User watched 950 minutes.
+
+• One session lasted approximately 14 hours.
+
+• No interaction after 9:35 PM.
+
+• Autoplay continued overnight.
+
+• TV remained ON.
+
+Conclusion:
+
+The session is likely an autoplay session rather than active viewing.
+```
+
+---
+
+# Step 10: Business Decision
+
+The Product Manager and Data Scientist decide to:
+
+```python
+watch_summary["possible_autoplay"] = False
+
+watch_summary.loc[
+    watch_summary["watch_time"] > 500,
+    "possible_autoplay"
+] = True
+
+watch_summary
+```
+
+Output
+
+|user_id|watch_time|possible_autoplay|
+|-------:|----------:|----------------|
+|101|120|False|
+|102|125|False|
+|103|130|False|
+|104|128|False|
+|105|950|True|
+
+Now the ML team can choose to:
+
+- Exclude autoplay sessions when calculating engagement.
+- Train recommendation models using only active viewing.
+- Report more accurate watch-time metrics to the business.

@@ -5,7 +5,55 @@
 
 ---
 
-## 📋 Module 1 Topics Checklist
+## � DAY-WISE STUDY PLAN (Module 1)
+
+### Day 1: Foundations (2-2.5 hours)
+| Time | Topic | What to Do |
+|------|-------|------------|
+| 30 min | Part 1: Vectors | Read + understand examples |
+| 30 min | Part 2: Linear Equations | Understand 3 types of solutions |
+| 45 min | Part 3-4: Matrices & Operations | Practice matrix multiplication |
+| 30 min | Part 5: Special Matrices | Memorize Identity, Transpose |
+| **Practice** | Problems 1-2 | Solve without looking at answers |
+
+### Day 2: Inverse & Properties (2 hours)
+| Time | Topic | What to Do |
+|------|-------|------------|
+| 45 min | Part 6: Matrix Inverse | Learn 2×2 formula, practice |
+| 30 min | Memorize Properties | (AB)⁻¹ = B⁻¹A⁻¹, (AB)ᵀ = BᵀAᵀ |
+| 30 min | Part 12: Inverse by Gaussian | Step-by-step [A\|I] → [I\|A⁻¹] |
+| 15 min | Exam Trap | (A+B)⁻¹ ≠ A⁻¹+B⁻¹ example |
+| **Practice** | EC2 Q2d style | Create your own example |
+
+### Day 3: Gaussian Elimination (2.5 hours)
+| Time | Topic | What to Do |
+|------|-------|------------|
+| 30 min | Part 7: Gaussian Elimination | Understand 3 row operations |
+| 45 min | Part 8-9: REF & RREF | Practice converting matrices |
+| 45 min | Part 19: RREF Algorithm | **Memorize pseudocode** ⭐ |
+| 30 min | Part 10: Solution Types | Identify 0, 1, ∞ solutions |
+| **Practice** | Convert 3 matrices to RREF | Do by hand |
+
+### Day 4: Solutions & Theory (2 hours)
+| Time | Topic | What to Do |
+|------|-------|------------|
+| 45 min | Part 13: Particular + General | Master the algorithm |
+| 30 min | Part 14: Why 0,1,∞ only | Memorize proof |
+| 30 min | Part 15: Geometric View | Visualize lines/planes |
+| 15 min | Part 18: Common Mistakes | Review what NOT to do |
+| **Practice** | EC3 Q5-10 | Solve completely |
+
+### Day 5: Revision & Mock Test (2-3 hours)
+| Time | Topic | What to Do |
+|------|-------|------------|
+| 30 min | Part 17: Cheat Sheet | Quick revision of formulas |
+| 45 min | Part 16: All Problems | Solve all practice problems |
+| 60 min | EC2 Q2 Complete | Solve like real exam |
+| 30 min | Checklist | Verify all ✅ in checklist |
+
+---
+
+## �📋 Module 1 Topics Checklist
 
 | Topic | Section | Exam Important |
 |-------|---------|----------------|
@@ -541,6 +589,194 @@ z = t (free variable)
 4. **Inverse** = "Undo" matrix, exists only if determinant ≠ 0
 5. **RREF** = Simplest form, solution readable directly
 6. **Linear Algebra is the language of Machine Learning!**
+
+---
+
+## 📍 Part 19: RREF Algorithm & Pseudocode ⭐⭐⭐ EXAM QUESTION (EC2 Q5b)
+
+### Exam Question (EC2 Q5b):
+> Write a pseudocode to convert a square matrix A of size n×n in upper triangular form to RREF assuming that the determinant of A is non-zero.
+
+### Understanding the Problem:
+- Input: Upper triangular matrix (already has zeros below diagonal)
+- Output: RREF (Identity matrix, since det ≠ 0)
+- Need to: Make pivots = 1 and eliminate above pivots
+
+### Pseudocode: Upper Triangular → RREF
+
+```
+ALGORITHM: UpperTriangularToRREF(A, n)
+
+INPUT:  A = n×n upper triangular matrix with det(A) ≠ 0
+OUTPUT: A in Reduced Row Echelon Form (RREF)
+
+// Step 1: Make all diagonal elements (pivots) equal to 1
+FOR i = 1 TO n:
+    pivot = A[i][i]
+    FOR j = i TO n:
+        A[i][j] = A[i][j] / pivot    // Scale row i
+    END FOR
+END FOR
+
+// Step 2: Eliminate all entries ABOVE each pivot
+FOR i = n DOWN TO 2:           // Start from last row
+    FOR k = i-1 DOWN TO 1:     // For each row above
+        factor = A[k][i]       // Element to eliminate
+        FOR j = i TO n:
+            A[k][j] = A[k][j] - factor * A[i][j]
+        END FOR
+    END FOR
+END FOR
+
+RETURN A
+```
+
+### Step-by-Step Example:
+
+**Input: Upper Triangular Matrix**
+```
+A = [2  4  6]
+    [0  3  9]
+    [0  0  5]
+```
+
+**Step 1: Make pivots = 1**
+```
+R1 = R1/2:  [1  2  3]
+R2 = R2/3:  [0  1  3]
+R3 = R3/5:  [0  0  1]
+
+Result:
+[1  2  3]
+[0  1  3]
+[0  0  1]
+```
+
+**Step 2: Eliminate above pivots (bottom to top)**
+
+Start with column 3 (pivot at row 3):
+```
+R2 = R2 - 3*R3:  [0  1  0]
+R1 = R1 - 3*R3:  [1  2  0]
+```
+
+Now column 2 (pivot at row 2):
+```
+R1 = R1 - 2*R2:  [1  0  0]
+```
+
+**Final RREF:**
+```
+[1  0  0]
+[0  1  0]  = I₃ (Identity Matrix) ✓
+[0  0  1]
+```
+
+---
+
+### Full Gaussian Elimination Pseudocode (General Case)
+
+```
+ALGORITHM: GaussianElimination(A, b, m, n)
+
+INPUT:  Augmented matrix [A|b] with m rows, n columns
+OUTPUT: Matrix in Row Echelon Form (REF)
+
+pivot_row = 1
+pivot_col = 1
+
+WHILE pivot_row <= m AND pivot_col <= n:
+
+    // Find non-zero entry in current column
+    max_row = pivot_row
+    FOR i = pivot_row + 1 TO m:
+        IF |A[i][pivot_col]| > |A[max_row][pivot_col]|:
+            max_row = i
+        END IF
+    END FOR
+
+    // If entire column is zero, move to next column
+    IF A[max_row][pivot_col] == 0:
+        pivot_col = pivot_col + 1
+        CONTINUE
+    END IF
+
+    // Swap rows if needed
+    IF max_row != pivot_row:
+        SWAP(A[pivot_row], A[max_row])
+    END IF
+
+    // Eliminate entries below pivot
+    FOR i = pivot_row + 1 TO m:
+        factor = A[i][pivot_col] / A[pivot_row][pivot_col]
+        FOR j = pivot_col TO n:
+            A[i][j] = A[i][j] - factor * A[pivot_row][j]
+        END FOR
+    END FOR
+
+    pivot_row = pivot_row + 1
+    pivot_col = pivot_col + 1
+
+END WHILE
+
+RETURN A
+```
+
+---
+
+### Pseudocode: REF → RREF (Back Substitution)
+
+```
+ALGORITHM: REFtoRREF(A, m, n)
+
+INPUT:  Matrix A in Row Echelon Form
+OUTPUT: Matrix in Reduced Row Echelon Form
+
+// Find pivot positions
+pivots = []  // List of (row, col) pairs
+
+FOR i = 1 TO m:
+    FOR j = 1 TO n:
+        IF A[i][j] != 0:
+            pivots.append((i, j))
+            BREAK
+        END IF
+    END FOR
+END FOR
+
+// Process from bottom-right to top-left
+FOR k = LENGTH(pivots) DOWN TO 1:
+    (pivot_row, pivot_col) = pivots[k]
+
+    // Scale pivot to 1
+    scale = A[pivot_row][pivot_col]
+    FOR j = pivot_col TO n:
+        A[pivot_row][j] = A[pivot_row][j] / scale
+    END FOR
+
+    // Eliminate above pivot
+    FOR i = pivot_row - 1 DOWN TO 1:
+        factor = A[i][pivot_col]
+        FOR j = pivot_col TO n:
+            A[i][j] = A[i][j] - factor * A[pivot_row][j]
+        END FOR
+    END FOR
+END FOR
+
+RETURN A
+```
+
+---
+
+### Summary of Three Row Operations:
+
+| Operation | Symbol | What it Does |
+|-----------|--------|--------------|
+| Swap rows | Ri ↔ Rj | Exchange row i and row j |
+| Scale row | Ri = k×Ri | Multiply row i by non-zero k |
+| Add multiple | Ri = Ri + k×Rj | Add k times row j to row i |
+
+**⚠️ Important:** These operations do NOT change the solution set!
 
 ---
 

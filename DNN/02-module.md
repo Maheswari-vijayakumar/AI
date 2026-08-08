@@ -2,6 +2,41 @@
 
 ## 📅 Session Covered: 2 | ⏱️ Study Time: 4 Hours | 📊 Exam Weight: ⭐⭐⭐⭐⭐
 
+---
+
+## 📚 PDF Lecture Coverage (DNN_M2_ANN_Perceptron.pdf - 52 pages)
+
+| PDF Page | Topic | Covered in Notes | Section |
+|----------|-------|------------------|---------|
+| 5-6 | How Humans Learn, Brain Facts | ✅ | Part 1 |
+| 7-8 | Biological Neuron Structure | ✅ | Part 1 |
+| 10-12 | Artificial Neuron Definition & Math | ✅ | Part 2 |
+| 13 | Biological vs Artificial Neuron Comparison | ✅ | Part 3 |
+| 15-17 | ANN Definition, Properties, When to Use | ✅ | Part 4 |
+| 19-20 | Connectionism Model & Principles | ✅ | Part 5 |
+| 22-23 | Perceptron Definition & Equation | ✅ | Part 6 |
+| 25-28 | AND Gate with Perceptron | ✅ | Part 8 |
+| 29-31 | OR Gate with Perceptron | ✅ | Part 8 |
+| 33 | Perceptron Learning Algorithm | ✅ | Part 7 |
+| 34-39 | NOT Gate Learning (Step-by-step) | ✅ | Worked Example |
+| 41-42 | XOR Problem & Why Perceptron Fails | ✅ | Part 9 |
+| 45-48 | Linearly Separable Data | ✅ | Part 10 |
+| 50 | Key Concepts Summary | ✅ | Big Picture Summary |
+| 51 | Practice Problems (OR, AND, NOR, NAND) | ✅ | Practice Problems 1-4 |
+
+### 📝 Practice Problems from PDF (Page 51)
+
+| # | Problem from PDF | Covered in Notes |
+|---|------------------|------------------|
+| 1 | Represent OR gate using Perceptron | ✅ Part 8 |
+| 2 | Represent AND gate using Perceptron | ✅ Part 8, Practice Problem 3 |
+| 3 | Represent NOR gate using Perceptron | ✅ Practice Problem 1 |
+| 4 | Represent NAND gate using Perceptron | ✅ Practice Problem 2 |
+
+**Syllabus Status**: This module is part of **Mid-Semester Exam (EC-2)** syllabus (Sessions 1-8)
+
+---
+
 ### 📋 Topics Checklist
 
 | ✓ | Topic | Importance | Time |
@@ -20,7 +55,73 @@
 
 ---
 
+## 🎯 Previous Year Question (PYQ) Analysis for Module 2
+
+### 📋 Questions from This Module
+
+| Exam | Q.No | Topic | Marks | Type |
+|------|------|-------|-------|------|
+| **EC-2 (Mid-Sem 2026)** | Q2 | 2-Layer Perceptron for Boolean Function | 5 | Numerical + Diagram |
+
+### 📝 EC-2 Q2 (Mid-Sem 2026) - EXACT QUESTION
+
+> **Design a 2-layer perceptron network using multiple AND/OR gates to implement:**
+> **F(x₁, x₂, x₃, x₄) = (x₁ ∧ x₂) ∨ (x₃ ∧ x₄)**
+>
+> Where x₁, x₂, x₃, x₄ ∈ {0,1} and activation function f(z) = 1 if z ≥ 0, f(z) = 0 if z < 0
+>
+> **(a)** Decompose the Boolean function into hidden layer and output layer operations. (1 mark)
+> **(b)** Derive the inequalities for AND, OR gates using the perceptron model and determine suitable weights and bias. (3 marks)
+> **(c)** Show the final weights, biases, and draw the 2-layer perceptron network. (1 mark)
+
+**💡 What This Tells Us:**
+- Perceptron gate design is **CONFIRMED exam topic**
+- Must know how to **decompose Boolean functions**
+- Must know how to **derive weight inequalities**
+- Must be able to **draw network diagrams**
+
+### 📊 Expected Question Patterns
+
+Based on handout Session 2 topics and PYQ analysis:
+
+| Topic | Likelihood | Question Type |
+|-------|------------|---------------|
+| Logic Gate Weights (AND/OR/NAND/NOR) | ⭐⭐⭐⭐⭐ | Derive weights from constraints |
+| 2-Layer Network Design | ⭐⭐⭐⭐⭐ | Decompose + Draw network |
+| Perceptron Learning Algorithm | ⭐⭐⭐⭐ | Step-by-step weight updates |
+| XOR Problem Explanation | ⭐⭐⭐⭐ | Why perceptron fails |
+| Bio vs Artificial Neuron | ⭐⭐⭐ | Theory comparison |
+| Linear Separability | ⭐⭐⭐ | Conceptual explanation |
+
+---
+
+## 📖 Key Terminology (Beginner's Glossary)
+
+| Term | Simple Meaning | Example |
+|------|----------------|---------|
+| **Neuron** | A tiny processing unit | Like a mini calculator |
+| **Weight (w)** | How important an input is | Rating from 0 to 1 |
+| **Bias (b)** | A default value added | Like a head start |
+| **Activation** | The decision rule | Yes/No based on score |
+| **Perceptron** | Simplest neuron type | Single decision maker |
+| **Epoch** | One complete pass through all data | Going through all examples once |
+| **Learning Rate (η)** | How fast we adjust | Big step vs small step |
+| **Linearly Separable** | Can be divided by a straight line | Like splitting a paper with one cut |
+| **Convergence** | When learning stops improving | When we've learned enough |
+
+---
+
 ## Part 1: Biological Neuron ⭐⭐
+
+### 💡 Simple Analogy: The Post Office
+Think of your brain as a **giant post office**:
+- Each **neuron** is like a postal worker
+- **Dendrites** are like the mailbox where letters (signals) arrive
+- The **cell body** is the worker who reads and processes all the mail
+- The **axon** is like the outgoing mail chute
+- **Synapses** are the doors connecting different workers
+
+Just like a post office processes thousands of letters in parallel, your brain processes millions of signals simultaneously!
 
 ### 🧬 Brain Facts
 | Property | Value |
@@ -59,6 +160,30 @@
 ---
 
 ## Part 2: Artificial Neuron ⭐⭐⭐⭐
+
+### 💡 Simple Analogy: The Decision Maker
+
+Imagine you're deciding **whether to go to a movie**:
+
+| Factor (Input) | How Important? (Weight) | Your Situation |
+|----------------|------------------------|----------------|
+| Good reviews | Very important (0.8) | Yes (1) |
+| Friend coming | Somewhat important (0.5) | No (0) |
+| Ticket price OK | Important (0.6) | Yes (1) |
+| Have free time | Critical (0.9) | Yes (1) |
+
+**Your brain calculates**:
+```
+Score = 0.8×1 + 0.5×0 + 0.6×1 + 0.9×1 = 2.3
+
+If Score > Threshold (say 1.5) → GO TO MOVIE! ✓
+```
+
+This is EXACTLY what an artificial neuron does:
+- **Inputs** = factors to consider
+- **Weights** = how important each factor is
+- **Bias** = your general mood/threshold
+- **Activation** = final yes/no decision
 
 ### 📐 Mathematical Model
 
@@ -159,6 +284,28 @@
 
 ## Part 6: The Perceptron ⭐⭐⭐⭐⭐
 
+### 💡 Simple Analogy: The Strict Bouncer
+
+Think of a perceptron as a **bouncer at a club**:
+
+🚪 **The Club Rule**: "You can enter if your total score ≥ 0"
+
+| What Bouncer Checks | Weight | Your Status |
+|--------------------|--------|-------------|
+| Dress code OK? | +2 | Yes (1) |
+| On guest list? | +3 | No (0) |
+| Age ≥ 21? | +2 | Yes (1) |
+| **Base strictness** | -3 (bias) | Always applies |
+
+**Bouncer's calculation**:
+```
+Score = 2×1 + 3×0 + 2×1 + (-3) = 2 + 0 + 2 - 3 = 1
+
+Since 1 ≥ 0 → YOU'RE IN! ✓
+```
+
+The perceptron is this simple - it just checks if the weighted sum crosses a threshold!
+
 ### 🎯 Definition
 > **Perceptron** = Simplest form of artificial neuron (Rosenblatt, 1958)
 
@@ -194,6 +341,34 @@
 ---
 
 ## Part 7: Perceptron Learning Algorithm ⭐⭐⭐⭐⭐
+
+### 💡 Simple Analogy: Learning from Mistakes
+
+Imagine you're learning to **judge whether fruits are ripe**:
+
+**Day 1**: You pick a green banana thinking it's ripe → WRONG!
+- You learn: "Green color means NOT ripe" → Adjust your criteria
+
+**Day 2**: You skip a yellow mango thinking it's unripe → WRONG!
+- You learn: "Softness matters more than color" → Adjust again
+
+**Day 3**: You correctly identify ripe fruits → No adjustment needed!
+
+This is EXACTLY how perceptron learns:
+- **Make prediction** → Check if correct
+- **If wrong** → Adjust weights (learn from mistake)
+- **If correct** → Keep weights same (no learning needed)
+- **Repeat** until you get everything right!
+
+### 🎓 What is Learning Rate (η)?
+
+Think of η like **how big your corrections are**:
+- **η = 1** (large): Big corrections → Learn fast but might overshoot
+- **η = 0.1** (small): Small corrections → Learn slowly but more stable
+
+Like adjusting a thermostat:
+- Big adjustment (η=1): Turn dial a lot → might get too hot/cold
+- Small adjustment (η=0.1): Turn dial a little → takes longer but more precise
 
 ### 📝 Algorithm Steps
 
@@ -238,7 +413,24 @@ wᵢ(new) = wᵢ(old) + η × (target - prediction) × xᵢ
 
 ## Part 8: Logic Gates with Perceptron ⭐⭐⭐⭐⭐
 
-### 🔷 AND Gate
+### 💡 Why Logic Gates? The Building Blocks!
+
+Logic gates are like **LEGO bricks** for computers:
+- Just as you build complex structures from simple LEGO pieces
+- Computers build complex decisions from simple AND, OR, NOT gates
+
+If perceptron can learn these basic gates, it can potentially learn complex decisions!
+
+### 🤔 How to Find Weights? The Constraint Method
+
+**Step-by-step approach**:
+1. Write the truth table
+2. For each row, write what you NEED:
+   - Output = 1 → Need: h ≥ 0
+   - Output = 0 → Need: h < 0
+3. Solve the inequalities to find w₀, w₁, w₂
+
+### 🔷 AND Gate (From PDF Page 27-28)
 
 | x₁ | x₂ | AND |
 |----|----|-----|
@@ -248,14 +440,16 @@ wᵢ(new) = wᵢ(old) + η × (target - prediction) × xᵢ
 | 1 | 1 | 1 |
 
 **Constraints** (h = w₀ + w₁x₁ + w₂x₂):
-- (0,0): w₀ < 0
-- (0,1): w₀ + w₂ < 0
-- (1,0): w₀ + w₁ < 0
-- (1,1): w₀ + w₁ + w₂ ≥ 0
+- (0,0): w₀ + 0 + 0 < 0 → **w₀ < 0**
+- (0,1): w₀ + 0 + w₂ < 0 → **w₀ + w₂ < 0**
+- (1,0): w₀ + w₁ + 0 < 0 → **w₀ + w₁ < 0**
+- (1,1): w₀ + w₁ + w₂ ≥ 0 → **w₀ + w₁ + w₂ ≥ 0**
 
-**Solution**: w₀ = -1, w₁ = 0.75, w₂ = 0.75 (or w₀ = -1.5, w₁ = 1, w₂ = 1)
+**Solution from PDF**: **w₀ = -1, w₁ = 0.75, w₂ = 0.75**
 
-### 🔷 OR Gate
+(Alternative: w₀ = -1.5, w₁ = 1, w₂ = 1)
+
+### 🔷 OR Gate (From PDF Page 30-31)
 
 | x₁ | x₂ | OR |
 |----|----|-----|
@@ -264,13 +458,15 @@ wᵢ(new) = wᵢ(old) + η × (target - prediction) × xᵢ
 | 1 | 0 | 1 |
 | 1 | 1 | 1 |
 
-**Constraints**:
-- (0,0): w₀ < 0
-- (0,1): w₀ + w₂ ≥ 0
-- (1,0): w₀ + w₁ ≥ 0
-- (1,1): w₀ + w₁ + w₂ ≥ 0
+**Constraints** (h = w₀ + w₁x₁ + w₂x₂):
+- (0,0): w₀ + 0 + 0 < 0 → **w₀ < 0**
+- (0,1): w₀ + 0 + w₂ ≥ 0 → **w₀ + w₂ ≥ 0**
+- (1,0): w₀ + w₁ + 0 ≥ 0 → **w₀ + w₁ ≥ 0**
+- (1,1): w₀ + w₁ + w₂ ≥ 0 (automatically satisfied)
 
-**Solution**: w₀ = -1, w₁ = 2, w₂ = 2 (or w₀ = -0.5, w₁ = 1, w₂ = 1)
+**Solution from PDF**: **w₀ = -1, w₁ = 2, w₂ = 2**
+
+(Alternative: w₀ = -0.5, w₁ = 1, w₂ = 1)
 
 ### 🔷 NOT Gate
 
@@ -287,9 +483,11 @@ wᵢ(new) = wᵢ(old) + η × (target - prediction) × xᵢ
 
 ---
 
-## 📝 Worked Example: NOT Gate Learning ⭐⭐⭐⭐⭐
+## 📝 Worked Example: NOT Gate Learning ⭐⭐⭐⭐⭐ (From PDF Pages 34-39)
 
 **Problem**: Train perceptron for NOT gate using η = 1, initial weights w₀ = 0, w₁ = 0
+
+> This is the **exact example from your lecture PDF** - follow these steps carefully!
 
 <details>
 <summary>📖 Click for Step-by-Step Solution</summary>
@@ -365,6 +563,22 @@ h = (-1)×1 + 0 = -1
 
 ## Part 9: XOR Problem ⭐⭐⭐⭐⭐
 
+### 💡 Understanding XOR in Plain English
+
+**XOR (Exclusive OR)** means "one or the other, but NOT both":
+
+Real-life examples:
+- 🚪 **Light switch**: Two switches control one light. Light is ON only if switches are in DIFFERENT positions
+- 🍕 **Pizza choice**: "You can have pizza OR burger" (but not both!)
+- 👫 **Dating**: "I'll go if you go, but not if we BOTH go or NEITHER goes"
+
+| x₁ | x₂ | XOR | Plain English |
+|----|----|-----|---------------|
+| 0 | 0 | 0 | Neither → OFF |
+| 0 | 1 | 1 | Only x₂ → ON |
+| 1 | 0 | 1 | Only x₁ → ON |
+| 1 | 1 | 0 | Both → OFF |
+
 ### ❌ XOR Truth Table
 
 | x₁ | x₂ | XOR |
@@ -376,6 +590,10 @@ h = (-1)×1 + 0 = -1
 
 ### 🚫 Why Single Perceptron Fails
 
+### 💡 The "Drawing a Line" Problem
+
+Imagine the points on a graph. Your job is to draw ONE straight line to separate ● from ○:
+
 ```
     x₂
      │
@@ -386,13 +604,36 @@ h = (-1)×1 + 0 = -1
      └──────────────────── x₁
         0              1
 
-    ● = Output 1
-    ○ = Output 0
-
-    NO SINGLE LINE CAN SEPARATE ● FROM ○!
+    ● = Output 1 (should be on one side)
+    ○ = Output 0 (should be on other side)
 ```
 
+**Try it yourself!** Can you draw ONE straight line that puts both ● on one side and both ○ on the other?
+
+❌ **IMPOSSIBLE!** The ● points are diagonal to each other, and so are ○ points.
+
+This is like trying to separate **opposite corners of a square** with one straight cut - you can't!
+
 > **Key Insight**: XOR is **NOT linearly separable** → Single perceptron cannot solve it!
+
+### 💡 Solution Intuition: Use Two Lines!
+
+What if we use TWO lines instead of one?
+
+```
+    x₂
+     │    Line 2
+   1 │  ●----\----○
+     │        \
+     │    /----\----
+   0 │  ○/      \●
+     └──────────────── x₁
+       Line 1
+
+Two lines can create a "band" that captures only the ● points!
+```
+
+This is why we need **hidden layers** - each neuron draws one line, and combining them solves XOR!
 
 ### ✅ Solution: Multi-Layer Perceptron (MLP)
 
@@ -414,6 +655,24 @@ Layer 2 (Output):
 ---
 
 ## Part 10: Linearly Separable Data ⭐⭐⭐⭐
+
+### 💡 Simple Analogy: The Fence Problem
+
+Imagine you have a **farm with sheep (○) and goats (●)**:
+
+**Linearly Separable** = You can build ONE straight fence to separate all sheep from all goats
+
+**NOT Linearly Separable** = No matter where you put the fence, some sheep and goats will be on the wrong side
+
+```
+CAN BUILD FENCE:           CANNOT BUILD FENCE:
+
+  ○ ○ ○ | ● ● ●              ○   ●   ○
+        |
+  ○ ○   | ● ●                ●   ○   ●
+        |
+  Sheep | Goats              Mixed up!
+```
 
 ### 📐 Definition
 > Data is **linearly separable** if classes can be separated by a hyperplane:
@@ -571,44 +830,211 @@ NAND = NOT(AND) → Output 0 only when BOTH inputs are 1
 
 ---
 
-## 📝 Practice Problem 4: 2-Layer Network for F = (x₁ ∧ x₂) ∨ (x₃ ∧ x₄)
+## 📝 Practice Problem 4: EC-2 Mid-Sem 2026 Q2 (EXACT PYQ) ⭐⭐⭐⭐⭐
 
-**From Mid-Sem 2026 Q2**: Design a 2-layer perceptron network.
+### 🎯 Question (5 Marks)
+
+**Design a 2-layer perceptron network using multiple AND/OR gates to implement:**
+
+**F(x₁, x₂, x₃, x₄) = (x₁ ∧ x₂) ∨ (x₃ ∧ x₄)**
+
+Where x₁, x₂, x₃, x₄ ∈ {0,1} and activation function f(z) = 1 if z ≥ 0, f(z) = 0 if z < 0
+
+**(a)** Decompose the Boolean function into hidden layer and output layer operations. (1 mark)
+**(b)** Derive the inequalities for AND, OR gates using the perceptron model and determine suitable weights and bias. (3 marks)
+**(c)** Show the final weights, biases, and draw the 2-layer perceptron network. (1 mark)
+
+<details>
+<summary>📖 Click for Complete Solution (Exam Format)</summary>
+
+### Part (a): Decompose the Boolean Function (1 mark)
+
+The function F(x₁, x₂, x₃, x₄) = (x₁ ∧ x₂) ∨ (x₃ ∧ x₄) can be decomposed as:
+
+**Hidden Layer (Layer 1)**:
+- Neuron h₁ computes: h₁ = AND(x₁, x₂) = x₁ ∧ x₂
+- Neuron h₂ computes: h₂ = AND(x₃, x₄) = x₃ ∧ x₄
+
+**Output Layer (Layer 2)**:
+- Neuron y computes: y = OR(h₁, h₂) = h₁ ∨ h₂
+
+---
+
+### Part (b): Derive Inequalities and Find Weights (3 marks)
+
+#### For AND Gate (h₁ and h₂):
+
+**Truth Table for AND:**
+| x₁ | x₂ | AND | Required condition |
+|----|----|-----|-------------------|
+| 0 | 0 | 0 | w₀ + 0 + 0 < 0 |
+| 0 | 1 | 0 | w₀ + 0 + w₂ < 0 |
+| 1 | 0 | 0 | w₀ + w₁ + 0 < 0 |
+| 1 | 1 | 1 | w₀ + w₁ + w₂ ≥ 0 |
+
+**Inequalities:**
+1. w₀ < 0
+2. w₀ + w₂ < 0 → w₂ < -w₀
+3. w₀ + w₁ < 0 → w₁ < -w₀
+4. w₀ + w₁ + w₂ ≥ 0
+
+From (1): w₀ < 0, let w₀ = -1.5
+From (2) & (3): w₁ < 1.5 and w₂ < 1.5
+From (4): -1.5 + w₁ + w₂ ≥ 0 → w₁ + w₂ ≥ 1.5
+
+**Solution for AND**: w₀ = -1.5, w₁ = 1, w₂ = 1
+
+**Verification:**
+- (0,0): -1.5 + 0 + 0 = -1.5 < 0 ✓ → output 0
+- (0,1): -1.5 + 0 + 1 = -0.5 < 0 ✓ → output 0
+- (1,0): -1.5 + 1 + 0 = -0.5 < 0 ✓ → output 0
+- (1,1): -1.5 + 1 + 1 = 0.5 ≥ 0 ✓ → output 1
+
+#### For OR Gate (output y):
+
+**Truth Table for OR:**
+| h₁ | h₂ | OR | Required condition |
+|----|----|-----|-------------------|
+| 0 | 0 | 0 | w₀ + 0 + 0 < 0 |
+| 0 | 1 | 1 | w₀ + 0 + w₂ ≥ 0 |
+| 1 | 0 | 1 | w₀ + w₁ + 0 ≥ 0 |
+| 1 | 1 | 1 | w₀ + w₁ + w₂ ≥ 0 |
+
+**Inequalities:**
+1. w₀ < 0
+2. w₀ + w₂ ≥ 0 → w₂ ≥ -w₀
+3. w₀ + w₁ ≥ 0 → w₁ ≥ -w₀
+4. w₀ + w₁ + w₂ ≥ 0 (automatically satisfied if 2 & 3 hold)
+
+**Solution for OR**: w₀ = -0.5, w₁ = 1, w₂ = 1
+
+**Verification:**
+- (0,0): -0.5 + 0 + 0 = -0.5 < 0 ✓ → output 0
+- (0,1): -0.5 + 0 + 1 = 0.5 ≥ 0 ✓ → output 1
+- (1,0): -0.5 + 1 + 0 = 0.5 ≥ 0 ✓ → output 1
+- (1,1): -0.5 + 1 + 1 = 1.5 ≥ 0 ✓ → output 1
+
+---
+
+### Part (c): Final Weights and Network Diagram (1 mark)
+
+**Final Weights Table:**
+
+| Neuron | Function | Inputs | w₀ (bias) | w₁ | w₂ |
+|--------|----------|--------|-----------|----|----|
+| h₁ | AND | x₁, x₂ | -1.5 | 1 | 1 |
+| h₂ | AND | x₃, x₄ | -1.5 | 1 | 1 |
+| y | OR | h₁, h₂ | -0.5 | 1 | 1 |
+
+**Network Diagram:**
+
+```
+        INPUT LAYER          HIDDEN LAYER         OUTPUT LAYER
+
+             x₁ ─────(w₁=1)────┐
+                               ├───► h₁ [AND] ────(w₁=1)────┐
+             x₂ ─────(w₂=1)────┘     (b=-1.5)               │
+                                                            ├───► y [OR]
+             x₃ ─────(w₁=1)────┐                            │    (b=-0.5)
+                               ├───► h₂ [AND] ────(w₂=1)────┘
+             x₄ ─────(w₂=1)────┘     (b=-1.5)
+```
+
+**Alternative Diagram (More Detailed):**
+
+```
+    1 ──(b=-1.5)──┐
+                  │
+   x₁ ──(w=1)─────┼──► Σ ──► f(z) ──► h₁ ──(w=1)──┐
+                  │                                │    1 ──(b=-0.5)──┐
+   x₂ ──(w=1)─────┘                                │                  │
+                                                   ├──────────────────┼──► Σ ──► f(z) ──► y
+    1 ──(b=-1.5)──┐                                │                  │
+                  │                                │                  │
+   x₃ ──(w=1)─────┼──► Σ ──► f(z) ──► h₂ ──(w=1)──┘                  │
+                  │                                                   │
+   x₄ ──(w=1)─────┘                                                   │
+```
+
+---
+
+### ✅ Final Verification (Complete Truth Table)
+
+| x₁ | x₂ | x₃ | x₄ | h₁=AND(x₁,x₂) | h₂=AND(x₃,x₄) | y=OR(h₁,h₂) | Expected |
+|----|----|----|----|----|----|----|----|
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 ✓ |
+| 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 ✓ |
+| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 1 ✓ |
+| 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 ✓ |
+| 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 ✓ |
+| 1 | 1 | 0 | 0 | 1 | 0 | 1 | 1 ✓ |
+| 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 ✓ |
+
+</details>
+
+---
+
+---
+
+## 📝 Practice Problem 5: Similar to PYQ Pattern
+
+### 🎯 Design 2-Layer Network for F = (x₁ ∨ x₂) ∧ (x₃ ∨ x₄)
+
+**Practice this pattern - likely exam question!**
 
 <details>
 <summary>📖 Click for Solution</summary>
 
-### Step 1: Decompose the Boolean function
-- **Hidden Layer**:
-  - h₁ = AND(x₁, x₂)
-  - h₂ = AND(x₃, x₄)
-- **Output Layer**:
-  - y = OR(h₁, h₂)
+### Step 1: Decompose
+- **Hidden Layer**: h₁ = OR(x₁, x₂), h₂ = OR(x₃, x₄)
+- **Output Layer**: y = AND(h₁, h₂)
 
-### Step 2: Weights for each gate
+### Step 2: Weights
 
-**AND gate**: w₀ = -1.5, w₁ = 1, w₂ = 1
 **OR gate**: w₀ = -0.5, w₁ = 1, w₂ = 1
+**AND gate**: w₀ = -1.5, w₁ = 1, w₂ = 1
 
-### Step 3: Network Diagram
+### Step 3: Final Table
 
-```
-x₁ ──(1)──┐
-          ├──[AND: w₀=-1.5]──► h₁ ──(1)──┐
-x₂ ──(1)──┘                              │
-                                         ├──[OR: w₀=-0.5]──► y
-x₃ ──(1)──┐                              │
-          ├──[AND: w₀=-1.5]──► h₂ ──(1)──┘
-x₄ ──(1)──┘
-```
+| Neuron | Function | w₀ | w₁ | w₂ |
+|--------|----------|----|----|-----|
+| h₁ | OR | -0.5 | 1 | 1 |
+| h₂ | OR | -0.5 | 1 | 1 |
+| y | AND | -1.5 | 1 | 1 |
 
-### Step 4: Final Weights Table
+</details>
 
-| Neuron | Inputs | w₀ (bias) | w₁ | w₂ |
-|--------|--------|-----------|----|----|
-| h₁ | x₁, x₂ | -1.5 | 1 | 1 |
-| h₂ | x₃, x₄ | -1.5 | 1 | 1 |
-| y | h₁, h₂ | -0.5 | 1 | 1 |
+---
+
+## 📝 Practice Problem 6: 3-Input Gate
+
+### 🎯 Design perceptron for 3-input AND gate: y = x₁ ∧ x₂ ∧ x₃
+
+<details>
+<summary>📖 Click for Solution</summary>
+
+### Truth Table
+| x₁ | x₂ | x₃ | AND |
+|----|----|----|-----|
+| 0 | 0 | 0 | 0 |
+| 0 | 0 | 1 | 0 |
+| 0 | 1 | 0 | 0 |
+| 0 | 1 | 1 | 0 |
+| 1 | 0 | 0 | 0 |
+| 1 | 0 | 1 | 0 |
+| 1 | 1 | 0 | 0 |
+| 1 | 1 | 1 | 1 |
+
+### Constraints
+- Output 1 only when ALL inputs = 1
+- w₀ + w₁ + w₂ + w₃ ≥ 0 (for 1,1,1)
+- w₀ + w₁ + w₂ < 0 (for 1,1,0)
+
+### Solution
+**w₀ = -2.5, w₁ = 1, w₂ = 1, w₃ = 1**
+
+Verification for (1,1,1): -2.5 + 1 + 1 + 1 = 0.5 ≥ 0 ✓
+Verification for (1,1,0): -2.5 + 1 + 1 + 0 = -0.5 < 0 ✓
 
 </details>
 
@@ -703,3 +1129,60 @@ x₄ ──(1)──┘
 - [ ] Can draw artificial neuron with weights
 - [ ] Can draw 2-layer perceptron network
 - [ ] Can show linear separability graphically
+
+---
+
+## 🎯 Big Picture Summary
+
+### What Did We Learn?
+
+```
+BIOLOGICAL BRAIN                    ARTIFICIAL NEURAL NETWORK
+     │                                        │
+     ▼                                        ▼
+Neurons connected                   Neurons (nodes) connected
+by synapses                         by weights
+     │                                        │
+     ▼                                        ▼
+Learn through                       Learn through
+experience                          algorithms (weight updates)
+```
+
+### The Story So Far
+
+1. **Brain** has billions of neurons → We created **artificial neurons**
+2. **Artificial neuron** = weighted sum + activation function
+3. **Perceptron** = simplest artificial neuron (step activation)
+4. **Perceptron can learn** by adjusting weights when wrong
+5. **BUT** perceptron has limits → Can only solve **linearly separable** problems
+6. **XOR is NOT linearly separable** → Need **multiple layers** (MLP)
+
+### What's Next?
+
+In the next module, we'll see how **adding more neurons and layers** (Multi-Layer Perceptron) can solve complex problems like XOR!
+
+```
+Single Perceptron          Multi-Layer Perceptron (MLP)
+
+    x₁ ─┐                     x₁ ─┬─ [H1] ─┐
+         ├─► [N] ─► y              │        ├─► [N] ─► y
+    x₂ ─┘                     x₂ ─┴─ [H2] ─┘
+
+  Only straight lines!        Can make curves!
+  Limited problems            Complex problems
+```
+
+---
+
+## 📚 Summary in One Page
+
+| Topic | Key Point |
+|-------|-----------|
+| Biological Neuron | Dendrites → Soma → Axon → Synapse |
+| Artificial Neuron | z = Σwᵢxᵢ + b, then apply f(z) |
+| Perceptron | Simplest neuron with step activation |
+| Learning Rule | wᵢ(new) = wᵢ(old) + η(t - ŷ)xᵢ |
+| AND/OR/NOT | ✅ Solvable by perceptron |
+| XOR | ❌ NOT solvable (need MLP) |
+| Linear Separability | Can a line separate classes? |
+| Convergence | Guaranteed for linearly separable data |

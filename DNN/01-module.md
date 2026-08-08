@@ -1,511 +1,580 @@
-# 🧠 Module 1: Introduction to Deep Learning & Perceptron
+# 🧠 Module 1: Introduction to Deep Learning
 
-## 📅 Sessions Covered: 1-2 | ⏱️ Study Time: 4 Hours | 📊 Exam Weight: ⭐⭐⭐
+## 📅 Session Covered: 1 | ⏱️ Study Time: 3 Hours | 📊 Exam Weight: ⭐⭐⭐
+
+---
+
+## 📚 PDF Lecture Coverage (DNN_M1_Introduction.pdf - 35 pages)
+
+| PDF Page | Topic | Covered in Notes | Section |
+|----------|-------|------------------|---------|
+| 3 | Table of Contents | ✅ | Overview |
+| 4 | What is Deep Learning? (Definitions) | ✅ | Part 1 |
+| 5 | Where in AI sits DL? (Hierarchy diagram) | ✅ | Part 1 |
+| 6 | AI – ML – DL Definitions | ✅ | Part 1 |
+| 7 | Deep (Machine) Learning - Layers concept | ✅ | Part 1 |
+| 9-10 | Why Deep Learning? (10 reasons + graph) | ✅ | Part 2 |
+| 11 | Deep Learning Timeline | ✅ | Part 2 |
+| 13-18 | Breakthroughs with Neural Networks | ✅ | Part 3 |
+| 19 | Applications Table (6 applications) | ✅ | Part 3 |
+| 20 | Many more applications | ✅ | Part 3 |
+| 22 | Core Components of DL Problem (diagram) | ✅ | Part 4 |
+| 23-24 | 1. Data (features, labels, examples) | ✅ | Part 4 |
+| 25 | 2. Model | ✅ | Part 4 |
+| 26 | 3. Objective/Loss Function | ✅ | Part 4 |
+| 27 | 4. Learning Algorithm | ✅ | Part 4 |
+| 28-30 | Wake Word Example (Framework) | ✅ | Part 4 |
+| 32 | Learning Problems (3 types) | ✅ | Part 5 |
+| 33 | Supervised Learning Definition | ✅ | Part 5 |
+| 34 | Supervised Learning Tasks | ✅ | Part 5 |
+| 35 | References | ✅ | End |
+
+**Syllabus Status**: This module is part of **Mid-Semester Exam (EC-2)** syllabus (Sessions 1-8)
+
+---
+
+## 🎯 Previous Year Question (PYQ) Analysis for Module 1
+
+### 📋 Questions Related to This Module
+
+| Exam | Q.No | Topic | Marks | Relevance |
+|------|------|-------|-------|-----------|
+| **EC-2 (Mid-Sem 2026)** | Q5 | DFNN Architecture (Overfitting diagnosis) | 5 | Conceptual foundation |
+| **EC-3 (Comprehensive 2026)** | Q1 | Vanishing/Exploding Gradients | 8 | Builds on DL basics |
+| **EC-3 (Comprehensive 2026)** | Q2 | Domain Shift (CNN deployment) | 7 | Data distribution concept |
+
+### 💡 What This Tells Us:
+- Module 1 provides **foundational concepts** tested indirectly in later questions
+- Understanding **4 components** (Data, Model, Loss, Optimizer) is essential
+- **Supervised learning** concepts appear throughout the course
+- **No direct numerical questions** from Module 1 in PYQs, but theory is important
+
+### 📊 Expected Question Patterns
+
+| Topic | Likelihood | Question Type |
+|-------|------------|---------------|
+| AI vs ML vs DL definitions | ⭐⭐ | Short answer |
+| 4 Components of DL | ⭐⭐⭐ | Theory/Matching |
+| Supervised vs Unsupervised | ⭐⭐⭐ | Conceptual |
+| Applications with NN types | ⭐⭐ | Matching table |
+| Why Deep Learning now? | ⭐⭐ | List reasons |
+
+---
 
 ### 📋 Topics Checklist
 
 | ✓ | Topic | Importance | Time |
 |---|-------|------------|------|
-| ☐ | Deep Learning Definition & Hierarchy | ⭐⭐ | 20 min |
-| ☐ | Why Deep Learning Now? | ⭐⭐ | 15 min |
-| ☐ | 4 Key Components (Data, Model, Loss, Optimizer) | ⭐⭐⭐ | 30 min |
-| ☐ | Biological vs Artificial Neuron | ⭐⭐⭐ | 20 min |
-| ☐ | Perceptron Model & Activation | ⭐⭐⭐⭐ | 30 min |
-| ☐ | Perceptron Learning Algorithm | ⭐⭐⭐⭐ | 30 min |
-| ☐ | Logic Gates (AND, OR, NOT) | ⭐⭐⭐⭐⭐ | 45 min |
-| ☐ | XOR Problem & MLP Solution | ⭐⭐⭐⭐⭐ | 30 min |
+| ☐ | Deep Learning Definition | ⭐⭐⭐ | 15 min |
+| ☐ | AI → ML → DL Hierarchy | ⭐⭐⭐ | 15 min |
+| ☐ | Why Deep Learning Now? (10 reasons) | ⭐⭐ | 20 min |
+| ☐ | DL Applications & NN Types | ⭐⭐⭐ | 20 min |
+| ☐ | 4 Key Components (Data, Model, Loss, Optimizer) | ⭐⭐⭐⭐ | 40 min |
+| ☐ | Wake Word Detection Example | ⭐⭐⭐ | 20 min |
+| ☐ | Types of Learning (Supervised/Unsupervised/RL) | ⭐⭐⭐⭐ | 30 min |
+| ☐ | Supervised Learning Tasks | ⭐⭐⭐ | 20 min |
 
-**Reference**: T1 - Chapter 1, Class Notes
-
----
-
-## Part 1: What is Deep Learning?
-
-### 🎯 Key Definition
-> **Deep Learning** = Machine Learning using neural networks with **multiple layers** to learn hierarchical representations from data.
-
-### 🏗️ The AI Hierarchy
-```
-┌─────────────────────────────────────┐
-│      Artificial Intelligence        │  ← Broad field (making machines smart)
-│  ┌─────────────────────────────┐    │
-│  │    Machine Learning         │    │  ← Learning from data
-│  │  ┌─────────────────────┐    │    │
-│  │  │   Deep Learning     │    │    │  ← Neural networks with many layers
-│  │  └─────────────────────┘    │    │
-│  └─────────────────────────────┘    │
-└─────────────────────────────────────┘
-```
-
-### 🌟 Why Deep Learning Now?
-| Factor | Explanation |
-|--------|-------------|
-| **Big Data** | Massive datasets (images, text, audio) |
-| **Compute Power** | GPUs, TPUs, distributed computing |
-| **Better Algorithms** | Improved architectures & training methods |
-| **Open Tools** | TensorFlow, PyTorch freely available |
-
-### 💡 Real-World Analogy
-Think of DL like a **factory assembly line**:
-- Raw materials (input data) enter
-- Each station (layer) does a specific transformation
-- Final product (prediction) comes out
+**Reference**: T1 - Chapter 1, R3 - Ch 1.1.1, 1.1.2, 1.1.5
 
 ---
 
-## Part 2: Core Components of Deep Learning
+## 📖 Key Terminology (Beginner's Glossary)
 
-### 🔧 The Four Pillars
-
-```
-┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
-│   DATA   │───▶│  MODEL   │───▶│   LOSS   │───▶│OPTIMIZER │
-│          │    │          │    │ FUNCTION │    │          │
-└──────────┘    └──────────┘    └──────────┘    └──────────┘
-   Input         Transform       Measure          Improve
-```
-
-| Component | Purpose | Example |
-|-----------|---------|---------|
-| **Data** | What we learn from | Images with labels |
-| **Model** | Transforms input to output | Neural network |
-| **Loss Function** | Measures "how wrong" | MSE, Cross-Entropy |
-| **Optimizer** | Updates weights to reduce loss | Gradient Descent |
+| Term | Simple Meaning | Example |
+|------|----------------|---------|
+| **AI** | Making machines smart | Robot vacuum cleaner |
+| **ML** | Learning from data/experience | Spam filter learns from emails |
+| **DL** | ML with many neural network layers | Face recognition |
+| **Neural Network** | Layers of connected neurons | Brain-inspired computing |
+| **Feature** | Input attribute/column | House size, bedrooms |
+| **Label/Target** | What we want to predict | House price |
+| **Model** | Function that maps input → output | Price predictor |
+| **Loss Function** | Measures how wrong we are | Error in prediction |
+| **Optimizer** | Improves the model | Gradient descent |
+| **Training** | Teaching the model with data | Showing examples |
+| **Inference** | Using trained model to predict | Predicting new house price |
 
 ---
 
-## Part 3: Biological vs Artificial Neuron ⭐⭐⭐
+## Part 1: What is Deep Learning? ⭐⭐⭐
 
-### 🧬 Side-by-Side Comparison
+### 💡 Simple Analogy: The Layer Cake
 
-| Biological Neuron | Artificial Neuron |
-|-------------------|-------------------|
-| Dendrites receive signals | Inputs (x₁, x₂, ..., xₙ) |
-| Synapse strength | Weights (w₁, w₂, ..., wₙ) |
-| Cell body sums signals | Weighted sum: z = Σwᵢxᵢ + b |
-| Axon fires if threshold met | Activation function: a = f(z) |
+Think of Deep Learning like baking a **multi-layer cake**:
+- **Layer 1** (bottom): Recognizes basic ingredients (edges, colors)
+- **Layer 2**: Combines ingredients into shapes (eyes, nose)
+- **Layer 3**: Combines shapes into objects (face)
+- **Layer 4** (top): Recognizes the whole picture (person's identity)
 
-### 📐 Mathematical Model
+Each layer builds on the previous one, extracting **higher-level features**!
 
-```
-                x₁ ──(w₁)──┐
-                           │
-                x₂ ──(w₂)──┼──► Σ + b ──► f(z) ──► Output
-                           │
-                xₙ ──(wₙ)──┘
+### 🎯 Key Definitions (From PDF Page 4)
 
-        z = w₁x₁ + w₂x₂ + ... + wₙxₙ + b
-        output = f(z)   [f is activation function]
-```
+> **Definition 1**: Deep Learning is a type of machine learning based on artificial neural networks in which **multiple layers** of processing are used to extract progressively higher level features from data.
 
----
+> **Definition 2**: Deep learning is a method in AI that teaches computers to process data in a way that is **inspired by the human brain**.
 
-## Part 4: Perceptron ⭐⭐⭐⭐⭐
+> **Definition 3**: Deep learning is a subset of machine learning, which is essentially a **neural network with three or more layers**.
 
-### 🎯 What is Perceptron?
-> Simplest neural network - single neuron for **binary classification**
+> **Definition 4**: Deep Learning gets its name from the fact that we add **more Layers** to learn from the data.
 
-### 📐 Perceptron Formula
+### 🏗️ The AI Hierarchy (From PDF Page 5-6)
 
 ```
-Output = f(z) where z = w₁x₁ + w₂x₂ + ... + wₙxₙ + b
-
-f(z) = { 1  if z ≥ 0
-       { 0  if z < 0     [Step activation]
+┌─────────────────────────────────────────────────┐
+│           ARTIFICIAL INTELLIGENCE               │
+│   "Science of making things smart"              │
+│   Example: Robot cleaning a room                │
+│  ┌───────────────────────────────────────────┐  │
+│  │         MACHINE LEARNING                  │  │
+│  │   "Learning from experience/data"         │  │
+│  │   Example: Spam filter improves over time │  │
+│  │  ┌─────────────────────────────────────┐  │  │
+│  │  │        DEEP LEARNING                │  │  │
+│  │  │   "Neural networks with many layers"│  │  │
+│  │  │   Example: Face recognition         │  │  │
+│  │  └─────────────────────────────────────┘  │  │
+│  └───────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────┘
 ```
 
-### ⚡ Perceptron Learning Algorithm
+### 📊 AI vs ML vs DL Comparison
 
-```python
-# Initialize weights and bias
-w = [0, 0, ..., 0], b = 0
+| Aspect | AI | ML | DL |
+|--------|----|----|-----|
+| **What** | Making machines smart | Learning from data | Many-layered neural networks |
+| **How** | Rules OR Learning | Statistical learning | Hierarchical feature learning |
+| **Example** | Chess program | Email spam filter | Image recognition |
+| **Human Input** | Explicit rules | Feature engineering | Raw data (auto features) |
 
-# For each epoch:
-for each training example (x, y_true):
-    z = w·x + b
-    y_pred = 1 if z >= 0 else 0
-    
-    if y_pred != y_true:
-        w = w + η * (y_true - y_pred) * x
-        b = b + η * (y_true - y_pred)
+### 🔑 What Makes it "Deep"? (From PDF Page 7)
+
+- "Deep" = **successive layers of representations**
+- Each layer learns increasingly **meaningful** features
+- **Depth** = number of layers that contribute to the model
+- Layers are **stacked on top of each other**
+
 ```
-Where η = learning rate
-
----
-
-## Part 5: Logic Gates with Perceptron ⭐⭐⭐⭐⭐ (MID-SEM IMPORTANT!)
-
-### AND Gate
-| x₁ | x₂ | Output |
-|----|----|----|
-| 0 | 0 | 0 |
-| 0 | 1 | 0 |
-| 1 | 0 | 0 |
-| 1 | 1 | 1 |
-
-**Solution**: w₁ = 1, w₂ = 1, b = -1.5
-- z = x₁ + x₂ - 1.5
-- Output = 1 only when x₁=1 AND x₂=1
-
-### OR Gate
-| x₁ | x₂ | Output |
-|----|----|----|
-| 0 | 0 | 0 |
-| 0 | 1 | 1 |
-| 1 | 0 | 1 |
-| 1 | 1 | 1 |
-
-**Solution**: w₁ = 1, w₂ = 1, b = -0.5
-- z = x₁ + x₂ - 0.5
-- Output = 1 when x₁=1 OR x₂=1
-
-### NOT Gate
-**Solution**: w₁ = -1, b = 0.5
-- z = -x₁ + 0.5
-- Output = 1 when x₁ = 0
-
-### ❌ XOR Gate - THE PROBLEM!
-| x₁ | x₂ | Output |
-|----|----|----|
-| 0 | 0 | 0 |
-| 0 | 1 | 1 |
-| 1 | 0 | 1 |
-| 1 | 1 | 0 |
-
-**Cannot be solved by single perceptron!** (Not linearly separable)
-
-**Solution**: Use 2-layer network (MLP)
-```
-XOR = (x₁ AND NOT x₂) OR (NOT x₁ AND x₂)
-    = (x₁ OR x₂) AND NOT(x₁ AND x₂)
+INPUT → [Layer 1] → [Layer 2] → [Layer 3] → ... → [Layer N] → OUTPUT
+        (edges)     (shapes)    (parts)           (objects)
 ```
 
 ---
 
-## 📝 Practice Problem 1 (From Mid-Sem 2026)
+## Part 2: Why Deep Learning Now? ⭐⭐
 
-**Q2**: Design a 2-layer perceptron network to implement:
-**F(x₁,x₂,x₃,x₄) = (x₁ ∧ x₂) ∨ (x₃ ∧ x₄)**
+### 💡 Simple Analogy: The Perfect Storm
 
-<details>
-<summary>📖 Click for Solution</summary>
+Deep Learning became possible because of a **perfect storm** of factors coming together:
+- More data (fuel) ⛽
+- Faster computers (engine) 🚗
+- Better algorithms (driver) 👨‍✈️
+- Open tools (roads) 🛣️
 
-### Step 1: Decompose the Boolean function
-- **Hidden Layer**:
-  - h₁ = AND(x₁, x₂)
-  - h₂ = AND(x₃, x₄)
-- **Output Layer**:
-  - y = OR(h₁, h₂)
+### 📋 10 Reasons for DL Success (From PDF Page 9)
 
-### Step 2: Derive weights for AND gate
-For AND gate: output = 1 only when both inputs = 1
-- Need: w₁(1) + w₂(1) + b ≥ 0 → 2w + b ≥ 0
-- Need: w₁(1) + w₂(0) + b < 0 → w + b < 0
-- Need: w₁(0) + w₂(1) + b < 0 → w + b < 0
-- Need: w₁(0) + w₂(0) + b < 0 → b < 0
+| # | Reason | Explanation |
+|---|--------|-------------|
+| 1 | **Large amounts of data** | Billions of images, texts, videos available |
+| 2 | **Unstructured data** | Images, text, audio, video |
+| 3 | **Cheap, high-quality sensors** | Cameras, microphones everywhere |
+| 4 | **Cheap computation** | GPUs, distributed clusters |
+| 5 | **Cheap data storage** | Cloud storage, SSDs |
+| 6 | **Learn by examples** | No manual rule programming |
+| 7 | **Automated feature generation** | No feature engineering needed |
+| 8 | **Better learning capabilities** | Can learn complex patterns |
+| 9 | **Scalability** | Performance improves with more data |
+| 10 | **Advanced analytics** | State-of-the-art results |
 
-**Solution**: w₁ = 1, w₂ = 1, b = -1.5
+### 📈 The Scale Graph (From PDF Page 10)
 
-### Step 3: Derive weights for OR gate
-For OR gate: output = 1 when at least one input = 1
-- Need: w₁(1) + w₂(0) + b ≥ 0 → w + b ≥ 0
-- Need: w₁(0) + w₂(0) + b < 0 → b < 0
-
-**Solution**: w₁ = 1, w₂ = 1, b = -0.5
-
-### Step 4: Network Diagram
 ```
-x₁ ──(1)──┐
-          ├──(AND: b=-1.5)──► h₁ ──(1)──┐
-x₂ ──(1)──┘                             ├──(OR: b=-0.5)──► y
-                                        │
-x₃ ──(1)──┐                             │
-          ├──(AND: b=-1.5)──► h₂ ──(1)──┘
-x₄ ──(1)──┘
+Performance
+    │
+    │                                    ╱ Large NN
+    │                               ╱───
+    │                          ╱───      Medium NN
+    │                     ╱───      ╱───
+    │                ╱───      ╱───      Small NN
+    │           ╱───      ╱───
+    │      ╱───      ╱───────────────── Traditional ML
+    │ ╱───      ╱───                     (SVM, Logistic Reg)
+    │──────────
+    └─────────────────────────────────────► Amount of Data
+         Small              Large
+         training           training
+         sets               sets
 ```
 
-**Final Answer**:
-| Neuron | w₁ | w₂ | b |
-|--------|----|----|---|
-| h₁ (AND) | 1 | 1 | -1.5 |
-| h₂ (AND) | 1 | 1 | -1.5 |
-| y (OR) | 1 | 1 | -0.5 |
-
-</details>
+**Key Insight** (Andrew Ng): "Scale drives deep learning progress"
+- Traditional ML: Performance **plateaus** with more data
+- Deep Learning: Performance **keeps improving** with more data
 
 ---
 
-## 🎴 Quick Reference Card
+## Part 3: Applications of Deep Learning ⭐⭐⭐
 
-| Concept | Formula/Value |
-|---------|---------------|
-| Perceptron output | f(z) = 1 if z≥0, else 0 |
-| Weighted sum | z = Σwᵢxᵢ + b |
-| AND gate | w=[1,1], b=-1.5 |
-| OR gate | w=[1,1], b=-0.5 |
-| NOT gate | w=[-1], b=0.5 |
-| XOR | Needs MLP (2 layers) |
+### 📊 Applications Table (From PDF Page 19)
+
+| Application | Input | Output | Neural Network Type |
+|-------------|-------|--------|---------------------|
+| **Real Estate** | House features | House Price | Standard NN |
+| **Photo Tagging** | Image | Text labels | CNN |
+| **Object Detection** | Image | Bounding boxes | CNN |
+| **Speech Recognition** | Audio | Text transcript | RNN |
+| **Translation** | English text | French text | RNN |
+| **Autonomous Driving** | Image, Sensors, Radar | Position of objects | Hybrid NN |
+
+### 🌟 More Applications (From PDF Page 20)
+
+1. **Weather Prediction**: Geographic info + satellite images → Tomorrow's weather
+2. **Question Answering**: Free-form text question → Correct answer
+3. **Person Detection**: Image → Outlines around each person
+4. **Recommender Systems**: User history → Products they might enjoy
+
+### 🎯 Quick Memory Trick
+
+| Data Type | Best Network |
+|-----------|--------------|
+| **Tabular** (numbers, categories) | Standard NN |
+| **Images** | CNN (Convolutional) |
+| **Sequences** (text, audio, time) | RNN (Recurrent) |
+| **Mixed** | Hybrid |
 
 ---
 
-## ⚠️ Common Mistakes to Avoid
+## Part 4: The 4 Key Components of Deep Learning ⭐⭐⭐⭐ (IMPORTANT!)
 
-1. **Forgetting bias term** - Always include b in calculations
-2. **Wrong activation threshold** - Step function uses ≥0, not >0
-3. **XOR confusion** - Single perceptron CANNOT learn XOR
-4. **Sign errors** - Be careful with negative weights/biases
+### 💡 Simple Analogy: Learning to Cook
+
+| DL Component | Cooking Analogy |
+|--------------|-----------------|
+| **Data** | Recipes + ingredients you practice with |
+| **Model** | Your cooking technique/method |
+| **Loss Function** | How your family rates your food (1-10) |
+| **Optimizer** | How you improve based on feedback |
+
+### 🔧 The 4 Pillars (From PDF Page 22)
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    DEEP LEARNING FRAMEWORK                    │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│   ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌──────────┐ │
+│   │  DATA   │───▶│  MODEL  │───▶│  LOSS   │───▶│OPTIMIZER │ │
+│   │         │    │         │    │FUNCTION │    │          │ │
+│   └─────────┘    └─────────┘    └─────────┘    └──────────┘ │
+│      What we       How we         How wrong      How we     │
+│      learn from    transform      we are         improve    │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### 1️⃣ DATA (From PDF Pages 23-24)
+
+**Definition**: Collection of examples we learn from
+
+**Key Concepts**:
+- **D = {X, t}** where X = features, t = target/label
+- **Features** = input attributes (columns)
+- **Label/Target** = what we want to predict
+- **N** = number of examples (rows)
+- **d** = number of dimensions/features
+
+**Example: House Price Dataset**
+
+| ID | Bedrooms | Location | Sq Ft | Price (Target) |
+|----|----------|----------|-------|----------------|
+| 1 | 3 | Urban | 1500 | 350K |
+| 2 | 2 | Suburban | 1200 | 280K |
+| 3 | 4 | Urban | 2000 | 520K |
+| 4 | 3 | Rural | 1800 | 310K |
+
+- **Features (X)**: Bedrooms, Location, Sq Ft (d = 3)
+- **Target (t)**: Price
+- **Examples**: N = 4
+
+### 2️⃣ MODEL (From PDF Page 25)
+
+**Definition**: Computational machinery that transforms input into predictions
+
+```
+INPUT (features) ──► [ MODEL ] ──► OUTPUT (prediction)
+     X                  f(X)              ŷ
+```
+
+- Deep learning models = **many successive transformations**
+- Transformations are **chained together** (layers)
+- Each layer extracts higher-level features
+
+### 3️⃣ LOSS/OBJECTIVE FUNCTION (From PDF Page 26)
+
+**Definition**: Formal measure of how good (or bad) the model is
+
+**Key Points**:
+- **Lower is better** (by convention)
+- Also called: Loss function, Cost function, Error function
+- Measures difference between prediction (ŷ) and actual (y)
+
+**Common Loss Functions**:
+| Task | Loss Function |
+|------|---------------|
+| Regression | MSE = (y - ŷ)² |
+| Classification | Cross-Entropy |
+
+### 4️⃣ LEARNING ALGORITHM/OPTIMIZER (From PDF Page 27)
+
+**Definition**: Algorithm that adjusts model parameters to minimize loss
+
+**Most Popular**: **Gradient Descent**
+- Calculates gradient (slope) of loss
+- Updates parameters in opposite direction
+- Repeats until loss is minimized
+
+```
+Repeat:
+    1. Make prediction
+    2. Calculate loss
+    3. Compute gradients
+    4. Update weights: w = w - η × gradient
+```
 
 ---
 
+## Part 5: Wake Word Example (From PDF Pages 28-30) ⭐⭐⭐
+
+### 🎯 Problem: Detect "Alexa" or "Hey Siri"
+
+### Step 1: Define the Problem
+- **Input**: Audio snippet
+- **Output**: Yes (wake word detected) or No
+- **Model Family**: Neural network
+
+### Step 2: Collect Data
+- Huge dataset of audio clips
+- Labeled: "contains wake word" or "doesn't contain"
+
+### Step 3: Choose Model
+- Program with adjustable **parameters**
+- Same model family for "Alexa" and "Hey Siri" (similar tasks)
+
+### Step 4: Train
+- Feed examples to model
+- Calculate loss (how many wrong predictions)
+- Adjust parameters to reduce loss
+- Once parameters are finalized → **Model is ready!**
+
+### Step 5: Inference
+- New audio comes in
+- Model outputs: Yes or No
+
 ---
 
-## Part 6: Supervised Learning Types ⭐⭐⭐
+## Part 6: Types of Learning Problems ⭐⭐⭐⭐
 
-### 🎯 Types of ML Problems
+### 📊 Three Types (From PDF Page 32)
 
-| Type | Question | Output | Example |
-|------|----------|--------|---------|
-| **Regression** | How much? How many? | Continuous value | House price prediction |
+| Type | Data Has Labels? | Example | Learn in Course |
+|------|------------------|---------|-----------------|
+| **Supervised** | ✅ Yes (X, y) | Classification, Regression | This course + ML |
+| **Unsupervised** | ❌ No (only X) | Clustering, GANs | Advanced DL + ML |
+| **Reinforcement** | 🎮 Rewards | Game playing, Robotics | Deep RL course |
+
+### 1️⃣ Supervised Learning (From PDF Pages 33-34)
+
+**Definition**: Task of predicting labels given input features
+
+**Key Concepts**:
+- Each (feature, label) pair = **example**
+- Goal: Model that maps **input → label prediction**
+- "Supervised" because we **provide labeled examples**
+
+**Tasks**:
+
+| Task | Question | Output Type | Example |
+|------|----------|-------------|---------|
+| **Regression** | How much? How many? | Continuous number | House price |
 | **Binary Classification** | Yes or No? | 0 or 1 | Spam detection |
-| **Multi-class Classification** | Which category? | One of K classes | Digit recognition (0-9) |
+| **Multi-class Classification** | Which category? | One of K classes | Digit recognition |
 | **Multi-label Classification** | Which categories? | Multiple labels | Image tagging |
 
-### 📊 Applications Table (From Slides)
+**More Supervised Tasks**:
+- Recommender systems
+- Sequence Learning (Tagging, Parsing)
+- Speech recognition
+- Machine translation
 
-| Application | Input | Output | Network Type |
-|-------------|-------|--------|--------------|
-| Real Estate | House features | House Price | Standard NN |
-| Photo Tagging | Image | Text labels | CNN |
-| Speech Recognition | Audio | Text transcript | RNN |
-| Translation | English text | French text | RNN/Transformer |
-| Autonomous Driving | Image, Sensors | Object positions | Hybrid NN |
+### 2️⃣ Unsupervised Learning
 
----
+- No labels provided
+- Find patterns/structure in data
+- Examples: Clustering, Density estimation, GANs
 
-## Part 7: Linearly Separable Data ⭐⭐⭐⭐
+### 3️⃣ Reinforcement Learning
 
-### 🎯 What is Linear Separability?
-
-> Data is **linearly separable** if a single straight line (or hyperplane) can separate the two classes.
-
-```
-Linearly Separable (AND):       NOT Linearly Separable (XOR):
-    x₂                              x₂
-    │   ○                           │   ●       ○
-    │       ●                       │
-    │                               │   ○       ●
-    └──────────── x₁                └──────────── x₁
-
-    Line can separate ○ and ●       No single line works!
-```
-
-### 💡 Key Insight
-- **Perceptron** can ONLY solve linearly separable problems
-- **XOR** is NOT linearly separable → Perceptron fails!
-- **Solution**: Add hidden layer (MLP) to create non-linear decision boundary
-
----
-
-## 📝 Practice Problem 2: Perceptron Learning Step-by-Step
-
-**Problem**: Train a perceptron for AND gate using learning rate η = 1
-
-**Initial**: w₁ = 0, w₂ = 0, b = 0
-
-<details>
-<summary>📖 Click for Step-by-Step Solution</summary>
-
-### Training Data
-| x₁ | x₂ | y (target) |
-|----|----|------------|
-| 0 | 0 | 0 |
-| 0 | 1 | 0 |
-| 1 | 0 | 0 |
-| 1 | 1 | 1 |
-
-### Epoch 1
-
-**Sample 1**: x = [0, 0], y = 0
-- z = 0×0 + 0×0 + 0 = 0
-- ŷ = 1 (since z ≥ 0)
-- Error! y - ŷ = 0 - 1 = -1
-- Update: w₁ = 0 + 1×(-1)×0 = 0
-- Update: w₂ = 0 + 1×(-1)×0 = 0
-- Update: b = 0 + 1×(-1) = **-1**
-
-**Sample 2**: x = [0, 1], y = 0
-- z = 0×0 + 0×1 + (-1) = -1
-- ŷ = 0 (since z < 0) ✓ Correct!
-
-**Sample 3**: x = [1, 0], y = 0
-- z = 0×1 + 0×0 + (-1) = -1
-- ŷ = 0 ✓ Correct!
-
-**Sample 4**: x = [1, 1], y = 1
-- z = 0×1 + 0×1 + (-1) = -1
-- ŷ = 0, but y = 1 → Error!
-- Update: w₁ = 0 + 1×(1)×1 = **1**
-- Update: w₂ = 0 + 1×(1)×1 = **1**
-- Update: b = -1 + 1×(1) = **0**
-
-**After Epoch 1**: w₁ = 1, w₂ = 1, b = 0
-
-### Continue training until convergence...
-(After several epochs, weights will converge to valid AND gate values)
-
-</details>
-
----
-
-## 📝 Practice Problem 3: Design NAND Gate
-
-**Problem**: Find weights and bias for NAND gate (NOT AND)
-
-| x₁ | x₂ | NAND Output |
-|----|----|-------------|
-| 0 | 0 | 1 |
-| 0 | 1 | 1 |
-| 1 | 0 | 1 |
-| 1 | 1 | 0 |
-
-<details>
-<summary>📖 Click for Solution</summary>
-
-### Analysis
-NAND is opposite of AND:
-- Output = 0 only when BOTH inputs are 1
-- Output = 1 otherwise
-
-### Constraints (with f(z) = 1 if z ≥ 0)
-- (0,0): w₁(0) + w₂(0) + b ≥ 0 → **b ≥ 0**
-- (0,1): w₁(0) + w₂(1) + b ≥ 0 → **w₂ + b ≥ 0**
-- (1,0): w₁(1) + w₂(0) + b ≥ 0 → **w₁ + b ≥ 0**
-- (1,1): w₁(1) + w₂(1) + b < 0 → **w₁ + w₂ + b < 0**
-
-### Solution
-Choose: **w₁ = -1, w₂ = -1, b = 1.5**
-
-Verify:
-- (0,0): 0 + 0 + 1.5 = 1.5 ≥ 0 ✓ → Output 1
-- (0,1): 0 - 1 + 1.5 = 0.5 ≥ 0 ✓ → Output 1
-- (1,0): -1 + 0 + 1.5 = 0.5 ≥ 0 ✓ → Output 1
-- (1,1): -1 - 1 + 1.5 = -0.5 < 0 ✓ → Output 0
-
-</details>
-
----
-
-## 📝 Practice Problem 4: XOR using MLP
-
-**Problem**: Show how XOR can be computed using AND, OR, NAND gates
-
-<details>
-<summary>📖 Click for Solution</summary>
-
-### XOR Truth Table
-| x₁ | x₂ | XOR |
-|----|----|-----|
-| 0 | 0 | 0 |
-| 0 | 1 | 1 |
-| 1 | 0 | 1 |
-| 1 | 1 | 0 |
-
-### Boolean Expression
-```
-XOR(x₁, x₂) = (x₁ OR x₂) AND (NOT(x₁ AND x₂))
-            = (x₁ OR x₂) AND NAND(x₁, x₂)
-```
-
-### 2-Layer Network
-```
-Layer 1 (Hidden):
-  h₁ = OR(x₁, x₂)   → w=[1,1], b=-0.5
-  h₂ = NAND(x₁, x₂) → w=[-1,-1], b=1.5
-
-Layer 2 (Output):
-  y = AND(h₁, h₂)   → w=[1,1], b=-1.5
-```
-
-### Verification
-| x₁ | x₂ | h₁=OR | h₂=NAND | y=AND(h₁,h₂) |
-|----|----|----|----|----|
-| 0 | 0 | 0 | 1 | 0 |
-| 0 | 1 | 1 | 1 | 1 |
-| 1 | 0 | 1 | 1 | 1 |
-| 1 | 1 | 1 | 0 | 0 |
-
-✓ Matches XOR!
-
-</details>
+- Agent interacts with environment
+- Takes actions over time
+- Learns from rewards/penalties
 
 ---
 
 ## 🎴 Quick Reference Card
 
-| Concept | Formula/Value |
-|---------|---------------|
-| Perceptron output | f(z) = 1 if z≥0, else 0 |
-| Weighted sum | z = Σwᵢxᵢ + b |
-| Weight update | w = w + η(y - ŷ)x |
-| Bias update | b = b + η(y - ŷ) |
-| AND gate | w=[1,1], b=-1.5 |
-| OR gate | w=[1,1], b=-0.5 |
-| NOT gate | w=[-1], b=0.5 |
-| NAND gate | w=[-1,-1], b=1.5 |
-| XOR | Needs MLP (2 layers) |
+### Definitions
 
-### DL Components Summary
-| Component | Role | Example |
-|-----------|------|---------|
-| Data | Training examples | (x, y) pairs |
-| Model | Maps input → output | Neural network |
-| Loss | Measures error | MSE, Cross-Entropy |
-| Optimizer | Updates weights | Gradient Descent |
+| Term | Definition |
+|------|------------|
+| AI | Science of making machines smart |
+| ML | Learning from experience/data |
+| DL | Neural networks with many layers |
+| Depth | Number of layers in the model |
+
+### 4 Components
+
+| Component | Purpose |
+|-----------|---------|
+| Data | What we learn from |
+| Model | Transforms input to output |
+| Loss | Measures error |
+| Optimizer | Reduces error |
+
+### Applications
+
+| Input Type | Use Network |
+|------------|-------------|
+| Tabular | Standard NN |
+| Image | CNN |
+| Sequence | RNN |
+
+### Supervised Learning
+
+| Task | Question |
+|------|----------|
+| Regression | How much? |
+| Classification | Which category? |
 
 ---
 
 ## ⚠️ Common Mistakes to Avoid
 
-1. **Forgetting bias term** - Always include b in calculations
-2. **Wrong activation threshold** - Step function uses ≥0, not >0
-3. **XOR confusion** - Single perceptron CANNOT learn XOR
-4. **Sign errors** - Be careful with negative weights/biases
-5. **Update rule confusion** - Update only when prediction is WRONG
-6. **Mixing up w and b updates** - b update doesn't multiply by x
+1. **Confusing AI, ML, DL** - Remember: AI ⊃ ML ⊃ DL (DL is subset of ML)
+2. **Forgetting the 4 components** - Data, Model, Loss, Optimizer (DMLO)
+3. **Mixing supervised/unsupervised** - Supervised has labels, Unsupervised doesn't
+4. **Wrong network for data type** - CNN for images, RNN for sequences
+5. **Thinking DL is new** - Concepts are old, but scale made it work
 
 ---
 
 ## 🧪 Exam Tips for Module 1
 
-### What to Expect
-1. **Theory questions** (2-3 marks): AI/ML/DL hierarchy, 4 components
-2. **Gate design** (5-6 marks): Design perceptron for Boolean function
-3. **MLP network** (5-6 marks): Multi-layer network for compound function
+### Expected Question Types
 
-### Key Skills Needed
-- Derive weight inequalities from truth table
-- Draw network diagrams with weights labeled
-- Verify solution by checking all input combinations
-- Explain why XOR needs hidden layer
+| Type | Marks | Example |
+|------|-------|---------|
+| Definition | 1-2 | What is Deep Learning? |
+| Comparison | 2-3 | Difference between AI, ML, DL |
+| Components | 3-4 | List and explain 4 components |
+| Applications | 2-3 | Match application with NN type |
+| Learning types | 2-3 | Supervised vs Unsupervised |
+
+### Must-Know for Exam
+- AI → ML → DL hierarchy with examples
+- 4 components with one-line definitions
+- 10 reasons for DL success (at least 5)
+- Application table (6 applications)
+- Supervised learning tasks (4 types)
 
 ---
 
-## ✅ Self-Check Quiz
+## ✅ Revision Checklist
 
-### Conceptual
-- [ ] Can explain AI → ML → DL hierarchy
-- [ ] Know 4 components of DL (Data, Model, Loss, Optimizer)
-- [ ] Understand supervised vs unsupervised learning
-- [ ] Can list DL applications with appropriate network types
+### Definitions
+- [ ] Can define AI, ML, DL in one sentence each
+- [ ] Know what "deep" means in deep learning
+- [ ] Can draw AI → ML → DL hierarchy
 
-### Technical
-- [ ] Can write perceptron mathematical formula
-- [ ] Can derive AND/OR/NAND weights from constraints
-- [ ] Know perceptron learning algorithm steps
-- [ ] Understand linear separability concept
+### Why DL?
+- [ ] Can list at least 5 reasons for DL success
+- [ ] Understand the scale vs performance graph
 
-### Problem Solving
-- [ ] Can design perceptron for any 2-input Boolean function
-- [ ] Can draw 2-layer perceptron network
-- [ ] Can verify weights by checking all inputs
-- [ ] Can explain why XOR needs hidden layer
+### Applications
+- [ ] Can match 6 applications with NN types
+- [ ] Know when to use CNN vs RNN vs Standard NN
+
+### 4 Components
+- [ ] Can name and explain all 4 components
+- [ ] Can give example for each component
+- [ ] Understand data terminology (features, labels, N, d)
+
+### Learning Types
+- [ ] Know difference: Supervised vs Unsupervised vs RL
+- [ ] Can list 4 supervised learning tasks
+- [ ] Know examples of each learning type
+
+---
+
+## 🎯 Big Picture Summary
+
+### The Story of Module 1
+
+```
+1. WHAT IS DL?
+   AI ⊃ ML ⊃ DL
+   DL = Neural networks with MANY LAYERS
+   "Deep" = successive layers of representations
+
+2. WHY NOW?
+   Big Data + Compute + Algorithms + Tools
+   Scale drives progress (Andrew Ng)
+
+3. APPLICATIONS
+   Images → CNN
+   Sequences → RNN
+   Tabular → Standard NN
+
+4. HOW IT WORKS
+   DATA ──► MODEL ──► LOSS ──► OPTIMIZER
+                        ↑______________|
+                         (feedback loop)
+
+5. TYPES OF LEARNING
+   Supervised: Has labels (Classification, Regression)
+   Unsupervised: No labels (Clustering)
+   Reinforcement: Rewards (Games, Robots)
+```
+
+### What's Next?
+
+In Module 2, we'll dive into the **building blocks** of neural networks:
+- Biological vs Artificial Neurons
+- The Perceptron model
+- How neurons learn (Perceptron Learning Algorithm)
+- Logic gates with Perceptrons
+
+---
+
+## 📚 Summary in One Page
+
+| Topic | Key Point |
+|-------|-----------|
+| Deep Learning | Neural networks with many layers |
+| "Deep" | Successive layers of representations |
+| AI vs ML vs DL | AI ⊃ ML ⊃ DL (DL is subset) |
+| Why DL now? | Data + Compute + Algorithms + Tools |
+| Applications | CNN for images, RNN for sequences |
+| 4 Components | Data, Model, Loss, Optimizer |
+| Data | D = {X, t}, features + labels |
+| Model | Transforms input → output |
+| Loss | Measures how wrong (lower = better) |
+| Optimizer | Adjusts parameters to minimize loss |
+| Supervised | Has labels (Classification, Regression) |
+| Unsupervised | No labels (Clustering, GANs) |
+| Reinforcement | Learns from rewards |
+
+---
+
+## 📖 References
+
+- Dive into Deep Learning (T1) - Chapter 1: https://d2l.ai/
+- Speech and Language Processing (R3) - Ch 1.1.1, 1.1.2, 1.1.5

@@ -1,14 +1,32 @@
-# 📘 Linear Algebra - Module 1: Complete Beginner Notes
+# 📘 Module 1: Solution of Linear Systems - Complete Exam-Ready Notes
+## AIML ZC416 - Mathematical Foundations for Machine Learning
+
+**Reference:** T1 (Diesenroth): Sections 2.1, 2.2, 2.3
+
+---
+
+## 📋 Module 1 Topics Checklist
+
+| Topic | Section | Exam Important |
+|-------|---------|----------------|
+| Systems of Linear Equations | Part 1-2 | ⭐⭐⭐ |
+| Matrices & Operations | Part 3-4 | ⭐⭐⭐ |
+| Inverse & Transpose | Part 5-6 | ⭐⭐⭐ |
+| Gaussian Elimination | Part 7-8 | ⭐⭐⭐ |
+| Row Echelon Form (REF/RREF) | Part 9-10 | ⭐⭐⭐ |
+| Particular & General Solutions | Part 11 | ⭐⭐⭐ |
+| Inverse using Gaussian Elimination | Part 12 | ⭐⭐ |
+
+---
 
 ## 🎯 What is Linear Algebra?
 
-**Simple Definition:** Linear Algebra is the math of **arrows (vectors)** and **boxes of numbers (matrices)**.
+**Definition:** Linear Algebra is the study of **vectors** and **linear mappings** between vector spaces.
 
-### Real-Life Analogy:
-Think of a recipe:
-- **Vectors** = List of ingredients (2 eggs, 3 cups flour, 1 cup sugar)
-- **Matrix** = Multiple recipes organized in a table
-- **Operations** = Combining or scaling recipes
+### Why Important for ML?
+- Data is represented as vectors/matrices
+- Neural networks use matrix multiplication
+- Solving equations (regression, optimization)
 
 ---
 
@@ -193,13 +211,13 @@ A = [1  2  3]      Aᵀ = [1  4]
 
 ---
 
-## 📍 Part 6: Matrix Inverse (A⁻¹)
+## 📍 Part 6: Matrix Inverse (A⁻¹) ⭐ EXAM IMPORTANT
 
 ### What is an Inverse?
 The inverse of matrix A is another matrix that when multiplied gives Identity.
 
 ```
-A × A⁻¹ = I  (Identity Matrix)
+A × A⁻¹ = A⁻¹ × A = I  (Identity Matrix)
 ```
 
 **Real-Life Analogy:**
@@ -208,6 +226,8 @@ A × A⁻¹ = I  (Identity Matrix)
 
 ### When Does Inverse Exist?
 Only for **square matrices** where **determinant ≠ 0**
+
+**A matrix with inverse is called "Invertible" or "Non-singular"**
 
 ### Finding Inverse of 2×2 Matrix:
 
@@ -236,12 +256,37 @@ Verify: A × A⁻¹ = [1  0] ✓
                   [0  1]
 ```
 
-### ⚠️ Key Properties:
+### ⚠️ Key Properties (MUST MEMORIZE):
 ```
 (A⁻¹)⁻¹ = A
-(AB)⁻¹ = B⁻¹ × A⁻¹  ← Order reverses!
+(AB)⁻¹ = B⁻¹ × A⁻¹     ← Order REVERSES!
 (Aᵀ)ᵀ = A
-(AB)ᵀ = Bᵀ × Aᵀ     ← Order reverses!
+(AB)ᵀ = Bᵀ × Aᵀ        ← Order REVERSES!
+(A⁻¹)ᵀ = (Aᵀ)⁻¹
+```
+
+### ⚠️ EXAM TRAP - What is NOT True:
+```
+(A + B)⁻¹ ≠ A⁻¹ + B⁻¹   ← THIS IS FALSE!
+```
+
+**Exam Question Example (from EC2 Q2d):**
+> Find matrices A, B such that A⁻¹, B⁻¹ and (A+B)⁻¹ exist but (A+B)⁻¹ ≠ A⁻¹ + B⁻¹
+
+**Solution:**
+```
+Let A = [1  0]    B = [1  0]
+        [0  1]        [0  1]
+
+A⁻¹ = I, B⁻¹ = I (both exist)
+
+A + B = [2  0]    (A+B)⁻¹ = [0.5   0]
+        [0  2]               [0   0.5]
+
+A⁻¹ + B⁻¹ = [2  0]
+            [0  2]
+
+Clearly (A+B)⁻¹ ≠ A⁻¹ + B⁻¹ ✓
 ```
 
 ---
@@ -499,6 +544,373 @@ z = t (free variable)
 
 ---
 
+## 📍 Part 12: Finding Inverse Using Gaussian Elimination ⭐ EXAM IMPORTANT
+
+### The Method:
+Create augmented matrix [A | I] and convert to [I | A⁻¹]
+
+### Step-by-Step Example:
+
+**Find inverse of:**
+```
+A = [1  2]
+    [3  4]
+```
+
+**Step 1: Create augmented matrix [A | I]**
+```
+[1  2 | 1  0]
+[3  4 | 0  1]
+```
+
+**Step 2: Make first column look like [1, 0]ᵀ**
+R2 = R2 - 3×R1
+```
+[1  2 | 1   0]
+[0 -2 | -3  1]
+```
+
+**Step 3: Make second pivot = 1**
+R2 = R2 ÷ (-2)
+```
+[1  2 | 1    0]
+[0  1 | 1.5 -0.5]
+```
+
+**Step 4: Eliminate above pivot**
+R1 = R1 - 2×R2
+```
+[1  0 | -2   1]
+[0  1 | 1.5 -0.5]
+```
+
+**Result:**
+```
+A⁻¹ = [-2    1  ]
+      [1.5  -0.5]
+```
+
+**Verify:** A × A⁻¹ = I ✓
+
+---
+
+## 📍 Part 13: Particular and General Solutions ⭐⭐⭐ VERY IMPORTANT
+
+### The Big Picture:
+For system Ax = b:
+```
+General Solution = Particular Solution + Homogeneous Solution
+       x         =        xₚ          +         xₕ
+```
+
+Where:
+- **xₚ** = Any ONE solution to Ax = b
+- **xₕ** = ALL solutions to Ax = 0
+
+### Algorithm to Find Solutions:
+
+**Step 1:** Convert [A | b] to RREF
+**Step 2:** Identify pivot columns and free variables
+**Step 3:** Find particular solution (set free variables = 0)
+**Step 4:** Find homogeneous solutions (one for each free variable)
+**Step 5:** Combine: x = xₚ + λ₁x₁ + λ₂x₂ + ...
+
+### Worked Example (from EC3 Q5-10):
+
+**Solve:**
+```
+[1  0  8  -4] [x₁]   [42]
+[0  1  12  2] [x₂] = [8]
+              [x₃]
+              [x₄]
+```
+
+**Step 1: Identify pivots and free variables**
+- Pivot columns: 1, 2 (columns with leading 1s)
+- Free variables: x₃, x₄ (non-pivot columns)
+
+**Step 2: Find Particular Solution (set x₃ = 0, x₄ = 0)**
+```
+From row 1: x₁ + 0 + 0 - 0 = 42  →  x₁ = 42
+From row 2: x₂ + 0 + 0 = 8      →  x₂ = 8
+
+xₚ = [42, 8, 0, 0]ᵀ
+```
+
+**Step 3: Find Homogeneous Solutions (Ax = 0)**
+
+For x₃ = 1, x₄ = 0:
+```
+From row 1: x₁ + 8(1) - 4(0) = 0  →  x₁ = -8
+From row 2: x₂ + 12(1) + 2(0) = 0 →  x₂ = -12
+
+x₁ = [-8, -12, 1, 0]ᵀ
+```
+
+For x₃ = 0, x₄ = 1:
+```
+From row 1: x₁ + 8(0) - 4(1) = 0  →  x₁ = 4
+From row 2: x₂ + 12(0) + 2(1) = 0 →  x₂ = -2
+
+x₂ = [4, -2, 0, 1]ᵀ
+```
+
+**Step 4: General Solution**
+```
+x = [42]     [-8]      [4]
+    [8]  + λ₁[-12] + λ₂[-2]    where λ₁, λ₂ ∈ ℝ
+    [0]      [1]       [0]
+    [0]      [0]       [1]
+```
+
+---
+
+## 📍 Part 14: Why Only 0, 1, or ∞ Solutions? ⭐ THEORY QUESTION
+
+### Exam Question (EC3 Q5-7):
+> Why can a linear system Ax = b NOT have exactly 3 solutions?
+
+### Answer:
+
+**Proof by contradiction:**
+
+Assume system has at least 2 different solutions: x₁ and x₂
+
+Then:
+- Ax₁ = b
+- Ax₂ = b
+
+Consider: x₃ = x₁ + t(x₂ - x₁) for any t ∈ ℝ
+
+```
+Ax₃ = A[x₁ + t(x₂ - x₁)]
+    = Ax₁ + t(Ax₂ - Ax₁)
+    = b + t(b - b)
+    = b + t(0)
+    = b
+```
+
+So x₃ is ALSO a solution for ANY value of t!
+
+**Conclusion:** If there are 2 solutions, there are infinitely many.
+Therefore, only 0, 1, or ∞ solutions are possible.
+
+---
+
+## 📍 Part 15: Geometric Interpretation
+
+### In 2D (Two Variables):
+Each equation = A LINE
+
+| Situation | Lines | Solutions |
+|-----------|-------|-----------|
+| Intersect at one point | × | 1 (unique) |
+| Same line (overlap) | ═ | ∞ (infinite) |
+| Parallel lines | ∥ | 0 (none) |
+
+### In 3D (Three Variables):
+Each equation = A PLANE
+
+| Situation | Solutions |
+|-----------|-----------|
+| 3 planes meet at ONE point | 1 (unique) |
+| 3 planes meet along a LINE | ∞ (infinite) |
+| 3 planes form a TRIANGLE (no common point) | 0 (none) |
+| 2 planes parallel | 0 (none) |
+
+---
+
+## 📍 Part 16: Exam-Style Practice Problems
+
+### Problem 1: Solve System (EC2 Style)
+**Find all solutions:**
+```
+x₁ + 7x₃ + 14x₄ = 40
+3x₁ + 4x₂ + 2x₃ + 5x₄ = 6
+```
+
+<details>
+<summary>Click for Solution</summary>
+
+**Step 1: Augmented Matrix**
+```
+[1  0  7   14 | 40]
+[3  4  2   5  | 6]
+```
+
+**Step 2: R2 = R2 - 3R1**
+```
+[1  0  7   14  | 40]
+[0  4  -19 -37 | -114]
+```
+
+**Step 3: R2 = R2 ÷ 4**
+```
+[1  0  7      14     | 40]
+[0  1  -19/4  -37/4  | -114/4]
+```
+
+**Pivots:** Columns 1, 2
+**Free variables:** x₃, x₄
+
+**Particular solution (x₃=0, x₄=0):**
+x₁ = 40, x₂ = -28.5, x₃ = 0, x₄ = 0
+
+**General solution:**
+```
+x = [40]      [-7]       [-14]
+    [-28.5] + λ₁[19/4] + λ₂[37/4]
+    [0]        [1]        [0]
+    [0]        [0]        [1]
+```
+</details>
+
+---
+
+### Problem 2: Find Inverse (If Exists)
+```
+A = [1  2  3]
+    [0  1  4]
+    [5  6  0]
+```
+
+<details>
+<summary>Click for Solution</summary>
+
+**Step 1: [A | I]**
+```
+[1  2  3 | 1  0  0]
+[0  1  4 | 0  1  0]
+[5  6  0 | 0  0  1]
+```
+
+**Step 2: R3 = R3 - 5R1**
+```
+[1  2  3  | 1   0  0]
+[0  1  4  | 0   1  0]
+[0  -4 -15| -5  0  1]
+```
+
+**Step 3: R3 = R3 + 4R2**
+```
+[1  2  3 | 1   0  0]
+[0  1  4 | 0   1  0]
+[0  0  1 | -5  4  1]
+```
+
+**Step 4: Back-substitute (eliminate above pivots)**
+```
+R2 = R2 - 4R3:  [0  1  0 | 20  -15  -4]
+R1 = R1 - 3R3:  [1  2  0 | 16  -12  -3]
+R1 = R1 - 2R2:  [1  0  0 | -24  18   5]
+```
+
+**Result:**
+```
+A⁻¹ = [-24   18   5]
+      [20   -15  -4]
+      [-5    4   1]
+```
+</details>
+
+---
+
+### Problem 3: Theory Question
+**True or False with justification:**
+> "If AB = I, then B is the inverse of A"
+
+<details>
+<summary>Click for Solution</summary>
+
+**Answer: Only TRUE if A is SQUARE!**
+
+If A is m×n and B is n×m:
+- AB = Iₘ (m×m identity)
+- But BA might not equal Iₙ
+
+For NON-SQUARE matrices:
+- AB = I does NOT imply BA = I
+- So B is NOT the inverse of A
+
+For SQUARE matrices (n×n):
+- If AB = I, then B = A⁻¹ ✓
+</details>
+
+---
+
+## 📍 Part 17: Quick Formulas & Cheat Sheet
+
+### Matrix Operations:
+```
+(AB)C = A(BC)           ← Associative
+A(B+C) = AB + AC        ← Distributive
+AI = IA = A             ← Identity property
+```
+
+### Inverse Properties:
+```
+(A⁻¹)⁻¹ = A
+(AB)⁻¹ = B⁻¹A⁻¹         ← Order reverses!
+(Aᵀ)⁻¹ = (A⁻¹)ᵀ
+det(A⁻¹) = 1/det(A)
+```
+
+### Transpose Properties:
+```
+(Aᵀ)ᵀ = A
+(A + B)ᵀ = Aᵀ + Bᵀ
+(AB)ᵀ = BᵀAᵀ            ← Order reverses!
+(λA)ᵀ = λAᵀ
+```
+
+### 2×2 Inverse Formula:
+```
+A = [a  b]     A⁻¹ = 1/(ad-bc) × [d  -b]
+    [c  d]                       [-c  a]
+
+Exists only if det = ad - bc ≠ 0
+```
+
+### Row Echelon Form (REF):
+1. Zero rows at bottom
+2. Leading entry (pivot) to right of pivot above
+3. Staircase pattern
+
+### Reduced Row Echelon Form (RREF):
+1. All REF conditions +
+2. All pivots = 1
+3. Pivot is ONLY non-zero in its column
+
+---
+
+## 📍 Part 18: Common Exam Mistakes to Avoid
+
+| Mistake | Correct Approach |
+|---------|------------------|
+| (AB)⁻¹ = A⁻¹B⁻¹ | (AB)⁻¹ = B⁻¹A⁻¹ (order reverses!) |
+| (A+B)⁻¹ = A⁻¹+B⁻¹ | NO such formula exists! |
+| AB = BA | Matrix multiplication NOT commutative! |
+| A×B possible always | Only if cols(A) = rows(B) |
+| Forgetting free variables | Always check for non-pivot columns |
+
+---
+
+## ✅ Module 1 Exam Preparation Checklist
+
+- [ ] Can solve Ax = b using Gaussian elimination
+- [ ] Can identify REF and RREF
+- [ ] Can find pivot and free variables
+- [ ] Can write particular + general solution
+- [ ] Can find inverse using [A|I] → [I|A⁻¹]
+- [ ] Know all inverse/transpose properties
+- [ ] Can prove (AB)⁻¹ = B⁻¹A⁻¹
+- [ ] Can explain why only 0, 1, or ∞ solutions
+- [ ] Know 2×2 inverse formula
+- [ ] Understand geometric interpretation
+
+---
+
 *📅 Created for BITS MTech WLP - AI/ML Program*
-*Good luck with your studies! 🎓*
+*Course: AIML ZC416 - Mathematical Foundations for Machine Learning*
+*Good luck with your Module 1 exam! 🎓*
 

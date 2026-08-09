@@ -1,579 +1,594 @@
-# 🎓 Machine Learning Module 1 - Beginner's Guide
-## AIML ZG565 | BITS Pilani MTech WLP
-## 📚 Written Like a Teacher Explaining to a Complete Beginner
----
+# 📘 Module 1: Introduction to Machine Learning - Complete Exam-Ready Notes
+## AIML ZG565 - Machine Learning | BITS Pilani MTech WLP
 
-# 🎯 What Will You Learn in This Module?
-
-From your **Lecture Slides (CS-1, 26th July 2026)**, we will cover:
-1. What is Machine Learning? (Simple explanation)
-2. Why do we need Machine Learning?
-3. Types of Machine Learning (Supervised, Unsupervised, Reinforcement)
-4. Real-world Applications
-5. How ML Works (The Workflow)
-6. Key Terms you MUST know
+**Syllabus Reference:** Contact Session 1-2 (Mid-Sem Syllabus: Sessions 1-8)
 
 ---
 
-# 📖 CHAPTER 1: What is Machine Learning?
+## 📅 DAY-WISE STUDY PLAN (Module 1)
 
-## 🤔 Imagine This First...
+### Day 1: ML Basics (2 hours)
+| Time | Topic | What to Do |
+|------|-------|------------|
+| 30 min | Part 1: What is ML? | Understand T-P-E framework |
+| 30 min | Part 2: Why ML? | Learn when to use ML |
+| 30 min | Part 3: Types of ML | Supervised, Unsupervised, RL |
+| 30 min | Part 4: Classification vs Regression | Key differences |
 
-**Traditional Programming (What you already know):**
-```
-You give the computer RULES + DATA → Computer gives OUTPUT
+### Day 2: Data Fundamentals ⭐ EXAM FOCUS (2.5 hours)
+| Time | Topic | What to Do |
+|------|-------|------------|
+| 45 min | Part 5: Data Types (NOIR) | **EC2 Q2a** - Must master! |
+| 45 min | Part 6: Missing Values | **EC2 Q2c** - Imputation methods |
+| 30 min | Part 7: Data Preprocessing | Scaling, encoding |
+| 30 min | Practice | Solve EC2 Q2 completely |
 
-Example: Calculator
-- Rule: "Add two numbers"
-- Data: 5 and 3
-- Output: 8
-```
+### Day 3: ML Workflow & Metrics (2 hours)
+| Time | Topic | What to Do |
+|------|-------|------------|
+| 45 min | Part 8: ML Workflow | 7-step process |
+| 45 min | Part 9: Performance Metrics | **EC2 Q3b** - Confusion matrix |
+| 30 min | Part 10: Train-Test Split | Overfitting, Underfitting |
 
-**Machine Learning (Something NEW!):**
-```
-You give the computer DATA + OUTPUT → Computer learns RULES itself!
-
-Example: Spam Filter
-- Data: 1000 emails
-- Output: "This is spam" / "This is not spam" (labels)
-- Computer learns: "Emails with 'free money' are usually spam"
-```
-
-## 🎯 Simple Definition
-
-> **Machine Learning = Teaching computers to learn from examples, just like how YOU learn!**
-
-Think about how a child learns:
-- Child sees many cats 🐱 → Parents say "This is a cat"
-- Child sees many dogs 🐕 → Parents say "This is a dog"
-- Now child can identify NEW cats and dogs!
-
-**ML works the same way!**
-- Computer sees many spam emails → You tell it "This is spam"
-- Computer sees many good emails → You tell it "This is not spam"  
-- Now computer can identify NEW spam emails!
+### Day 4: Revision & Practice (2 hours)
+| Time | Topic | What to Do |
+|------|-------|------------|
+| 60 min | Part 11: Exam Problems | Solve all practice problems |
+| 30 min | Part 12: Quick Reference | Review formulas |
+| 30 min | Checklist | Verify all topics covered |
 
 ---
 
-## 📝 The Official Definition (From Your Slides - Page 16)
+## 📋 Module 1 Topics Checklist
 
-Your professor gave this definition:
-
-> **"Algorithms that improve their performance P at some task T with experience E"**
-
-### What does this mean? Let's break it down:
-
-| Letter | Meaning | Simple Example |
-|--------|---------|----------------|
-| **T** | Task (What to do?) | Recognize spam emails |
-| **P** | Performance (How good?) | 95% emails correctly classified |
-| **E** | Experience (Learn from what?) | Database of 10,000 labeled emails |
-
-### Examples from Your Slides (Page 17-18):
-
-**Example 1: Handwriting Recognition**
-- T = Recognize handwritten words
-- P = Percentage of words correctly identified
-- E = Database of images with labels ("This image is letter A")
-
-**Example 2: Spam Detection**
-- T = Classify email as spam or not spam
-- P = Percentage of emails correctly classified
-- E = Database of emails marked as spam/not spam
-
-**Example 3: Self-Driving Car**
-- T = Drive on highway
-- P = Average distance before making an error
-- E = Videos of human drivers + their steering commands
+| Topic | Part | Exam Important |
+|-------|------|----------------|
+| What is ML? (T-P-E) | Part 1 | ⭐⭐ |
+| Types of ML | Part 3 | ⭐⭐ |
+| **Data Types (NOIR)** | Part 5 | ⭐⭐⭐ EC2 Q2a |
+| **Missing Value Imputation** | Part 6 | ⭐⭐⭐ EC2 Q2c |
+| ML Workflow | Part 8 | ⭐⭐ |
+| **Confusion Matrix & Metrics** | Part 9 | ⭐⭐⭐ EC2 Q3b |
+| Overfitting/Underfitting | Part 10 | ⭐⭐⭐ EC2 Q5 |
 
 ---
 
-# 📖 CHAPTER 2: Why Do We Need Machine Learning?
+## 📍 Part 1: What is Machine Learning?
 
-## 🤷 Why Can't We Just Write Normal Programs?
+### Simple Definition:
+> **Machine Learning = Teaching computers to learn from examples, not explicit rules!**
 
-From your slides (Page 25-26), here are the reasons:
+### The T-P-E Framework (Tom Mitchell's Definition):
 
-### Reason 1: Some problems are TOO HARD to write rules for
+> "A computer program learns from **Experience (E)** with respect to some **Task (T)** and **Performance measure (P)**, if its performance at T improves with E."
 
-**Example: Recognizing the number "2"**
+| Letter | Meaning | Example: Spam Filter |
+|--------|---------|---------------------|
+| **T** | Task | Classify emails as spam/not spam |
+| **P** | Performance | % of emails correctly classified |
+| **E** | Experience | Database of labeled emails |
 
-Look at these handwritten 2's:
-```
-  ___      ____     ___
- /   \        /    (   )
-    /       /        /
-   /       /       /
-  /____   /____   /____
-```
+### More Examples:
 
-How would you write rules?
-- "If there's a curve at top and line at bottom" - But what exactly is a "curve"?
-- "If it looks like..." - How do you define "looks like" in code?
-
-**ML Solution:** Show computer 10,000 examples of "2" → It learns the pattern itself!
-
-### Reason 2: Hidden patterns in data
-
-**Example: Which customers will buy?**
-- You have data: Age, Salary, Location, Past purchases...
-- There might be hidden patterns you don't know!
-- ML can find: "People aged 25-35 who live in cities and earn >5L usually buy electronics"
-
-### Reason 3: Too much data for humans
-
-**Example: Medical diagnosis**
-- A doctor can't remember 1 million patient records
-- ML can analyze all records and find patterns
-- "Patients with these 5 symptoms usually have this disease"
-
-### Reason 4: Things keep changing
-
-**Example: Spam detection**
-- Spammers change their tactics every day
-- Writing rules manually = Never-ending work
-- ML automatically adapts to new spam patterns!
+| Application | T (Task) | P (Performance) | E (Experience) |
+|-------------|----------|-----------------|----------------|
+| Handwriting Recognition | Recognize digits | % correctly identified | Labeled digit images |
+| Self-Driving Car | Drive safely | Distance without error | Videos of human driving |
+| Chess AI | Play chess | % games won | Past games played |
 
 ---
 
-# 📖 CHAPTER 3: Types of Machine Learning
+## 📍 Part 2: Why Do We Need Machine Learning?
 
-## From Your Slides (Page 29): Three Main Types
+### When to Use ML:
+
+| Scenario | Why ML? |
+|----------|---------|
+| **Rules too complex** | Recognizing faces - can't write explicit rules |
+| **Hidden patterns** | Customer segmentation - unknown patterns in data |
+| **Too much data** | Medical diagnosis from millions of records |
+| **Changing environment** | Spam detection - spammers change tactics |
+
+### When NOT to Use ML:
+```
+❌ Simple calculations (Salary = Basic + DA + HRA)
+❌ Deterministic rules exist (Tax calculation)
+❌ Not enough data available
+❌ Explainability is critical and simple rules suffice
+```
+
+---
+
+## 📍 Part 3: Types of Machine Learning
 
 ```
 Machine Learning
-     │
-     ├── 1. Supervised Learning (With Teacher)
-     │
-     ├── 2. Unsupervised Learning (Without Teacher)
-     │
-     └── 3. Reinforcement Learning (Trial & Error)
+      │
+      ├── 1. SUPERVISED LEARNING (With Labels)
+      │        ├── Classification (Categories)
+      │        └── Regression (Numbers)
+      │
+      ├── 2. UNSUPERVISED LEARNING (Without Labels)
+      │        ├── Clustering
+      │        └── Dimensionality Reduction
+      │
+      └── 3. REINFORCEMENT LEARNING (Trial & Error)
+               └── Agent learns via Rewards/Penalties
 ```
 
----
-
-## 🎯 Type 1: SUPERVISED LEARNING (Most Common!)
-
-### What is it?
-> Learning WITH a teacher! You give computer both QUESTIONS and ANSWERS.
-
-### Real Life Analogy:
-Like a student learning with a teacher:
-- Teacher shows: "This is the letter A" ✓
-- Teacher shows: "This is the letter B" ✓
-- Now student can identify A and B on their own!
-
-### In ML Terms:
-- **Input (X)**: Features/Data (What you give)
-- **Output (Y)**: Label/Answer (What you want to predict)
-- **Training**: Computer learns the relationship between X and Y
-
-### Two Types of Supervised Learning:
-
-#### A) CLASSIFICATION (Output is a CATEGORY)
-```
-Examples:
-- Email → Spam or Not Spam (2 categories)
-- Patient → Has Disease or Healthy (2 categories)  
-- Image → Cat, Dog, or Bird (3 categories)
-```
-
-**From Your Slides (Page 33):**
-| Tumor Size (X) | Cancer? (Y) |
-|----------------|-------------|
-| 2 cm | No (Benign) |
-| 5 cm | Yes (Malignant) |
-| 3 cm | No (Benign) |
-| 8 cm | Yes (Malignant) |
-
-Computer learns: "Bigger tumors are more likely to be cancer"
-
-#### B) REGRESSION (Output is a NUMBER)
-```
-Examples:
-- House features → Price (₹50 lakhs, ₹75 lakhs...)
-- Student's study hours → Exam marks (85, 92, 78...)
-- Car age → Resale price (₹3 lakhs, ₹5 lakhs...)
-```
-
-**From Your Slides (Page 31):**
-| Brand | Year | Mileage | Price (Y) |
-|-------|------|---------|-----------|
-| Honda City | 2008 | 10.5 | ₹3,50,000 |
-| ... | ... | ... | ... |
-
-Computer learns: "Older cars with more mileage have lower price"
-
----
-
-## 🎯 Type 2: UNSUPERVISED LEARNING
-
-### What is it?
-> Learning WITHOUT a teacher! Computer finds patterns on its own.
-
-### Real Life Analogy:
-Like organizing your closet:
-- No one tells you how to organize
-- You GROUP similar items yourself
-- All shirts together, all pants together, etc.
-
-### In ML Terms:
-- You ONLY give Input (X) - No labels/answers!
-- Computer finds hidden patterns/groups
-
-### Main Type: CLUSTERING (Grouping similar items)
-
-**From Your Slides (Page 32) - Customer Segmentation:**
-
-| Customer | Income | Visits/Month | Money Spent |
-|----------|--------|--------------|-------------|
-| A | ₹11,50,000 | 4 | ₹8,000 |
-| B | ₹3,00,000 | 1 | ₹500 |
-| C | ₹15,00,000 | 6 | ₹12,000 |
-| D | ₹2,50,000 | 2 | ₹300 |
-
-Computer might find:
-- **Group 1**: A, C → "Big Spenders" (High income, frequent visits)
-- **Group 2**: B, D → "Budget Shoppers" (Low income, rare visits)
-
-**You didn't tell the computer these groups exist - it discovered them!**
-
-### Applications (From Your Slides Page 41):
-- Customer segmentation (Who are my best customers?)
-- Recommendation systems (Netflix: "You might also like...")
-- Spam filtering (Group emails by patterns)
-- News categorization (Group similar news articles)
-
----
-
-## 🎯 Type 3: REINFORCEMENT LEARNING
-
-### What is it?
-> Learning by TRIAL and ERROR with rewards and punishments!
-
-### Real Life Analogy:
-Like training a dog:
-- Dog sits when you say "sit" → Give treat (reward) 🦴
-- Dog doesn't sit → No treat (punishment)
-- Dog learns: "Sitting = Treat!"
-
-### In ML Terms (From Your Slides Page 44-45):
-- **Agent**: The learner (like a robot)
-- **Environment**: Where it operates (like a game)
-- **Action**: What it does (move left, move right)
-- **Reward**: Positive feedback (+10 points)
-- **Penalty**: Negative feedback (-5 points)
-
-### Example: Robot Learning to Walk
-```
-Attempt 1: Robot falls → Penalty (-1)
-Attempt 2: Robot takes 2 steps, falls → Small Reward (+2)
-Attempt 3: Robot walks 10 steps → Big Reward (+10)
-...
-After 10,000 attempts: Robot walks perfectly!
-```
-
-### Applications:
-- Game playing (Chess, Go - AlphaGo)
-- Self-driving cars
-- Robot navigation
-- Stock trading
-
----
-
-## 📊 Quick Comparison (From Your Slides Page 49)
+### Quick Comparison:
 
 | Aspect | Supervised | Unsupervised | Reinforcement |
 |--------|------------|--------------|---------------|
-| **Has Labels?** | ✅ Yes | ❌ No | ❌ No |
-| **Feedback** | Immediate (correct/wrong) | None | Delayed (reward/penalty) |
-| **Goal** | Predict output | Find patterns | Maximize rewards |
+| **Labels?** | ✅ Yes | ❌ No | ❌ No |
+| **Feedback** | Immediate | None | Delayed (rewards) |
+| **Goal** | Predict output | Find patterns | Maximize reward |
 | **Example** | Spam detection | Customer groups | Game AI |
 
 ---
 
-# 📖 CHAPTER 4: Real-World Applications
-
-## From Your Slides (Pages 12-14, 22-23):
-
-### 🚗 Security & Transportation
-| Application | ML Type | What it does |
-|-------------|---------|--------------|
-| Self-driving cars | Supervised + RL | Learns to drive from human examples |
-| Fraud detection | Supervised | Identifies suspicious bank transactions |
-| Email spam filter | Supervised | Classifies spam vs legitimate emails |
-
-### 🗣️ Virtual Assistants
-| Application | What it does |
-|-------------|--------------|
-| Siri (Apple) | Understands voice commands |
-| Google Assistant | Answers questions |
-| Alexa (Amazon) | Controls smart home |
-
-### 🛒 Recommendations
-| Company | What it recommends |
-|---------|-------------------|
-| Netflix | Movies you might like |
-| Amazon | Products you might buy |
-| Spotify | Songs you might enjoy |
-| Zomato | Restaurants nearby |
-
-### 🏥 Healthcare
-| Application | What it does |
-|-------------|--------------|
-| Disease diagnosis | Predicts disease from symptoms |
-| Medical imaging | Detects tumors in X-rays |
-| Drug discovery | Finds new medicines |
-
----
-
-# 📖 CHAPTER 5: How Does ML Work? (The Workflow)
-
-## From Your Slides (Pages 56-58):
-
-### The 7-Step ML Process:
-
-```
-Step 1: Should I use ML?
-    ↓
-Step 2: Gather Data
-    ↓
-Step 3: Clean & Prepare Data
-    ↓
-Step 4: Choose a Model
-    ↓
-Step 5: Train the Model
-    ↓
-Step 6: Evaluate Performance
-    ↓
-Step 7: Improve & Repeat
-```
-
-### Let's Understand Each Step:
-
-#### Step 1: Should I use ML?
-Ask yourself:
-- ✅ Is there a pattern to find? (Yes → Use ML)
-- ✅ Can I solve it with simple math? (No → Use ML)
-- ✅ Do I have enough data? (Yes → Use ML)
-
-**Example where ML is NOT needed:**
-- Calculating salary = Basic + DA + HRA (Just use formula!)
-
-#### Step 2: Gather Data
-- Collect relevant data
-- More data = Better learning
-- Example: 10,000 emails for spam detection
-
-#### Step 3: Clean & Prepare Data
-- Remove errors, missing values
-- Split into: **Training Set (80%)** + **Test Set (20%)**
-
-#### Step 4: Choose a Model
-Which algorithm to use?
-- Linear Regression (for predicting numbers)
-- Logistic Regression (for yes/no classification)
-- Decision Trees (for complex rules)
-- etc.
-
-#### Step 5: Train the Model
-- Feed training data to the model
-- Model learns patterns
-- Like a student studying for exam
-
-#### Step 6: Evaluate Performance
-- Test on data it has NEVER seen
-- Check accuracy: "How many correct predictions?"
-
-#### Step 7: Improve & Repeat
-- If not good enough, go back to step 4 or 5
-- Try different model or more data
-
----
-
-## 📝 Example: Car Price Prediction (From Your Slides Page 58)
-
-**Objective**: Predict price of used cars
-
-**Step 1**: Can ML help?
-- Yes! Price depends on many factors (age, mileage, brand)
-
-**Step 2**: Gather Data
-| Brand | Year | Mileage | Km Driven | Price |
-|-------|------|---------|-----------|-------|
-| Honda City | 2018 | 15 | 25000 | ₹6,00,000 |
-| Maruti Swift | 2015 | 18 | 45000 | ₹3,50,000 |
-| ... | ... | ... | ... | ... |
-
-**Step 3**: Clean Data
-- Remove cars with missing info
-- Split: 80% training, 20% testing
-
-**Step 4**: Choose Model
-- Linear Regression (because we're predicting a NUMBER)
-
-**Step 5**: Train
-- Model learns: "Newer cars with less km = Higher price"
-
-**Step 6**: Evaluate
-- Test on 20% data
-- Accuracy: 85% (pretty good!)
-
-**Step 7**: Deploy
-- Now use it to predict prices of new cars!
-
----
-
-# 📖 CHAPTER 6: Key Terms You MUST Know
-
-## From Your Slides - Glossary for Beginners:
-
-| Term | Simple Meaning | Example |
-|------|----------------|---------|
-| **Features** | Input variables (what you feed) | Age, Salary, Location |
-| **Label/Target** | Output (what you want to predict) | Spam/Not Spam, Price |
-| **Training Data** | Data used to teach the model | 80% of your data |
-| **Test Data** | Data to check if model works | 20% of your data |
-| **Model** | The "brain" that learns patterns | A trained algorithm |
-| **Prediction** | Model's guess for new data | "This email is spam" |
-| **Accuracy** | How often model is correct | 95% = 95 out of 100 correct |
-
----
-
-## 🔑 Classification vs Regression (VERY IMPORTANT!)
+## 📍 Part 4: Classification vs Regression
 
 | Aspect | Classification | Regression |
 |--------|----------------|------------|
-| **Output Type** | Category (label) | Number |
-| **Examples** | Spam/Not Spam, Yes/No, Cat/Dog | Price, Temperature, Score |
-| **Question** | "Which group does this belong to?" | "How much/How many?" |
+| **Output** | Category/Label | Continuous Number |
+| **Question** | "Which class?" | "How much?" |
+| **Examples** | Spam/Not Spam, Yes/No | Price, Temperature |
+| **Algorithms** | Logistic Regression, Decision Tree, SVM | Linear Regression |
+
+### Quick Test:
+- "Will it rain tomorrow?" → **Classification** (Yes/No)
+- "How much will the house cost?" → **Regression** (₹50L, ₹75L...)
+- "Is this tumor cancerous?" → **Classification** (Malignant/Benign)
+- "What will be tomorrow's temperature?" → **Regression** (32°C, 28°C...)
 
 ---
 
-## 🔑 Overfitting vs Underfitting
+## 📍 Part 5: Data Types (NOIR) ⭐⭐⭐ EC2 Q2a - MUST KNOW!
 
-### Overfitting (TOO SMART for its own good)
-> Model memorizes training data but fails on new data
+### The NOIR Framework:
 
-**Analogy**: Student who memorizes answers without understanding
-- Knows all practice questions perfectly
-- Fails on exam (new questions)
+| Type | Definition | Examples | Operations Allowed |
+|------|------------|----------|-------------------|
+| **N**ominal | Categories with NO order | Colors (Red, Blue), Gender (M/F), Product Category | Mode, Frequency |
+| **O**rdinal | Categories WITH order | Education (High School < Bachelor's < Master's < PhD), Ratings (Low < Medium < High) | Mode, Median, Comparisons |
+| **I**nterval | Numeric, equal intervals, NO true zero | Temperature (°C), Dates, IQ scores | Mean, Std Dev, +/- |
+| **R**atio | Numeric, equal intervals, HAS true zero | Height, Weight, Salary, Age, Distance | All operations including ×/÷ |
 
-**Signs**:
-- Training accuracy: 99%
-- Test accuracy: 60%
+### Memory Trick: **NOIR** (French for "black")
+```
+N - Names only (no order)
+O - Order matters (but gaps unknown)
+I - Intervals equal (no true zero)
+R - Ratio possible (true zero exists)
+```
 
-### Underfitting (TOO SIMPLE)
-> Model is too simple to learn patterns
+### EC2 Q2a - Exam Question:
 
-**Analogy**: Student who didn't study at all
-- Bad on practice questions
-- Bad on exam too
+> **Classify each attribute: Temperature (°C), Salary (₹), Customer Satisfaction (Low/Medium/High), Product Category (Electronics, Grocery)**
 
-**Signs**:
-- Training accuracy: 55%
-- Test accuracy: 50%
+| Attribute | Type | Justification |
+|-----------|------|---------------|
+| Temperature (°C) | **Interval** | Equal intervals, but 0°C ≠ "no temperature" |
+| Salary (₹) | **Ratio** | Has true zero (₹0 = no salary), can say "2x salary" |
+| Customer Satisfaction | **Ordinal** | Has order (Low < Medium < High), but gaps unequal |
+| Product Category | **Nominal** | Just names, no inherent order |
 
-### Just Right (What we want!)
-- Training accuracy: 90%
-- Test accuracy: 88%
+### EC2 Q2b - Education Level:
 
----
+> **What operations are meaningful for Education Level (High School → Bachelor's → Master's → PhD)?**
 
-# 📖 CHAPTER 7: Other Concepts from Your Slides
+**Answer:** Ordinal data
 
-## Batch vs Online Learning (Page 51)
-
-| Type | How it works | Example |
-|------|--------------|---------|
-| **Batch Learning** | Uses ALL data at once | Train on 1 million emails once |
-| **Online Learning** | Learns one example at a time | Learn as each new email comes |
-
-## Instance-Based vs Model-Based (Page 52)
-
-| Type | How it works | Example |
-|------|--------------|---------|
-| **Instance-Based** | Compares new data to stored examples | KNN - "Find similar emails" |
-| **Model-Based** | Builds a formula/pattern | Linear Regression - "y = mx + b" |
+| Operation | Meaningful? | Why? |
+|-----------|-------------|------|
+| Mode | ✅ Yes | "Most common education level" |
+| Median | ✅ Yes | "Middle education level" |
+| Mean | ❌ No | Can't average "Bachelor's + PhD" |
+| Comparisons | ✅ Yes | "PhD > Master's" makes sense |
 
 ---
 
-# 📖 CHAPTER 8: Tools You'll Use (From Page 53-54)
+## 📍 Part 6: Missing Value Handling ⭐⭐⭐ EC2 Q2c
 
-| Tool | Language | What For |
-|------|----------|----------|
-| **Scikit-Learn** | Python | Classification, Regression, Clustering |
-| **TensorFlow** | Python | Deep Learning, Neural Networks |
-| **PyTorch** | Python | Deep Learning, Neural Networks |
-| **Google Colab** | Cloud | Free Python environment with GPU |
-| **Jupyter Notebook** | Python | Interactive coding |
+### Why Handle Missing Values?
+- Most ML algorithms can't handle NaN/NULL
+- Missing data can bias results
+- Need strategies to fill or remove
 
-**For this course, you'll mainly use:**
-- Python
-- Scikit-Learn
-- Google Colab
+### Common Strategies:
 
----
+| Strategy | When to Use | Formula |
+|----------|-------------|---------|
+| **Delete rows** | Few missing values, large dataset | Remove entire row |
+| **Mean Imputation** | Numeric data, symmetric distribution | Replace with mean |
+| **Median Imputation** | Numeric data, skewed/outliers | Replace with median |
+| **Mode Imputation** | Categorical data | Replace with most frequent |
+| **Forward/Backward Fill** | Time series data | Use previous/next value |
 
-# ✅ SUMMARY: What You Learned
+### EC2 Q2c - Exam Question:
 
-## The BIG Ideas:
+> **Dataset: 10, 12, 13, NaN, 15, 18, NaN, 20**
+> **Impute missing values using mean and median.**
 
-1. **ML = Learning from data** (not programming rules)
+**Step 1: Calculate Mean (ignoring NaN)**
+```
+Available values: 10, 12, 13, 15, 18, 20
+Mean = (10 + 12 + 13 + 15 + 18 + 20) / 6 = 88 / 6 = 14.67
+```
 
-2. **Three Types**:
-   - Supervised (with teacher/labels)
-   - Unsupervised (find patterns alone)
-   - Reinforcement (trial & error)
+**Step 2: Calculate Median (ignoring NaN)**
+```
+Sorted values: 10, 12, 13, 15, 18, 20
+Median = (13 + 15) / 2 = 14
+```
 
-3. **Two Supervised Tasks**:
-   - Classification → Categories
-   - Regression → Numbers
+**Step 3: Impute**
 
-4. **ML Workflow**: Data → Clean → Train → Evaluate → Improve
+| Method | Imputed Dataset |
+|--------|-----------------|
+| Mean | 10, 12, 13, **14.67**, 15, 18, **14.67**, 20 |
+| Median | 10, 12, 13, **14**, 15, 18, **14**, 20 |
 
-5. **Key Terms**: Features, Labels, Training, Testing, Model, Accuracy
+### When to Use Which?
 
----
-
-# 📝 Practice: Can You Answer These?
-
-## Q1: Which type of ML is this?
-"Netflix recommends movies based on what you watched"
-- **Answer**: Supervised Learning (it knows what you liked/disliked)
-
-## Q2: Classification or Regression?
-"Predicting tomorrow's temperature"
-- **Answer**: Regression (temperature is a number)
-
-## Q3: Classification or Regression?
-"Is this tumor cancerous or not?"
-- **Answer**: Classification (Yes/No categories)
-
-## Q4: What is T, P, E for this task?
-"Teaching a robot to play chess"
-- T = Play chess
-- P = Percentage of games won
-- E = Games played against itself
+| Situation | Use |
+|-----------|-----|
+| Normal distribution | Mean |
+| Skewed data / Outliers | Median |
+| Categorical data | Mode |
 
 ---
 
-# 🎯 What's Next?
+## 📍 Part 7: Data Preprocessing
 
-In the next modules, you will learn:
-- **Module 2**: ML Workflow (Data preprocessing)
-- **Module 3**: Linear Regression (Math behind prediction)
-- **Module 4**: Logistic Regression (Classification)
-- **Module 5**: Decision Trees
-- **Module 6**: KNN (Instance-based)
-- **Module 7**: SVM
-- **Module 8**: Bayesian Learning
-- **Module 9**: Ensemble Methods
-- **Module 10**: Clustering (K-Means)
+### Key Steps:
+
+```
+Raw Data → Clean → Transform → Encode → Scale → Ready for ML
+```
+
+### 1. Handling Categorical Variables:
+
+| Encoding | When to Use | Example |
+|----------|-------------|---------|
+| **Label Encoding** | Ordinal data | Low=1, Medium=2, High=3 |
+| **One-Hot Encoding** | Nominal data | Red=[1,0,0], Blue=[0,1,0] |
+
+### 2. Feature Scaling:
+
+| Method | Formula | Range |
+|--------|---------|-------|
+| **Min-Max Scaling** | (x - min) / (max - min) | [0, 1] |
+| **Standardization (Z-score)** | (x - μ) / σ | Mean=0, Std=1 |
+
+### When to Scale:
+- ✅ Distance-based algorithms (KNN, SVM)
+- ✅ Gradient descent algorithms
+- ❌ Tree-based algorithms (Decision Trees, Random Forest)
 
 ---
 
-**📅 Created for BITS MTech WLP - AIML ZG565**
-**📚 Based on CS-1 Lecture Slides (26th July 2026)**
-**👨‍🏫 Written in simple language for complete beginners**
-**🔄 Covers ALL concepts from your lecture slides!**
+## 📍 Part 8: Machine Learning Workflow
+
+### The 7-Step Process:
+
+```
+┌─────────────────────────────────────────────────────┐
+│  1. Define Problem     → What are we predicting?   │
+│  2. Collect Data       → Gather relevant data      │
+│  3. Prepare Data       → Clean, transform, split   │
+│  4. Choose Model       → Select algorithm          │
+│  5. Train Model        → Learn from training data  │
+│  6. Evaluate Model     → Test on unseen data       │
+│  7. Deploy & Monitor   → Use in production         │
+└─────────────────────────────────────────────────────┘
+```
+
+### Train-Test Split:
+
+```
+Total Data (100%)
+    │
+    ├── Training Set (70-80%)  → Model learns from this
+    │
+    └── Test Set (20-30%)      → Evaluate model (NEVER seen during training)
+```
+
+**Why Split?**
+- Avoid overfitting
+- Estimate real-world performance
+- Validate model generalization
+
+---
+
+## 📍 Part 9: Performance Metrics ⭐⭐⭐ EC2 Q3b - CRITICAL!
+
+### Confusion Matrix (Binary Classification):
+
+```
+                    Predicted
+                 Positive  Negative
+Actual Positive    TP        FN
+Actual Negative    FP        TN
+
+TP = True Positive (Correctly predicted positive)
+TN = True Negative (Correctly predicted negative)
+FP = False Positive (Type I Error - False alarm)
+FN = False Negative (Type II Error - Missed detection)
+```
+
+### Key Metrics:
+
+| Metric | Formula | Meaning |
+|--------|---------|---------|
+| **Accuracy** | (TP + TN) / Total | Overall correctness |
+| **Precision** | TP / (TP + FP) | Of predicted positives, how many correct? |
+| **Recall (Sensitivity)** | TP / (TP + FN) | Of actual positives, how many found? |
+| **F1-Score** | 2 × (Precision × Recall) / (Precision + Recall) | Harmonic mean of P & R |
+| **Specificity** | TN / (TN + FP) | Of actual negatives, how many correct? |
+
+### EC2 Q3b - Multi-Class Confusion Matrix:
+
+> **Given:**
+> ```
+>              Predicted
+>            A     B     C
+> Actual A   40    5     5
+> Actual B   8    30    12
+> Actual C   3     7    35
+> ```
+
+**Solution:**
+
+**1. Accuracy:**
+```
+Accuracy = (40 + 30 + 35) / (40+5+5+8+30+12+3+7+35)
+         = 105 / 145
+         = 0.724 or 72.4%
+```
+
+**2. Per-Class Metrics:**
+
+For **Class A:**
+```
+TP_A = 40
+FP_A = 8 + 3 = 11 (predicted A but actually B or C)
+FN_A = 5 + 5 = 10 (actually A but predicted B or C)
+
+Precision_A = 40 / (40 + 11) = 40/51 = 0.784
+Recall_A = 40 / (40 + 10) = 40/50 = 0.800
+F1_A = 2 × (0.784 × 0.800) / (0.784 + 0.800) = 0.792
+```
+
+For **Class B:**
+```
+TP_B = 30
+FP_B = 5 + 7 = 12
+FN_B = 8 + 12 = 20
+
+Precision_B = 30 / (30 + 12) = 30/42 = 0.714
+Recall_B = 30 / (30 + 20) = 30/50 = 0.600
+F1_B = 2 × (0.714 × 0.600) / (0.714 + 0.600) = 0.652
+```
+
+For **Class C:**
+```
+TP_C = 35
+FP_C = 5 + 12 = 17
+FN_C = 3 + 7 = 10
+
+Precision_C = 35 / (35 + 17) = 35/52 = 0.673
+Recall_C = 35 / (35 + 10) = 35/45 = 0.778
+F1_C = 2 × (0.673 × 0.778) / (0.673 + 0.778) = 0.722
+```
+
+---
+
+## 📍 Part 10: Overfitting, Underfitting & Bias-Variance ⭐⭐⭐ EC2 Q5
+
+### The Three Scenarios:
+
+| Scenario | Training Error | Test Error | Problem |
+|----------|----------------|------------|---------|
+| **Underfitting** | High | High | Model too simple |
+| **Good Fit** | Low | Low | Just right! |
+| **Overfitting** | Very Low | High | Model memorized data |
+
+### Visual Understanding:
+
+```
+Underfitting          Good Fit            Overfitting
+(High Bias)          (Balanced)          (High Variance)
+
+    ──────              ╭─╮                ╭╮╭╮╭╮
+   /      \            /   \              │││││││
+  ●  ●  ●  ●          ●     ●            ●│●│●│●
+                     /       \
+```
+
+### Bias-Variance Tradeoff:
+
+| Concept | Definition | Effect |
+|---------|------------|--------|
+| **Bias** | Error from wrong assumptions | High bias → Underfitting |
+| **Variance** | Sensitivity to training data | High variance → Overfitting |
+
+```
+Total Error = Bias² + Variance + Irreducible Noise
+```
+
+### EC2 Q5b - Exam Question:
+
+> **True function: y = x³ + ε. Rank models by bias and variance:**
+> - Model 1: Linear regression
+> - Model 2: Cubic regression
+> - Model 3: 15th-degree polynomial
+
+**Answer:**
+
+| Ranking | Bias (High to Low) | Variance (High to Low) |
+|---------|-------------------|------------------------|
+| 1st | Model 1 (Linear) | Model 3 (15th degree) |
+| 2nd | Model 3 (15th degree) | Model 1 (Linear) |
+| 3rd | Model 2 (Cubic) | Model 2 (Cubic) |
+
+**Explanation:**
+- **Model 1 (Linear):** Too simple for cubic data → High Bias, Low Variance
+- **Model 2 (Cubic):** Matches true function → Low Bias, Low Variance ✓
+- **Model 3 (15th degree):** Too complex → Low Bias, High Variance
+
+**Best Model:** Model 2 (Cubic) - lowest test error due to bias-variance balance
+
+### Solutions to Overfitting:
+```
+1. More training data
+2. Regularization (L1, L2)
+3. Cross-validation
+4. Reduce model complexity
+5. Early stopping
+6. Dropout (for neural networks)
+```
+
+---
+
+## 📍 Part 11: Exam Practice Problems
+
+### Problem 1: Data Type Classification
+> Classify: Age, City, Temperature (Kelvin), Movie Rating (1-5 stars)
+
+<details>
+<summary>Click for Solution</summary>
+
+| Attribute | Type | Reason |
+|-----------|------|--------|
+| Age | **Ratio** | True zero (0 years), can say "twice as old" |
+| City | **Nominal** | Names only, no order |
+| Temperature (Kelvin) | **Ratio** | True zero (0K = absolute zero) |
+| Movie Rating (1-5) | **Ordinal** | Ordered categories, unequal gaps |
+
+</details>
+
+---
+
+### Problem 2: Missing Value Imputation
+> Dataset: 5, 8, NaN, 12, 15, NaN, 25, 30
+> Impute using mean and median.
+
+<details>
+<summary>Click for Solution</summary>
+
+**Available values:** 5, 8, 12, 15, 25, 30
+
+**Mean:** (5+8+12+15+25+30)/6 = 95/6 = **15.83**
+
+**Median:** Sorted: 5, 8, 12, 15, 25, 30 → (12+15)/2 = **13.5**
+
+| Method | Result |
+|--------|--------|
+| Mean | 5, 8, **15.83**, 12, 15, **15.83**, 25, 30 |
+| Median | 5, 8, **13.5**, 12, 15, **13.5**, 25, 30 |
+
+</details>
+
+---
+
+### Problem 3: Confusion Matrix Analysis
+> Given: TP=50, TN=40, FP=10, FN=20
+> Calculate: Accuracy, Precision, Recall, F1-Score
+
+<details>
+<summary>Click for Solution</summary>
+
+```
+Total = 50 + 40 + 10 + 20 = 120
+
+Accuracy = (50 + 40) / 120 = 90/120 = 0.75 = 75%
+
+Precision = 50 / (50 + 10) = 50/60 = 0.833 = 83.3%
+
+Recall = 50 / (50 + 20) = 50/70 = 0.714 = 71.4%
+
+F1-Score = 2 × (0.833 × 0.714) / (0.833 + 0.714)
+         = 2 × 0.595 / 1.547
+         = 0.769 = 76.9%
+```
+
+</details>
+
+---
+
+### Problem 4: Bias-Variance Analysis
+> A model has: Training accuracy = 98%, Test accuracy = 65%
+> What's the problem and solution?
+
+<details>
+<summary>Click for Solution</summary>
+
+**Problem:** **Overfitting** (High Variance)
+- Training accuracy very high (98%)
+- Test accuracy much lower (65%)
+- Model memorized training data, doesn't generalize
+
+**Solutions:**
+1. Get more training data
+2. Use regularization (L1/L2)
+3. Reduce model complexity
+4. Use cross-validation
+5. Apply dropout (if neural network)
+
+</details>
+
+---
+
+## 📍 Part 12: Quick Reference Card
+
+### Data Types (NOIR):
+```
+Nominal  → Categories, NO order (Colors, Names)
+Ordinal  → Categories, WITH order (Low/Med/High)
+Interval → Numbers, NO true zero (Temperature °C)
+Ratio    → Numbers, HAS true zero (Height, Salary)
+```
+
+### Metrics Formulas:
+```
+Accuracy  = (TP + TN) / Total
+Precision = TP / (TP + FP)
+Recall    = TP / (TP + FN)
+F1-Score  = 2 × P × R / (P + R)
+```
+
+### Bias-Variance:
+```
+High Bias     → Underfitting → Too simple
+High Variance → Overfitting  → Too complex
+```
+
+### ML Types:
+```
+Supervised   → Has labels → Classification/Regression
+Unsupervised → No labels  → Clustering
+Reinforcement → Rewards   → Trial & Error
+```
+
+---
+
+## ✅ Module 1 Exam Preparation Checklist
+
+- [ ] Can explain T-P-E framework with examples
+- [ ] Can classify data types (Nominal, Ordinal, Interval, Ratio)
+- [ ] Can impute missing values using mean/median
+- [ ] Can calculate Accuracy, Precision, Recall, F1 from confusion matrix
+- [ ] Can identify overfitting vs underfitting
+- [ ] Understand bias-variance tradeoff
+- [ ] Know when to use Classification vs Regression
+- [ ] Can explain ML workflow steps
+
+---
+
+*📅 Created for BITS MTech WLP - AIML ZG565*
+*Course: Machine Learning*
+*Module 1: Introduction to Machine Learning*
+*Good luck with your exam! 🎓*
+

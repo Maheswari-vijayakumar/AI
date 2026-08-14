@@ -1,2230 +1,1042 @@
-Linear Algebra — Module 1 Complete Study Notes
-Module 1 — Topics Covered
-Introduction
-Systems of Linear Equations
-Matrices
-Inverse & Transpose
-Compact Representation
-Solving Systems
-Elementary Row Operations
-Gaussian Elimination
-Calculating Inverse using Gaussian Elimination
-1. INTRODUCTION TO LINEAR ALGEBRA
-1.1 What is Linear Algebra?
+# 📘 Linear Algebra — Module 1 Complete Study Notes
+## AIML ZC416 - Mathematical Foundations for Machine Learning | BITS Pilani MTech WLP
 
-Linear Algebra is the study of vectors, matrices, and linear equations.
+---
+
+## 📋 Module 1 — Topics Covered
+
+| # | Topic |
+|---|-------|
+| 1 | Introduction to Linear Algebra |
+| 2 | Systems of Linear Equations |
+| 3 | Matrices |
+| 4 | Inverse & Transpose |
+| 5 | Compact Representation |
+| 6 | Solving Systems |
+| 7 | Elementary Row Operations |
+| 8 | Gaussian Elimination |
+| 9 | Calculating Inverse using Gaussian Elimination |
+
+---
+
+# 1. INTRODUCTION TO LINEAR ALGEBRA
+
+## 1.1 What is Linear Algebra?
+
+Linear Algebra is the study of **vectors**, **matrices**, and **linear equations**.
 
 It helps us solve problems involving many variables simultaneously.
 
-For example:
-
-x+y=5
-
-and
-
-2x−y=1
-
+**Example:**
+```
+x + y = 5
+2x - y = 1
+```
 We want to find values of x and y that satisfy both equations.
-
 Linear algebra gives us systematic methods to solve this.
 
-Where is Linear Algebra used?
+---
 
-Linear algebra is extremely important in:
+## 1.2 Where is Linear Algebra Used?
 
-Machine Learning
-Artificial Intelligence
-Computer Graphics
-Data Science
-Image Processing
-Robotics
-Engineering
-Statistics
-Physics
+| Field | Application |
+|-------|-------------|
+| Machine Learning | Neural networks, regression |
+| Artificial Intelligence | Feature extraction |
+| Computer Graphics | 3D transformations |
+| Data Science | Dimensionality reduction |
+| Image Processing | Image as matrix of pixels |
+| Robotics | Motion planning |
+| Statistics | Covariance matrices |
+| Physics | Quantum mechanics |
 
-For example, an image can be represented as a large collection of numbers, and matrices are used to manipulate those numbers.
+---
 
-1.2 What is a Vector?
+## 1.3 What is a Vector?
 
-A vector is simply an ordered collection of numbers.
+> A **vector** is simply an ordered collection of numbers.
 
-For example:
+**Example:**
+```
+    ┌   ┐
+x = │ 2 │   ← 2-dimensional vector
+    │ 3 │
+    └   ┘
+```
 
-[
-2
-3
-	​
+**More Examples:**
+```
+    ┌   ┐           ┌    ┐
+    │ 1 │           │  5 │
+    │ 2 │           │  7 │
+    │ 3 │           │  9 │
+    └   ┘           │ 10 │
+                    └    ┘
+```
 
-]
+> **Think of it as:** A list of numbers arranged in a particular order.
 
-is a 2-dimensional vector.
+---
 
-We can also write it as:
+## 1.4 Idea of Closure ⭐
 
-x
-=[
-2
-3
-	​
+> **Closure** = When we perform an operation on elements of a set, the result must also belong to that set.
 
-]
+**Simple Example:**
 
-Think of it as:
+Let S = {1, 2, 3}
 
-A vector is a list of numbers arranged in a particular order.
+| Operation | Result | In S? |
+|-----------|--------|-------|
+| 1 + 2 = 3 | 3 | ✅ Yes |
+| 2 + 3 = 5 | 5 | ❌ No |
 
-Examples:
+**Conclusion:** S is **NOT closed** under addition (because 5 is not in S).
 
-	​
+---
 
-1
-2
-3
-	​
+**Vector Example:**
 
-	​
+Let U = {(x, y) : y ≥ 0}  (all points with non-negative y)
 
-	​
+Take: (2, 3) and (4, 5) — both in U
 
-5
-7
-9
-10
-	​
+Add them: (2, 3) + (4, 5) = (6, 8)
 
-	​
+Since 8 ≥ 0, the result is in U.
 
-1.3 Idea of Closure
+**Therefore:** U is **closed** under addition.
 
-Closure means:
+---
 
-When we perform an operation on things belonging to a set, the result must also belong to that set.
+### 💡 Easy Way to Remember
 
-Let's understand with a simple example.
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│   Closure = "The answer stays inside the group"         │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
 
-Suppose:
+---
 
-S={1,2,3}
+# 2. SYSTEMS OF LINEAR EQUATIONS
 
-Take two numbers from S:
+## 2.1 What is an Equation?
 
-1+2=3
+An equation says: **Two mathematical expressions are equal.**
 
-3 is also inside S.
+**Example:**
+```
+x + 2 = 5
 
-So addition is closed for this particular example.
+Solving: x = 3
+```
 
-But:
+---
 
-2+3=5
+## 2.2 What is a Linear Equation?
 
-5 is NOT inside S.
+> A **linear equation** is an equation where variables have **power 1**.
 
-Therefore, S is not closed under addition.
+**✅ Linear Examples:**
+```
+2x + 3y = 10
+x - y + 2z = 5
+4x₁ + 3x₂ - x₃ = 7
+```
 
-Easy way to remember
+**❌ NOT Linear:**
+```
+x² + y = 5      ← x has power 2
+xy = 5          ← variables multiplied together
+```
 
-Closure = "The answer stays inside the group."
+---
 
-Vector example
+## 2.3 System of Linear Equations
 
-Suppose:
+> A **system** = Multiple equations that must be satisfied at the same time.
 
-U={(x,y):y≥0}
+**Example:**
+```
+x + y = 5
+x - y = 1
+```
 
-Take:
+**Solving:**
+```
+Adding:  2x = 6  →  x = 3
+Then:    3 + y = 5  →  y = 2
 
-(2,3),(4,5)
+Solution: (x, y) = (3, 2)
+```
 
-Add them:
+---
 
-(2,3)+(4,5)=(6,8)
+## 2.4 Three Types of Solutions ⭐⭐⭐
 
-Since:
+| Type | Description | Example |
+|------|-------------|---------|
+| **Unique Solution** | Exactly ONE solution | x + y = 5, x - y = 1 → (3, 2) |
+| **No Solution** | Impossible to satisfy | x + y = 5, x + y = 8 |
+| **Infinite Solutions** | Infinitely many solutions | x + y = 5, 2x + 2y = 10 |
 
-8≥0
+---
 
-the result remains in U.
+### Case 1: Unique Solution
 
-Therefore, U is closed under addition.
+```
+x + y = 5
+x - y = 1
 
-2. SYSTEMS OF LINEAR EQUATIONS
-2.1 What is an Equation?
+Solution: x = 3, y = 2  ← Only ONE solution
+```
 
-An equation says:
+---
 
-Two mathematical expressions are equal.
+### Case 2: No Solution
 
-Example:
+```
+x + y = 5
+x + y = 8
 
-x+2=5
+Left sides are same, right sides different → Impossible!
+```
 
-We solve:
+---
 
-x=3
-2.2 What is a Linear Equation?
+### Case 3: Infinite Solutions
 
-A linear equation is an equation where variables have power 1.
+```
+x + y = 5
+2x + 2y = 10    ← This is just 2 × (first equation)
 
-Examples:
+Both equations represent the SAME line.
 
-2x+3y=10
-x−y+2z=5
-4x
-1
-	​
+Solutions: (0,5), (1,4), (2,3), (3,2), ... infinitely many!
+```
 
-+3x
-2
-	​
+---
 
-−x
-3
-	​
+## 2.5 Geometrical Interpretation ⭐⭐
 
-=7
+### In 2D
 
-These are linear.
+A linear equation like `x + y = 5` represents a **line**.
 
-Not linear
-x
-2
-+y=5
+Two equations = Two lines.
 
-because x has power 2.
+| Case | Visual | Meaning |
+|------|--------|---------|
+| **Unique Solution** | Lines cross at one point | `\ /` → One intersection |
+| **No Solution** | Parallel lines | `──────` and `──────` → Never meet |
+| **Infinite Solutions** | Same line (overlap) | Lines are identical |
 
-Also:
+```
+Case 1: Unique        Case 2: No Solution      Case 3: Infinite
+    \  /                  ─────────               ═══════════
+     \/                   ─────────               (same line)
+     /\
+```
 
-xy=5
+---
 
-is not linear because variables are multiplied together.
+### In 3D
 
-2.3 System of Linear Equations
+In 3 dimensions, a linear equation represents a **plane**.
 
-A system means:
+| Situation | Solutions |
+|-----------|-----------|
+| 3 planes meet at ONE point | Unique |
+| 3 planes meet along a LINE | Infinite |
+| No common intersection | None |
 
-Multiple equations that must be satisfied at the same time.
+---
 
-Example:
+## 2.6 Pivot Variables vs Free Variables ⭐⭐⭐
 
-x+y=5
-x−y=1
-
-We need values of x and y that satisfy both equations.
-
-Adding them:
-
-2x=6
-
-Therefore:
-
-x=3
-
-Then:
-
-3+y=5
-y=2
-
-So the solution is:
-
-(x,y)=(3,2)
-	​
-
-2.4 Three Types of Solutions
-
-A system of linear equations can have:
-
-1. Unique solution
-
-Exactly one solution.
-
-Example:
-
-x+y=5
-x−y=1
-
-Solution:
-
-x=3,y=2
-
-Therefore:
-
-Unique solution
-	​
-
-2. No solution
-
-There is no value that satisfies all equations.
-
-Example:
-
-x+y=5
-x+y=8
-
-The left side is the same, but the right sides are different.
-
-Impossible.
-
-Therefore:
-
-No solution
-	​
-
-3. Infinite solutions
-
-The equations represent essentially the same equation.
-
-Example:
-
-x+y=5
-2x+2y=10
-
-The second equation is simply:
-
-2(x+y)=2(5)
-
-So both equations represent the same line.
-
-There are infinitely many solutions.
-
-For example:
-
-(0,5)
-(1,4)
-(2,3)
-(3,2)
-
-etc.
-
-Therefore:
-
-Infinitely many solutions
-	​
-
-2.5 Geometrical Interpretation
-
-This is very important.
-
-In 2D
-
-A linear equation such as:
-
-x+y=5
-
-represents a line.
-
-Two equations represent two lines.
-
-Case 1: Unique solution
-
-Two lines intersect at exactly one point.
-
-\ /
- \/
- /\
-/  \
-
-The intersection point is the solution.
-
-Case 2: No solution
-
-Two parallel lines never meet.
-
-────────────
-
-
-────────────
-
-Therefore:
-
-No solution
-	​
-
-Case 3: Infinite solutions
-
-Both equations represent the same line.
-
-────────────
-────────────
-
-They overlap completely.
-
-Therefore, every point on the line is a solution.
-
-2.6 In 3D
-
-In 3 dimensions:
-
-A linear equation represents a plane
-Multiple equations represent multiple planes
-
-They can:
-
-intersect at one point → unique solution
-have no common intersection → no solution
-share a line → infinitely many solutions
-2.7 Pivot Variables vs Free Variables
-
-This is one of the most important concepts.
+This is one of the **most important concepts**.
 
 Suppose after elimination we get:
+```
+x + 2y + 3z = 5
+```
 
-x+2y+3z=5
+One equation, three variables → We can choose y and z freely!
 
-There is only one equation but three variables.
+| Variable | Type | Reason |
+|----------|------|--------|
+| x | **Pivot** | Determined by other variables |
+| y | **Free** | Can choose any value |
+| z | **Free** | Can choose any value |
 
-We can choose y and z freely.
+**Express solution:**
+```
+x = 5 - 2y - 3z
 
-So:
+Let y = s, z = t
 
-x → pivot variable
-y → free variable
-z → free variable
+Then: x = 5 - 2s - 3t, y = s, z = t
+```
 
-For example:
+> **Free variables** create infinitely many solutions!
 
-x=5−2y−3z
+---
 
-Let:
+# 3. MATRICES
 
-y=s
-z=t
+## 3.1 What is a Matrix?
 
-Then:
+> A **matrix** is a rectangular arrangement of numbers in rows and columns.
 
-x=5−2s−3t
+**Example:**
+```
+      ┌         ┐
+A  =  │ 1  2  3 │   ← Row 1
+      │ 4  5  6 │   ← Row 2
+      └         ┘
+        ↑  ↑  ↑
+       C1 C2 C3
 
-Therefore:
+This is a 2×3 matrix (2 rows, 3 columns)
+```
 
-x=5−2s−3t,y=s,z=t
-	​
+---
 
+## 3.2 Matrix Dimensions (m × n)
 
-The free variables create infinitely many solutions.
+| Term | Meaning |
+|------|---------|
+| m | Number of **rows** |
+| n | Number of **columns** |
+| Size | Written as **m × n** |
 
-Remember
+**Example:**
+```
+      ┌          ┐
+      │ 1  2   3 │
+A  =  │ 4  5   6 │   →  4 rows, 3 columns  →  4×3 matrix
+      │ 7  8   9 │
+      │ 10 11 12 │
+      └          ┘
+```
 
-Pivot variable: determined by other variables.
+---
 
-Free variable: you can choose its value freely.
+## 3.3 Row Matrix
 
-3. MATRICES
-3.1 What is a Matrix?
+A matrix with **only one row**.
 
-A matrix is a rectangular arrangement of numbers.
+```
+A = [ 1  2  3  4 ]     Size: 1×4
+```
 
-Example:
+---
 
-A=[
-1
-4
-	​
+## 3.4 Column Matrix
 
-2
-5
-	​
+A matrix with **only one column**.
 
-3
-6
-	​
+```
+      ┌   ┐
+A  =  │ 1 │
+      │ 2 │     Size: 4×1
+      │ 3 │
+      │ 4 │
+      └   ┘
+```
 
-]
+---
 
-This matrix has:
+## 3.5 Matrix Addition
 
-2 rows
-3 columns
+**Rule:** Add corresponding elements (matrices must be **SAME size**).
 
-Therefore its size is:
+```
+┌     ┐   ┌     ┐   ┌         ┐   ┌      ┐
+│ 1 2 │ + │ 5 6 │ = │ 1+5 2+6 │ = │ 6  8 │
+│ 3 4 │   │ 7 8 │   │ 3+7 4+8 │   │ 10 12│
+└     ┘   └     ┘   └         ┘   └      ┘
+```
 
-2×3
-	​
+---
 
-3.2 m×n Matrix
+## 3.6 Matrix Multiplication ⭐⭐⭐
 
-If a matrix has:
+**This is VERY important!**
 
-m rows
-n columns
+### Size Rule
 
-then its size is:
+```
+A(m×n) × B(p×q) is possible ONLY when n = p
 
-m×n
-	​
+Result size: m × q
+```
 
+> **Memory trick:** Inside numbers must match → (m×n)(n×p) = m×p
 
-Example:
+---
 
-A=
-	​
+### How to Multiply
 
-1
-4
-7
-10
-	​
+**Row × Column, then sum up.**
 
-2
-5
-8
-11
-	​
+**Example:**
+```
+┌     ┐   ┌     ┐
+│ 1 2 │ × │ 5 6 │ = ?
+│ 3 4 │   │ 7 8 │
+└     ┘   └     ┘
 
-3
-6
-9
-12
-	​
+Position (1,1): (1×5) + (2×7) = 5 + 14 = 19
+Position (1,2): (1×6) + (2×8) = 6 + 16 = 22
+Position (2,1): (3×5) + (4×7) = 15 + 28 = 43
+Position (2,2): (3×6) + (4×8) = 18 + 32 = 50
 
-	​
+Result:
+┌       ┐
+│ 19 22 │
+│ 43 50 │
+└       ┘
+```
 
+---
 
-There are 4 rows and 3 columns.
+## 3.7 Matrix Multiplication is NOT Commutative ⭐
 
-Therefore:
+For numbers: `2 × 3 = 3 × 2`
 
-4×3
-	​
+For matrices: **AB ≠ BA** (generally!)
 
-3.3 Row Matrix
+Sometimes AB exists but BA doesn't even exist!
 
-A matrix containing only one row.
+> **This is an important exam point!**
 
-Example:
+---
 
-A=[
-1
-	​
+## 3.8 Associativity
 
-2
-	​
-
-3
-	​
-
-4
-	​
-
-]
-
-Size:
-
-1×4
-3.4 Column Matrix
-
-A matrix containing only one column.
-
-Example:
-
-A=
-	​
-
-1
-2
-3
-4
-	​
-
-	​
-
-
-Size:
-
-4×1
-3.5 Matrix Addition
-
-Matrices can be added only if they have the same dimensions.
-
-Example:
-
-A=[
-1
-3
-	​
-
-2
-4
-	​
-
-]
-
-and
-
-B=[
-5
-7
-	​
-
-6
-8
-	​
-
-]
-
-Add corresponding elements:
-
-A+B=[
-1+5
-3+7
-	​
-
-2+6
-4+8
-	​
-
-]
-
-Therefore:
-
-A+B=[
-6
-10
-	​
-
-8
-12
-	​
-
-]
-	​
-
-3.6 Matrix Multiplication
-
-This is very important.
-
-You can multiply:
-
-A
-m×n
-	​
-
-B
-p×q
-	​
-
-
-only when:
-
-n=p
-	​
-
-
-In other words:
-
-Inside numbers must match.
-
-Example:
-
-A
-2×3
-	​
-
-B
-3×2
-	​
-
-
-is possible.
-
-The result will be:
-
-2×2
-Rule
-(m×n)(n×p)=m×p
-Example
-A=[
-1
-3
-	​
-
-2
-4
-	​
-
-]
-B=[
-5
-7
-	​
-
-6
-8
-	​
-
-]
-
-Calculate AB.
-
-First element:
-
-1(5)+2(7)=19
-
-Second:
-
-1(6)+2(8)=22
-
-Third:
-
-3(5)+4(7)=43
-
-Fourth:
-
-3(6)+4(8)=50
-
-Therefore:
-
-AB=[
-19
-43
-	​
-
-22
-50
-	​
-
-]
-3.7 Matrix Multiplication is NOT Usually Commutative
-
-For normal numbers:
-
-2×3=3×2
-
-But matrices are different.
-
-Generally:
-
-AB
-
-=BA
-	​
-
-
-Sometimes AB exists but BA doesn't even exist.
-
-This is an important exam point.
-
-3.8 Associativity
-
-Matrix multiplication is associative:
-
-(AB)C=A(BC)
-	​
-
+```
+(AB)C = A(BC)
+```
 
 You can change the grouping.
 
-3.9 Distributivity
+---
 
-Matrix multiplication distributes over addition:
+## 3.9 Distributivity
 
-A(B+C)=AB+AC
-	​
+```
+A(B + C) = AB + AC
 
+(A + B)C = AC + BC
+```
 
-and:
+---
 
-(A+B)C=AC+BC
-	​
+## 3.10 Identity Matrix ⭐
 
-3.10 Identity Matrix
+The identity matrix is like the **number 1** for matrices.
 
-The identity matrix is like the number 1 for matrices.
+```
+       ┌     ┐              ┌       ┐
+I₂  =  │ 1 0 │       I₃  =  │ 1 0 0 │
+       │ 0 1 │              │ 0 1 0 │
+       └     ┘              │ 0 0 1 │
+                            └       ┘
+```
 
-For a 2×2 matrix:
+**Key Property:**
+```
+A × I = A
+I × A = A
+```
 
-I=[
-1
-0
-	​
+Just like: 5 × 1 = 5
 
-0
-1
-	​
+---
 
-]
+## 3.11 Scalar Multiplication
 
-For a 3×3 matrix:
+A **scalar** is simply a number.
 
-I=
-	​
+**Rule:** Multiply every element by the scalar.
 
-1
-0
-0
-	​
+```
+      ┌     ┐       ┌      ┐
+3  ×  │ 1 2 │   =   │ 3  6 │
+      │ 3 4 │       │ 9 12 │
+      └     ┘       └      ┘
+```
 
-0
-1
-0
-	​
+---
 
-0
-0
-1
-	​
+# 4. INVERSE AND TRANSPOSE
 
-	​
+## 4.1 What is an Inverse?
 
+For a number: `5 × (1/5) = 1`
 
-The important property is:
+For matrices, same idea:
 
-AI=A
-	​
+```
+A × A⁻¹ = I
 
+A⁻¹ × A = I
+```
 
-and:
+> **A⁻¹** is called the **inverse** of A.
 
-IA=A
-	​
+---
 
+## 4.2 Formula: 2×2 Matrix Inverse ⭐⭐⭐
 
-Just like:
+```
+      ┌     ┐
+A  =  │ a b │
+      │ c d │
+      └     ┘
 
-5×1=5
-3.11 Scalar Multiplication
+         1      ┌      ┐
+A⁻¹ = ────── ×  │  d -b│
+      ad - bc   │ -c  a│
+                └      ┘
 
-A scalar is simply a number.
+Provided: ad - bc ≠ 0
+```
 
-Example:
+---
 
-A=[
-1
-3
-	​
+## 4.3 Determinant (2×2)
 
-2
-4
-	​
+```
+      ┌     ┐
+A  =  │ a b │     det(A) = ad - bc
+      │ c d │
+      └     ┘
+```
 
-]
+**Example:**
+```
+      ┌     ┐
+A  =  │ 4 7 │
+      │ 2 6 │
+      └     ┘
 
-Multiply by 3:
+det(A) = (4)(6) - (7)(2) = 24 - 14 = 10
+```
 
-3A=[
-3
-9
-	​
+Since 10 ≠ 0, inverse exists.
 
-6
-12
-	​
+---
 
-]
+## 4.4 When Does an Inverse Exist?
 
-Every element is multiplied by 3.
+| Condition | Result |
+|-----------|--------|
+| det(A) ≠ 0 | Inverse EXISTS (Non-singular/Invertible) |
+| det(A) = 0 | Inverse DOES NOT exist (Singular) |
 
-4. INVERSE AND TRANSPOSE
-4.1 What is an Inverse?
+---
 
-For a number:
+## 4.5 Transpose ⭐⭐
 
-5×
-5
-1
-	​
+> **Transpose** = Turn rows into columns and columns into rows.
 
-=1
+```
+      ┌         ┐              ┌     ┐
+A  =  │ 1  2  3 │       Aᵀ =   │ 1 4 │
+      │ 4  5  6 │              │ 2 5 │
+      └         ┘              │ 3 6 │
+                               └     ┘
 
-Therefore:
+Original: 2×3    →    Transpose: 3×2
+```
 
-5
-1
-	​
+**Rule:** (m×n)ᵀ = n×m
 
+---
 
-is the inverse of 5.
+## 4.6 Important Properties ⭐⭐⭐ MUST MEMORIZE
 
-For matrices, the same idea applies.
+### Transpose Properties:
+```
+(Aᵀ)ᵀ = A
+(A + B)ᵀ = Aᵀ + Bᵀ
+(AB)ᵀ = BᵀAᵀ           ← ORDER REVERSES!
+(λA)ᵀ = λAᵀ
+```
 
-The inverse of A is written:
+### Inverse Properties:
+```
+(A⁻¹)⁻¹ = A
+(AB)⁻¹ = B⁻¹A⁻¹        ← ORDER REVERSES!
+(Aᵀ)⁻¹ = (A⁻¹)ᵀ
+```
 
-A
-−1
-	​
+---
 
+### 💡 Easy Memory Trick
 
-and:
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│   For both TRANSPOSE and INVERSE:                       │
+│                                                         │
+│   When dealing with AB, the ORDER REVERSES!             │
+│                                                         │
+│   (AB)ᵀ  = Bᵀ Aᵀ                                        │
+│   (AB)⁻¹ = B⁻¹ A⁻¹                                      │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
 
-AA
-−1
-=I
-	​
+---
 
+# 5. COMPACT REPRESENTATION
 
-Also:
+## 5.1 Ax = b Form
 
-A
-−1
-A=I
-	​
+Instead of writing equations separately, use matrices:
 
-4.2 2×2 Matrix Inverse Formula
+**Equations:**
+```
+2x + y = 5
+x - y = 1
+```
 
-Suppose:
+**Matrix form: Ax = b**
+```
+┌      ┐ ┌   ┐   ┌   ┐
+│ 2  1 │ │ x │ = │ 5 │
+│ 1 -1 │ │ y │   │ 1 │
+└      ┘ └   ┘   └   ┘
+   A       x       b
+```
 
-A=[
-a
-c
-	​
+---
 
-b
-d
-	​
+## 5.2 Augmented Matrix
 
-]
+Combine A and b into one matrix:
 
-Then:
+```
+[A | b]
 
-A
-−1
-=
-ad−bc
-1
-	​
-
-[
-d
-−c
-	​
-
-−b
-a
-	​
-
-]
-	​
-
-
-provided:
-
-ad−bc
-
-=0
-4.3 Determinant
-
-For:
-
-A=[
-a
-c
-	​
-
-b
-d
-	​
-
-]
-
-the determinant is:
-
-det(A)=ad−bc
-	​
-
-
-Example:
-
-A=[
-4
-2
-	​
-
-7
-6
-	​
-
-]
-
-Determinant:
-
-(4)(6)−(7)(2)
-=24−14
-=10
-
-Therefore:
-
-det(A)=10
-
-Since:
-
-10
-
-=0
-
-the inverse exists.
-
-4.4 When Does an Inverse Exist?
-
-For a square matrix:
-
-det(A)
-
-=0
-	​
-
-
-means the inverse exists.
-
-If:
-
-det(A)=0
-	​
-
-
-then:
-
-Inverse does not exist
-	​
-
-
-Such a matrix is called singular.
-
-If determinant is non-zero, the matrix is called non-singular/invertible.
-
-4.5 Transpose
-
-Transpose means:
-
-Turn rows into columns and columns into rows.
-
-Example:
-
-A=[
-1
-4
-	​
-
-2
-5
-	​
-
-3
-6
-	​
-
-]
-
-Transpose:
-
-A
-T
-=
-	​
-
-1
-2
-3
-	​
-
-4
-5
-6
-	​
-
-	​
-
-
-Notice:
-
-Original:
-
-2×3
-
-Transpose:
-
-3×2
-
-So:
-
-(m×n)
-T
-=n×m
-	​
-
-4.6 Important Transpose Property
-
-For matrix multiplication:
-
-(AB)
-T
-=B
-T
-A
-T
-	​
-
-
-Notice the order reverses.
-
-It is not:
-
-A
-T
-B
-T
-4.7 Important Inverse Property
-
-For multiplication:
-
-(AB)
-−1
-=B
-−1
-A
-−1
-	​
-
-
-Again, the order reverses.
-
-Easy memory trick
-
-For both transpose and inverse:
-
-When dealing with AB, the order reverses.
-
-(AB)
-T
-=B
-T
-A
-T
-(AB)
-−1
-=B
-−1
-A
-−1
-5. COMPACT REPRESENTATION
-
-Suppose we have:
-
-2x+y=5
-x−y=1
-
-Instead of writing equations separately, we can represent them using matrices.
-
-5.1 Ax = b
-
-Write:
-
-Ax=b
-
-where:
-
-A=[
-2
-1
-	​
-
-1
-−1
-	​
-
-]
-x=[
-x
-y
-	​
-
-]
-
-and:
-
-b=[
-5
-1
-	​
-
-]
-
-Therefore:
-
-[
-2
-1
-	​
-
-1
-−1
-	​
-
-][
-x
-y
-	​
-
-]=[
-5
-1
-	​
-
-]
-	​
-
-
-This is called the compact matrix representation.
-
-5.2 Augmented Matrix
-
-We can combine A and b:
-
-[A∣b]
-
-For our example:
-
-[
-2
-1
-	​
-
-1
-−1
-	​
-
-5
-1
-	​
-
-]
-	​
-
+┌          ┐
+│ 2  1 │ 5 │
+│ 1 -1 │ 1 │
+└          ┘
+```
 
 The vertical line separates:
+- **Left:** Coefficient matrix A
+- **Right:** Right-hand side b
 
-coefficient matrix A
-right-hand side b
-6. SOLVING SYSTEMS
+---
 
-There are three important ideas here:
+# 6. SOLVING SYSTEMS
 
-Particular solution
-General solution
-Combining particular + general solution
-6.1 Particular Solution
+## 6.1 Particular Solution
 
-Suppose:
+A **particular solution** is ONE specific solution to Ax = b.
 
-Ax=b
+**Example:**
+```
+x + y = 5
 
-A particular solution is one specific solution.
+One solution: x = 2, y = 3
 
-Example:
+       ┌   ┐
+xₚ  =  │ 2 │    ← Particular solution
+       │ 3 │
+       └   ┘
+```
 
-x+y=5
+---
 
-One solution is:
+## 6.2 Homogeneous System
 
-x=2,y=3
+A **homogeneous system** has the form:
 
-Therefore:
+```
+Ax = 0
+```
 
-x
-p
-	​
+**Example:** x + y = 0
 
-=[
-2
-3
-	​
-
-]
-
-is a particular solution.
-
-There could be other solutions too.
-
-6.2 Homogeneous System
-
-A homogeneous system is:
-
-Ax=0
-	​
-
-
-For example:
-
-x+y=0
-
-This always has at least one solution:
-
-x=0,y=0
-
-This is called the:
-
-trivial solution
-	​
-
+This **always** has at least one solution:
+```
+x = 0, y = 0    ← Trivial solution
+```
 
 There may also be non-zero solutions.
 
-6.3 General Solution
+---
 
-The general solution describes all possible solutions.
+## 6.3 General Solution
 
-For example:
+The **general solution** describes ALL possible solutions.
 
-x+y=0
+**Example:**
+```
+x + y = 0
 
-We can write:
+Write: x = -y
 
-x=−y
+Let y = t
 
-Let:
+Then: x = -t, y = t
 
-y=t
+┌   ┐   ┌    ┐
+│ x │ = │ -t │    where t can be any number
+│ y │   │  t │
+└   ┘   └    ┘
+```
 
-Then:
+---
 
-x=−t
+## 6.4 Particular + General Solution ⭐⭐⭐
 
-Therefore:
+**This is EXTREMELY important!**
 
-[
-x
-y
-	​
+For Ax = b:
 
-]=[
-−t
-t
-	​
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│   General Solution = Particular Solution + Homogeneous  │
+│                                                         │
+│          x    =       xₚ       +       xₕ               │
+│                                                         │
+│   where:                                                │
+│   • xₚ = particular solution of Ax = b                  │
+│   • xₕ = general solution of Ax = 0                     │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
 
-]
-	​
+---
 
+# 7. ELEMENTARY ROW OPERATIONS
 
-where t can be any number.
+There are exactly **THREE** types of operations allowed.
 
-6.4 Particular + General Solution
+## 7.1 Row Swap
 
-This is an extremely important concept.
+**Swap two rows.**
 
-For:
+```
+┌     ┐           ┌     ┐
+│ 1 2 │   R₁↔R₂   │ 3 4 │
+│ 3 4 │  ──────→  │ 1 2 │
+└     ┘           └     ┘
+```
 
-Ax=b
+---
 
-the general solution can be written as:
+## 7.2 Multiply Row by Non-Zero Constant
 
-x=x
-p
-	​
+```
+R₁ = [1  2]
 
-+x
-h
-	​
+R₁ → 3R₁
 
-	​
+Result: [3  6]
+```
 
+⚠️ **Important:** λ ≠ 0
 
-where:
+We cannot multiply by zero (destroys information).
 
-x
-p
-	​
+---
 
- = particular solution of Ax=b
-x
-h
-	​
+## 7.3 Add One Row to Another
 
- = general solution of Ax=0
+```
+R₁ → R₁ + 2R₂
 
-So:
+If R₁ = [1  2] and R₂ = [3  4]
 
-General solution=Particular solution+Homogeneous solution
-	​
+R₁ + 2R₂ = [1, 2] + 2[3, 4]
+         = [1, 2] + [6, 8]
+         = [7, 10]
+```
 
-7. ELEMENTARY ROW OPERATIONS
+---
 
-Elementary row operations are used to simplify matrices.
+# 8. GAUSSIAN ELIMINATION ⭐⭐⭐
 
-There are exactly three types.
+**This is one of the MOST IMPORTANT topics!**
 
-7.1 Row Swap
+## Purpose
 
-Swap two rows.
+Convert a complicated system into an easier form to find the solution.
 
-Example:
-
-[
-1
-3
-	​
-
-2
-4
-	​
-
-]
-
-Swap R
-1
-	​
-
- and R
-2
-	​
-
-:
-
-[
-3
-1
-	​
-
-4
-2
-	​
-
-]
-	​
-
-
-Written as:
-
-R
-1
-	​
-
-↔R
-2
-	​
-
-7.2 Multiply a Row by a Non-Zero Constant
-
-Example:
-
-R
-1
-	​
-
-=[
-1
-	​
-
-2
-	​
-
-]
-
-Multiply by 3:
-
-R
-1
-	​
-
-→3R
-1
-	​
-
-
-Result:
-
-[
-3
-	​
-
-6
-	​
-
-]
-
-Important:
-
-λ
-
-=0
-	​
-
-
-We cannot multiply a row by zero because that would destroy information.
-
-7.3 Add One Row to Another
-
-Example:
-
-R
-1
-	​
-
-→R
-1
-	​
-
-+2R
-2
-	​
-
-
-Suppose:
-
-R
-1
-	​
-
-=[
-1
-	​
-
-2
-	​
-
-]
-
-and:
-
-R
-2
-	​
-
-=[
-3
-	​
-
-4
-	​
-
-]
-
-Then:
-
-R
-1
-	​
-
-+2R
-2
-	​
-
-=[1,2]+2[3,4]
-=[1,2]+[6,8]
-=[7,10]
-
-So:
-
-R
-1
-	​
-
-=[7,10]
-	​
-
-8. GAUSSIAN ELIMINATION
-
-Gaussian elimination is one of the most important topics in this module.
-
-Its purpose is:
-
-Convert a complicated system into an easier form so that we can find the solution.
-
-The general process is:
-
-Original system→Augmented matrix→REF→Back substitution→Solution
-	​
-
-8.1 Example
-
-Consider:
-
-x+y+z=6
-2x+3y+z=10
-x+2y+3z=13
-
-Write augmented matrix:
-
-	​
-
-1
-2
-1
-	​
-
-1
-3
-2
-	​
-
-1
-1
-3
-	​
-
-6
-10
-13
-	​
-
-	​
-
-8.2 Forward Elimination
-
-We want zeros below the first pivot.
-
-The first pivot is:
-
-1
-
-Use:
-
-R
-2
-	​
-
-→R
-2
-	​
-
-−2R
-1
-	​
-
-
-and:
-
-R
-3
-	​
-
-→R
-3
-	​
-
-−R
-1
-	​
-
-
-Result:
-
-	​
-
-1
-0
-0
-	​
-
-1
-1
-1
-	​
-
-1
-−1
-2
-	​
-
-6
-−2
-7
-	​
-
-	​
-
-
-Now eliminate below the second pivot:
-
-R
-3
-	​
-
-→R
-3
-	​
-
-−R
-2
-	​
-
-
-Result:
-
-	​
-
-1
-0
-0
-	​
-
-1
-1
-0
-	​
-
-1
-−1
-3
-	​
-
-6
-−2
-9
-	​
-
-	​
-
-
-This is Row-Echelon Form.
-
-8.3 Row-Echelon Form — REF
-
-A matrix is in REF when it generally has:
-
-Rule 1
-
-All non-zero rows are above zero rows.
-
-Rule 2
-
-Each pivot moves to the right as we go down.
-
-Example:
-
-	​
-
-1
-0
-0
-	​
-
-2
-1
-0
-	​
-
-3
-4
-1
-	​
-
-	​
-
-
-This is REF.
-
-Think of it as a staircase:
-
-Pivot
-  ↓
-[1 2 3]
-[0 1 4]
-[0 0 1]
-8.4 Back Substitution
-
-From:
-
-	​
-
-1
-0
-0
-	​
-
-1
-1
-0
-	​
-
-1
-−1
-3
-	​
-
-6
-−2
-9
-	​
-
-	​
-
-
-Last equation:
-
-3z=9
-
-Therefore:
-
-z=3
-
-Second equation:
-
-y−z=−2
-
-Substitute:
-
-y−3=−2
-y=1
-
-First equation:
-
-x+y+z=6
-x+1+3=6
-x=2
-
-Therefore:
-
-x=2,y=1,z=3
-	​
-
-8.5 Reduced Row-Echelon Form — RREF
-
-RREF goes one step further than REF.
-
-In RREF:
-
-Every pivot is 1.
-Each pivot is the only non-zero number in its column.
-Pivot positions move to the right as you go down.
-Zero rows are at the bottom.
-
-Example:
-
-	​
-
-1
-0
-0
-	​
-
-0
-1
-0
-	​
-
-2
-3
-0
-	​
-
-	​
-
-	​
-
-
-This is RREF.
-
-Compare:
-
-REF
-	​
-
-1
-0
-0
-	​
-
-2
-1
-0
-	​
-
-3
-4
-1
-	​
-
-	​
-
-RREF
-	​
-
-1
-0
-0
-	​
-
-0
-1
-0
-	​
-
-2
-3
-0
-	​
-
-	​
-
-
-RREF is more completely simplified.
-
-8.6 REF vs RREF
-REF	RREF
-Pivot doesn't always have to be 1	Every pivot is 1
-Zeros required below pivots	Zeros above AND below pivots
-Staircase form	Fully simplified staircase
-Back substitution usually needed	Solution can often be read directly
-8.7 What is a Pivot?
-
-A pivot is the leading non-zero entry in a row after elimination.
-
-Example:
-
-	​
-
-1
-0
-0
-	​
-
-2
-4
-0
-	​
-
-3
-5
-6
-	​
-
-	​
-
-
-The pivots are:
-
-1,4,6
-
-Their columns are called pivot columns.
-
-Important
-
-A pivot is not necessarily the number 1.
-
-For example:
-
-4
-
-can absolutely be a pivot.
-
-In RREF, however, pivots are made into 1.
-
-8.8 Pivot Variables and Free Variables
-
-Suppose RREF gives:
-
-[
-1
-0
-	​
-
-0
-1
-	​
-
-2
-3
-	​
-
-∣
-∣
-	​
-
-5
-7
-	​
-
-]
+```
+Original → Augmented → REF → Back Substitution → Solution
+ system     matrix
+```
+
+---
+
+## 8.1 Example
+
+**Solve:**
+```
+x + y + z = 6
+2x + 3y + z = 10
+x + 2y + 3z = 13
+```
+
+**Augmented matrix:**
+```
+┌             ┐
+│ 1  1  1 │ 6 │
+│ 2  3  1 │10 │
+│ 1  2  3 │13 │
+└             ┘
+```
+
+---
+
+## 8.2 Forward Elimination
+
+**Goal:** Create zeros below the first pivot.
+
+**Step 1:** R₂ → R₂ - 2R₁ and R₃ → R₃ - R₁
+```
+┌              ┐
+│ 1  1  1 │  6 │
+│ 0  1 -1 │ -2 │
+│ 0  1  2 │  7 │
+└              ┘
+```
+
+**Step 2:** R₃ → R₃ - R₂
+```
+┌              ┐
+│ 1  1  1 │  6 │
+│ 0  1 -1 │ -2 │
+│ 0  0  3 │  9 │
+└              ┘
+```
+
+**This is Row-Echelon Form (REF).**
+
+---
+
+## 8.3 Row-Echelon Form (REF) ⭐⭐
+
+A matrix is in REF when:
+
+| Rule | Description |
+|------|-------------|
+| 1 | All non-zero rows are ABOVE zero rows |
+| 2 | Each pivot is to the RIGHT of the pivot above |
+| 3 | Creates a "staircase" pattern |
+
+```
+┌           ┐
+│ ■  *  * │     ■ = Pivot (first non-zero)
+│ 0  ■  * │     * = Any number
+│ 0  0  ■ │     0 = Must be zero
+└         ┘
+```
+
+---
+
+## 8.4 Back Substitution
+
+From the REF:
+```
+┌              ┐
+│ 1  1  1 │  6 │
+│ 0  1 -1 │ -2 │
+│ 0  0  3 │  9 │
+└              ┘
+```
+
+**Solve from bottom:**
+```
+Row 3:  3z = 9   →  z = 3
+Row 2:  y - z = -2  →  y - 3 = -2  →  y = 1
+Row 1:  x + y + z = 6  →  x + 1 + 3 = 6  →  x = 2
+```
+
+**Solution: x = 2, y = 1, z = 3** ✓
+
+---
+
+## 8.5 Reduced Row-Echelon Form (RREF) ⭐⭐
+
+RREF goes **one step further** than REF:
+
+| Property | REF | RREF |
+|----------|-----|------|
+| Pivot value | Any non-zero | Must be **1** |
+| Above pivot | Can be non-zero | Must be **0** |
+| Below pivot | Zero | Zero |
+| Zero rows | At bottom | At bottom |
+
+**Example:**
+```
+REF                         RREF
+┌           ┐              ┌           ┐
+│ 1  2  3 │               │ 1  0  2 │
+│ 0  1  4 │      →        │ 0  1  3 │
+│ 0  0  1 │               │ 0  0  0 │
+└         ┘               └         ┘
+```
+
+---
+
+## 8.6 REF vs RREF Comparison
+
+| Feature | REF | RREF |
+|---------|-----|------|
+| Pivot must be 1 | No | Yes |
+| Zeros required | Below pivots only | Above AND below pivots |
+| Form | Staircase | Fully simplified |
+| Back substitution | Usually needed | Solution often direct |
+
+---
+
+## 8.7 What is a Pivot? ⭐
+
+> A **pivot** is the leading (first) non-zero entry in a row after elimination.
+
+**Example:**
+```
+┌           ┐
+│ 1  2  3 │     Pivots: 1, 4, 6
+│ 0  4  5 │
+│ 0  0  6 │     Pivot columns: 1, 2, 3
+└         ┘
+```
+
+**Important:** A pivot is not necessarily 1 (except in RREF).
+
+---
+
+## 8.8 Pivot Variables vs Free Variables ⭐⭐⭐
+
+**Example RREF:**
+```
+┌               ┐
+│ 1  0  2 │ 5 │
+│ 0  1  3 │ 7 │
+└             ┘
+```
 
 This represents:
+```
+x + 2z = 5
+y + 3z = 7
+```
+
+| Column | Variable | Type | Reason |
+|--------|----------|------|--------|
+| 1 | x | Pivot | Has pivot |
+| 2 | y | Pivot | Has pivot |
+| 3 | z | **Free** | No pivot |
+
+**Solution:**
+```
+Let z = t (free variable)
+
+x = 5 - 2t
+y = 7 - 3t
+z = t
+```
+
+---
+
+# 9. CALCULATING INVERSE USING GAUSSIAN ELIMINATION ⭐⭐⭐
+
+**This is a major exam topic!**
+
+## The Method
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│   [A | I]  →  [I | A⁻¹]                                 │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 9.1 Step-by-Step Example
+
+**Find inverse of:**
+```
+      ┌     ┐
+A  =  │ 1 2 │
+      │ 3 4 │
+      └     ┘
+```
+
+---
+
+**Step 1: Create augmented matrix [A | I]**
+```
+┌           ┐
+│ 1  2 │ 1 0│
+│ 3  4 │ 0 1│
+└           ┘
+```
+
+---
+
+**Step 2: R₂ → R₂ - 3R₁ (make bottom-left = 0)**
+```
+┌              ┐
+│ 1  2 │  1  0 │
+│ 0 -2 │ -3  1 │
+└              ┘
+```
+
+---
+
+**Step 3: R₂ → -½R₂ (make second pivot = 1)**
+```
+┌               ┐
+│ 1  2 │  1    0│
+│ 0  1 │ 3/2 -½ │
+└               ┘
+```
+
+---
+
+**Step 4: R₁ → R₁ - 2R₂ (eliminate above pivot)**
+```
+┌                ┐
+│ 1  0 │ -2    1 │
+│ 0  1 │ 3/2  -½ │
+└                ┘
+```
+
+---
+
+**Result:**
+```
+        ┌          ┐
+A⁻¹  =  │ -2    1  │
+        │ 3/2  -½  │
+        └          ┘
+```
+
+**Verify:** A × A⁻¹ = I ✓
+
+---
 
-x+2z=5
-y+3z=7
+# 📊 MODULE OVERVIEW: THE BIG PICTURE
 
-The pivot columns are:
-
-column 1 → x
-column 2 → y
-
-Column 3 has no pivot.
-
-Therefore:
-
-x,y=pivot variables
-
-and:
-
-z=free variable
-
-Let:
-
-z=t
-
-Then:
-
-x=5−2t
-y=7−3t
-
-So:
-
-x=5−2t,y=7−3t,z=t
-	​
-
-9. CALCULATING INVERSE USING GAUSSIAN ELIMINATION
-
-This is another major exam topic.
-
-We can calculate A
-−1
- using:
-
-[A∣I]→[I∣A
-−1
-]
-	​
-
-
-This is one of the most important formulas to remember.
-
-9.1 Example
-
-Let:
-
-A=[
-1
-3
-	​
-
-2
-4
-	​
-
-]
-
-The identity matrix is:
-
-I=[
-1
-0
-	​
-
-0
-1
-	​
-
-]
-
-Put them together:
-
-[A∣I]=[
-1
-3
-	​
-
-2
-4
-	​
-
-1
-0
-	​
-
-0
-1
-	​
-
-]
-
-Our goal is:
-
-[
-1
-0
-	​
-
-0
-1
-	​
-
-0
-1
-	​
-
-1
-0
-	​
-
-]
-
-More specifically:
-
-[A∣I]→[I∣A
-−1
-]
-Step 1
-
-Start:
-
-[
-1
-3
-	​
-
-2
-4
-	​
-
-1
-0
-	​
-
-0
-1
-	​
-
-]
-
-Make the bottom-left element zero:
-
-R
-2
-	​
-
-→R
-2
-	​
-
-−3R
-1
-	​
-
-
-Result:
-
-[
-1
-0
-	​
-
-2
-−2
-	​
-
-1
-−3
-	​
-
-0
-1
-	​
-
-]
-Step 2
-
-Make second pivot equal to 1:
-
-R
-2
-	​
-
-→−
-2
-1
-	​
-
-R
-2
-	​
-
-
-Result:
-
-[
-1
-0
-	​
-
-2
-1
-	​
-
-1
-2
-3
-	​
-
-	​
-
-0
-−
-2
-1
-	​
-
-	​
-
-]
-Step 3
-
-Make the number above the second pivot zero:
-
-R
-1
-	​
-
-→R
-1
-	​
-
-−2R
-2
-	​
-
-
-Result:
-
-[
-1
-0
-	​
-
-0
-1
-	​
-
-−2
-2
-3
-	​
-
-	​
-
-1
-−
-2
-1
-	​
-
-	​
-
-]
-
-Therefore:
-
-A
-−1
-=
-[
-−2
-2
-3
-	​
-
-	​
-
-1
-−
-2
-1
-	​
-
-	​
-
-]
-	​
-
-COMPLETE MODULE — BIG PICTURE
-
-You should understand how all these topics connect.
-
+```
 LINEAR ALGEBRA
       │
       ├── Vectors
@@ -2259,147 +1071,95 @@ LINEAR ALGEBRA
               ├── Free Variables
               ├── Particular Solution
               └── General Solution
-⭐ Most Important Formulas to Memorize
-Matrix multiplication
-(m×n)(n×p)=m×p
-	​
+```
 
-Identity
-AI=IA=A
-	​
+---
 
-Inverse
-AA
-−1
-=A
-−1
-A=I
-	​
+# ⭐ MOST IMPORTANT FORMULAS TO MEMORIZE
 
-2×2 inverse
-[
-a
-c
-	​
+| Formula | Expression |
+|---------|------------|
+| Matrix Multiplication Size | (m × n)(n × p) = m × p |
+| Identity Property | A × I = I × A = A |
+| Inverse Property | A × A⁻¹ = A⁻¹ × A = I |
+| 2×2 Inverse | A⁻¹ = (1/det) × [d -b; -c a] |
+| Inverse Exists | det(A) ≠ 0 |
+| Transpose of Product | (AB)ᵀ = BᵀAᵀ |
+| Inverse of Product | (AB)⁻¹ = B⁻¹A⁻¹ |
+| Matrix Form | Ax = b |
+| Homogeneous System | Ax = 0 |
+| General Solution | x = xₚ + xₕ |
+| Inverse via Gaussian | [A \| I] → [I \| A⁻¹] |
 
-b
-d
-	​
+---
 
-]
-−1
-=
-ad−bc
-1
-	​
+# ⭐ EXAM-FOCUSED CHECKLIST
 
-[
-d
-−c
-	​
+| Topic | What You Should Be Able To Do |
+|-------|-------------------------------|
+| Closure | Determine whether a set is closed |
+| Linear equations | Identify whether an equation is linear |
+| Systems | Find unique/no/infinite solutions |
+| Geometry | Explain lines and planes interpretation |
+| Pivot | Identify pivot positions/columns |
+| Free variable | Identify and parameterize free variables |
+| Matrix dimensions | Determine m×n |
+| Addition | Add matrices |
+| Multiplication | Multiply matrices and check dimensions |
+| Identity | Understand AI = A |
+| Scalar | Multiply a matrix by a number |
+| Determinant | Calculate 2×2 determinant |
+| Inverse | Calculate A⁻¹ |
+| Transpose | Calculate Aᵀ |
+| Ax = b | Convert equations into matrix form |
+| Augmented matrix | Construct [A \| b] |
+| Particular solution | Find one solution |
+| Homogeneous solution | Solve Ax = 0 |
+| Row operations | Perform all 3 operations |
+| Gaussian elimination | Convert matrix to REF |
+| RREF | Fully reduce a matrix |
+| Back substitution | Find variables from REF |
+| Matrix inverse | Use [A \| I] → [I \| A⁻¹] |
 
-−b
-a
-	​
+---
 
-]
-	​
+# 💡 THE ONE STORY TO REMEMBER
 
-Inverse exists
-det(A)
-
-=0
-	​
+If you remember only **ONE flow** from this entire module:
 
-Transpose
-(AB)
-T
-=B
-T
-A
-T
-	​
-
-Inverse of product
-(AB)
-−1
-=B
-−1
-A
-−1
-	​
-
-Matrix representation
-Ax=b
-	​
-
-Homogeneous system
-Ax=0
-	​
-
-General solution
-x=x
-p
-	​
-
-+x
-h
-	​
-
-	​
-
-Inverse using Gaussian elimination
-[A∣I]→[I∣A
-−1
-]
-	​
-
-⭐ Exam-Focused Concepts
-
-If you're preparing for the semester exam, make sure you can explain and solve problems involving these:
-
-Topic	What you should be able to do
-Closure	Determine whether a set is closed
-Linear equations	Identify whether an equation is linear
-Systems	Find unique/no/infinite solutions
-Geometry	Explain lines and planes
-Pivot	Identify pivot positions/columns
-Free variable	Identify and parameterize free variables
-Matrix dimensions	Determine m×n
-Addition	Add matrices
-Multiplication	Multiply matrices and check dimensions
-Identity	Understand AI=A
-Scalar	Multiply a matrix by a number
-Determinant	Calculate 2×2 determinant
-Inverse	Calculate A
-−1
-
-Transpose	Calculate A
-T
-
-Ax=b	Convert equations into matrix form
-Augmented matrix	Construct ([A
-Particular solution	Find one solution
-Homogeneous solution	Solve Ax=0
-Row operations	Perform all 3 operations
-Gaussian elimination	Convert matrix to REF
-RREF	Fully reduce a matrix
-Back substitution	Find variables from REF
-Matrix inverse	Use ([A
-The one story you should remember
-
-If you remember only one flow from this entire module, remember this:
-
-Linear equations→Ax=b→[A∣b]→Row Operations→Gaussian Elimination→REF/RREF→Solution
-	​
-
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                                                                         │
+│  Linear Equations → Ax=b → [A|b] → Row Operations → REF/RREF → Solution │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
 
 And for finding an inverse:
 
-[A∣I]→[I∣A
-−1
-]
-	​
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                                                                         │
+│                    [A | I]  →  [I | A⁻¹]                                │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
 
+**That is the backbone of Module 1!**
 
-That is the backbone of Module 1.
+---
+
+## ✅ Module 1 Exam Preparation Checklist
+
+- [ ] Can solve Ax = b using Gaussian elimination
+- [ ] Can identify REF and RREF
+- [ ] Can find pivot and free variables
+- [ ] Can write particular + general solution
+- [ ] Can find inverse using [A|I] → [I|A⁻¹]
+- [ ] Know all inverse/transpose properties
+- [ ] Can prove (AB)⁻¹ = B⁻¹A⁻¹
+- [ ] Can explain why only 0, 1, or ∞ solutions exist
+- [ ] Know 2×2 inverse formula
+- [ ] Understand geometric interpretation
+
+---

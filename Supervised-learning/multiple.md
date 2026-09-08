@@ -302,6 +302,376 @@ $$
 
 # 7. Step 4 — Apply the Normal Equation
 
+Yes — this is the most important part to understand. We got:
+
+$$
+\beta=
+\begin{bmatrix}
+1\\
+2\\
+0
+\end{bmatrix}
+$$
+
+from the equation:
+
+$$
+\beta=(X^TX)^{-1}X^TY
+$$
+
+But instead of manually calculating the inverse of the \(3\times3\) matrix, we can understand it much more simply by solving the equations.
+
+---
+
+## 1. Start with the Normal Equation
+
+We had:
+
+$$
+X^TX=
+\begin{bmatrix}
+5&15&11\\
+15&55&41\\
+11&41&31
+\end{bmatrix}
+$$
+
+and:
+
+$$
+X^TY=
+\begin{bmatrix}
+35\\
+125\\
+93
+\end{bmatrix}
+$$
+
+So:
+
+$$
+\begin{bmatrix}
+5&15&11\\
+15&55&41\\
+11&41&31
+\end{bmatrix}
+\begin{bmatrix}
+b_0\\
+b_1\\
+b_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+35\\
+125\\
+93
+\end{bmatrix}
+$$
+
+---
+
+# 2. Matrix Multiplication Gives 3 Equations
+
+Multiply each row.
+
+### Equation 1
+
+$$
+5b_0+15b_1+11b_2=35
+$$
+
+### Equation 2
+
+$$
+15b_0+55b_1+41b_2=125
+$$
+
+### Equation 3
+
+$$
+11b_0+41b_1+31b_2=93
+$$
+
+So now our problem is simply:
+
+$$
+\boxed{
+\begin{aligned}
+5b_0+15b_1+11b_2&=35\\
+15b_0+55b_1+41b_2&=125\\
+11b_0+41b_1+31b_2&=93
+\end{aligned}}
+$$
+
+We need to find \(b_0,b_1,b_2\).
+
+---
+
+# 3. Solve the Equations
+
+Let's eliminate \(b_0\).
+
+Take:
+
+$$
+3\times\text{Equation 1}
+$$
+
+$$
+15b_0+45b_1+33b_2=105
+$$
+
+Now subtract Equation 2:
+
+$$
+(15b_0+45b_1+33b_2)
+-
+(15b_0+55b_1+41b_2)
+=105-125
+$$
+
+This gives:
+
+$$
+-10b_1-8b_2=-20
+$$
+
+Divide by \(-2\):
+
+$$
+\boxed{5b_1+4b_2=10}
+$$
+
+---
+
+## 4. Eliminate \(b_0\) Again
+
+Take:
+
+$$
+11\times\text{Equation 1}
+$$
+
+$$
+55b_0+165b_1+121b_2=385
+$$
+
+Take:
+
+$$
+5\times\text{Equation 3}
+$$
+
+$$
+55b_0+205b_1+155b_2=465
+$$
+
+Subtract:
+
+$$
+(55b_0+205b_1+155b_2)
+-
+(55b_0+165b_1+121b_2)
+=465-385
+$$
+
+Therefore:
+
+$$
+40b_1+34b_2=80
+$$
+
+---
+
+# 5. Now We Have Two Equations
+
+We have:
+
+$$
+5b_1+4b_2=10
+$$
+
+and:
+
+$$
+40b_1+34b_2=80
+$$
+
+Multiply the first equation by 8:
+
+$$
+40b_1+32b_2=80
+$$
+
+Subtract:
+
+$$
+(40b_1+34b_2)-(40b_1+32b_2)=80-80
+$$
+
+Therefore:
+
+$$
+2b_2=0
+$$
+
+So:
+
+$$
+\boxed{b_2=0}
+$$
+
+---
+
+# 6. Find \(b_1\)
+
+Put:
+
+$$
+b_2=0
+$$
+
+into:
+
+$$
+5b_1+4b_2=10
+$$
+
+We get:
+
+$$
+5b_1+4(0)=10
+$$
+
+$$
+5b_1=10
+$$
+
+Therefore:
+
+$$
+\boxed{b_1=2}
+$$
+
+---
+
+# 7. Find \(b_0\)
+
+Use the first equation:
+
+$$
+5b_0+15b_1+11b_2=35
+$$
+
+Substitute:
+
+$$
+b_1=2,\qquad b_2=0
+$$
+
+Therefore:
+
+$$
+5b_0+15(2)+11(0)=35
+$$
+
+$$
+5b_0+30=35
+$$
+
+$$
+5b_0=5
+$$
+
+$$
+\boxed{b_0=1}
+$$
+
+---
+
+# 8. Therefore β
+
+We found:
+
+$$
+b_0=1
+$$
+
+$$
+b_1=2
+$$
+
+$$
+b_2=0
+$$
+
+So we put them into the coefficient vector:
+
+$$
+\boxed{
+\beta=
+\begin{bmatrix}
+1\\
+2\\
+0
+\end{bmatrix}}
+$$
+
+That's where the **\([1,2,0]\)** comes from.
+
+---
+
+### ⭐ The important connection
+
+Don't think that:
+
+$$
+\beta=
+\begin{bmatrix}
+1\\2\\0
+\end{bmatrix}
+$$
+
+just magically appears from the formula.
+
+The actual process is:
+
+$$
+\boxed{
+X^TX\beta=X^TY
+}
+$$
+
+↓
+
+$$
+\boxed{
+\text{3 equations}
+}
+$$
+
+↓
+
+$$
+\boxed{
+b_0=1,\ b_1=2,\ b_2=0
+}
+$$
+
+↓
+
+$$
+\boxed{
+\beta=
+\begin{bmatrix}
+1\\2\\0
+\end{bmatrix}
+}
+$$
+
+This is essentially **solving a system of linear equations**, which is why the linear algebra concepts you've been learning—matrices, row operations, RREF, etc.—are directly useful here.
+
+
 Now we have:
 
 $$

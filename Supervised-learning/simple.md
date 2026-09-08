@@ -66,3 +66,26 @@ $$\hat{Y} = 1.4(6) + 0.8 = 8.4 + 0.8 = 9.2$$
 ---
 
 
+
+## Closed-Form Formulas for Linear Regression
+
+| # | Formula | Use case |
+|---|---|---|
+| 1 | $m = \dfrac{n\sum XY - \sum X \sum Y}{n\sum X^2 - (\sum X)^2}$ | Slope, simple linear regression (1 predictor) |
+| 2 | $c = \bar{Y} - m\bar{X}$ | Intercept, simple linear regression |
+| 3 | $\beta = (X^TX)^{-1}X^TY$ | Both slope(s) and intercept, **any** number of predictors (general case — includes #1 and #2 as the special 2-variable case) |
+
+
+
+| Concept | Closed-form? |
+|---|---|
+| Mean, variance, standard deviation | Yes — direct formulas |
+| Correlation coefficient ($r$) | Yes |
+| $R^2$ (coefficient of determination) | Yes |
+| Ridge regression ($L_2$ regularization) | Yes — $\beta = (X^TX + \lambda I)^{-1}X^TY$ |
+| Lasso regression ($L_1$ regularization) | **No** — requires iterative optimization |
+| Logistic regression | **No** — requires iterative optimization (e.g. gradient descent, Newton's method) |
+| Neural networks | **No** — always trained iteratively |
+| Principal Component Analysis (PCA) | Yes — via eigendecomposition/SVD |
+
+

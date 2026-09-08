@@ -45,25 +45,7 @@ X=
 \end{bmatrix}
 $$
 
-The first column contains **1s** because it represents the intercept \(b_0\).
 
-So each row represents:
-
-$$
-[1,\ X_1,\ X_2]
-$$
-
-For example, the first row:
-
-$$
-[1,1,1]
-$$
-
-means:
-
-$$
-1(b_0)+1(b_1)+1(b_2)
-$$
 
 ---
 

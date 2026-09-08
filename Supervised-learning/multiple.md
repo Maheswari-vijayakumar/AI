@@ -1,7 +1,7 @@
 
 ## 1. The Dataset
 
-Now we have two independent variables, $X_1$ and $X_2$, predicting $Y$.
+Two independent variables, $X_1$ and $X_2$, predicting $Y$:
 
 | $X_1$ | $X_2$ | $Y$ |
 |---|---|---|
@@ -17,9 +17,7 @@ $$\hat{Y} = b_0 + b_1X_1 + b_2X_2$$
 
 ## 2. Why the Old Formula Doesn't Work Anymore
 
-With one predictor, we had simple algebraic formulas for $m$ and $b$. With multiple predictors, we need to solve for several coefficients at once — so we switch to **matrix notation**.
-
-Define:
+With one predictor, simple algebraic formulas gave us $m$ and $b$ directly. With multiple predictors, we need to solve for several coefficients simultaneously — so we switch to **matrix notation**.
 
 $$Y = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix} \qquad X = \begin{bmatrix} 1 & x_{11} & x_{12} \\ 1 & x_{21} & x_{22} \\ \vdots & \vdots & \vdots \\ 1 & x_{n1} & x_{n2} \end{bmatrix} \qquad \beta = \begin{bmatrix} b_0 \\ b_1 \\ b_2 \end{bmatrix}$$
 
@@ -27,11 +25,9 @@ The leading column of 1s in $X$ accounts for the intercept $b_0$.
 
 ## 3. The Normal Equation
 
-The closed-form solution (still OLS, still derived the same way — minimize squared error, take derivatives, set to zero) is:
+Same derivation as before — minimize squared error, differentiate, set to zero. The result generalizes to:
 
 $$\beta = (X^TX)^{-1}X^TY$$
-
-This is the direct matrix generalization of the slope/intercept formulas from simple linear regression.
 
 ## 4. Plugging In the Dataset
 
@@ -39,29 +35,27 @@ $$X = \begin{bmatrix} 1 & 1 & 1 \\ 1 & 2 & 1 \\ 1 & 3 & 2 \\ 1 & 4 & 3 \\ 1 & 5 
 
 **Step 1 — Compute $X^TX$:**
 
-$$X^TX = \begin{bmatrix} 5 & 15 & 11 \\ 15 & 55 & 43 \\ 11 & 43 & 35 \end{bmatrix}$$
+$$X^TX = \begin{bmatrix} 5 & 15 & 11 \\ 15 & 55 & 41 \\ 11 & 41 & 31 \end{bmatrix}$$
 
 **Step 2 — Compute $X^TY$:**
 
-$$X^TY = \begin{bmatrix} 35 \\ 121 \\ 97 \end{bmatrix}$$
+$$X^TY = \begin{bmatrix} 35 \\ 125 \\ 93 \end{bmatrix}$$
 
-**Step 3 — Invert $X^TX$ and multiply by $X^TY$:**
+**Step 3 — Solve $\beta = (X^TX)^{-1}X^TY$:**
 
-Solving $\beta = (X^TX)^{-1}X^TY$ gives:
+Inverting a 3×3 matrix by hand is tedious, so in practice this is done with software. Solving the system gives:
 
 $$b_0 = 1, \quad b_1 = 2, \quad b_2 = 0$$
-
-(By hand, inverting a 3×3 matrix is tedious — in practice this step is done with software. Want me to build you an interactive widget or run the actual matrix algebra numerically?)
 
 ## 5. The Final Regression Equation
 
 $$\hat{Y} = 1 + 2X_1 + 0X_2$$
 
-This means $Y$ increases by 2 for every one-unit increase in $X_1$, and $X_2$ has no additional effect once $X_1$ is accounted for (in this particular toy dataset).
+$Y$ increases by 2 for every one-unit increase in $X_1$; $X_2$ adds nothing once $X_1$ is accounted for. (You can check this directly — every row in the dataset satisfies $Y = 1 + 2X_1$ exactly, which is why $b_2$ comes out to 0.)
 
 ## 6. Making a Prediction
 
-If $X_1 = 6$ and $X_2 = 5$:
+For $X_1 = 6$, $X_2 = 5$:
 
 $$\hat{Y} = 1 + 2(6) + 0(5) = 13$$
 
@@ -73,5 +67,3 @@ $$\hat{Y} = 1 + 2(6) + 0(5) = 13$$
 | Solution | Algebraic formula | Matrix equation $\beta=(X^TX)^{-1}X^TY$ |
 | Geometry | Best-fit **line** | Best-fit **plane/hyperplane** |
 | Coefficient interpretation | Slope of the line | Effect of each $X$, holding others constant |
-
----

@@ -1,4 +1,4 @@
-Here's the same walkthrough with cleaner formatting:
+
 
 ## 1. The Dataset
 
@@ -65,7 +65,4 @@ $$\hat{Y} = 1.4(6) + 0.8 = 8.4 + 0.8 = 9.2$$
 
 ---
 
-If you'd like, I can:
-- Calculate the R² value to show fit quality
-- Build an interactive calculator widget for your own data
-- Show you how to calculate the residuals (errors)
+

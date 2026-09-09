@@ -1,147 +1,369 @@
+Yes. The expression
 
-# Multiple Linear Regression — Step-by-Step
+$$
+(X^TX)^{-1}
+=
+\begin{bmatrix}
+\frac{49}{18} &-\frac73&\frac59\\
+-\frac73&\frac{25}{9}&-\frac23\\
+\frac59&-\frac23&\frac16
+\end{bmatrix}
+$$
 
-## 1. The Dataset
+comes from **finding the inverse of a 3×3 matrix**.
 
-Two independent variables, $X_1$ and $X_2$, predicting $Y$:
+But there is an easier way to understand the math behind it.
 
-| $X_1$ | $X_2$ | $Y$ |
-|---:|---:|---:|
-| 1 | 1 | 3 |
-| 2 | 1 | 5 |
-| 3 | 2 | 7 |
-| 4 | 3 | 9 |
-| 5 | 4 | 11 |
+For our example:
 
-Goal — build a model of the form:
+$$
+X^TX=
+\begin{bmatrix}
+3&6&14\\
+6&14&36\\
+14&36&98
+\end{bmatrix}
+$$
 
-$$\boxed{\hat Y=b_0+b_1X_1+b_2X_2}$$
+Let's call this matrix \(A\):
 
-where:
-- $b_0$ → intercept
-- $b_1$ → effect of $X_1$
-- $b_2$ → effect of $X_2$
+$$
+A=
+\begin{bmatrix}
+3&6&14\\
+6&14&36\\
+14&36&98
+\end{bmatrix}
+$$
 
-## 2. Convert the Data into Matrices
+We want:
 
-$$X=\begin{bmatrix}1&1&1\\1&2&1\\1&3&2\\1&4&3\\1&5&4\end{bmatrix} \qquad Y=\begin{bmatrix}3\\5\\7\\9\\11\end{bmatrix} \qquad \beta=\begin{bmatrix}b_0\\b_1\\b_2\end{bmatrix}$$
+$$
+A^{-1}
+$$
 
-The leading column of 1s in $X$ accounts for the intercept $b_0$. $\beta$ is unknown — solving for it is the whole task.
+---
 
-## 3. The Normal Equation
+# 1. The basic idea of a matrix inverse
 
-$$\boxed{\beta=(X^TX)^{-1}X^TY}$$
+For ordinary numbers:
 
-This closed-form solution runs through these stages:
+$$
+5^{-1}=\frac15
+$$
 
-$$X \;\rightarrow\; X^T \;\rightarrow\; X^TX \;\rightarrow\; X^TY \;\rightarrow\; \beta$$
+because:
 
-## 4. Transpose $X$
+$$
+5\times\frac15=1
+$$
 
-Transposing turns rows into columns:
+For matrices, the same idea applies:
 
-$$X^T=\begin{bmatrix}1&1&1&1&1\\1&2&3&4&5\\1&1&2&3&4\end{bmatrix}$$
+$$
+\boxed{A A^{-1}=I}
+$$
 
-Dimensions go from $5\times3$ to $3\times5$.
+where \(I\) is the identity matrix:
 
-## 5. Compute $X^TX$
+$$
+I=
+\begin{bmatrix}
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}
+$$
 
-$$X^TX=\begin{bmatrix}1&1&1&1&1\\1&2&3&4&5\\1&1&2&3&4\end{bmatrix}\begin{bmatrix}1&1&1\\1&2&1\\1&3&2\\1&4&3\\1&5&4\end{bmatrix}=\boxed{\begin{bmatrix}5&15&11\\15&55&41\\11&41&31\end{bmatrix}}$$
+So we're looking for a matrix that, when multiplied by \(A\), gives \(I\).
 
-Each entry is a dot product between two columns of $X$:
+---
 
-| Entry | Calculation | Result |
-|---|---|---|
-| $(0,0)$ | $1+1+1+1+1$ | $5$ |
-| $(0,1)$ | $1+2+3+4+5$ | $15$ |
-| $(0,2)$ | $1+1+2+3+4$ | $11$ |
-| $(1,1)$ | $1^2+2^2+3^2+4^2+5^2$ | $55$ |
-| $(1,2)$ | $(1)(1)+(2)(1)+(3)(2)+(4)(3)+(5)(4)$ | $41$ |
-| $(2,2)$ | $1^2+1^2+2^2+3^2+4^2$ | $31$ |
+# 2. How do we actually find the inverse?
 
-The matrix is symmetric, so those six values fill all nine entries.
+For a \(3\times3\) matrix, one standard method is:
 
-## 6. Compute $X^TY$
+$$
+\boxed{
+A^{-1}=\frac{1}{|A|}\operatorname{adj}(A)
+}
+$$
 
-$$X^TY=\begin{bmatrix}1&1&1&1&1\\1&2&3&4&5\\1&1&2&3&4\end{bmatrix}\begin{bmatrix}3\\5\\7\\9\\11\end{bmatrix}=\boxed{\begin{bmatrix}35\\125\\93\end{bmatrix}}$$
+There are **two main pieces**:
 
-| Row | Calculation | Result |
-|---|---|---|
-| 1 | $3+5+7+9+11$ | $35$ |
-| 2 | $1(3)+2(5)+3(7)+4(9)+5(11)$ | $125$ |
-| 3 | $1(3)+1(5)+2(7)+3(9)+4(11)$ | $93$ |
+1. Find the determinant \(|A|\)
+2. Find the adjugate matrix \(\operatorname{adj}(A)\)
 
-## 7. Solve for $\beta$
+---
 
-Rather than inverting the 3×3 matrix directly, treat $X^TX\,\beta = X^TY$ as a system of three linear equations and solve by elimination.
+# 3. Find the determinant
 
-**The system:**
+Our matrix:
 
-$$\begin{aligned} 5b_0+15b_1+11b_2&=35 &&\text{(1)}\\ 15b_0+55b_1+41b_2&=125 &&\text{(2)}\\ 11b_0+41b_1+31b_2&=93 &&\text{(3)} \end{aligned}$$
+$$
+A=
+\begin{bmatrix}
+3&6&14\\
+6&14&36\\
+14&36&98
+\end{bmatrix}
+$$
 
-**Eliminate $b_0$ from (1) and (2):** multiply (1) by 3, subtract (2):
+For a \(3\times3\) matrix:
 
-$$(15b_0+45b_1+33b_2)-(15b_0+55b_1+41b_2)=105-125$$
-$$-10b_1-8b_2=-20 \;\;\Rightarrow\;\; \boxed{5b_1+4b_2=10} \quad \text{(4)}$$
+$$
+|A|=
+a(ei-fh)-b(di-fg)+c(dh-eg)
+$$
 
-**Eliminate $b_0$ from (1) and (3):** multiply (1) by 11 and (3) by 5, subtract:
+So:
 
-$$(55b_0+165b_1+121b_2)-(55b_0+205b_1+155b_2)=385-465$$
-$$-40b_1-34b_2=-80 \;\;\Rightarrow\;\; 40b_1+34b_2=80 \quad \text{(5)}$$
+$$
+|A|=
+3(14\times98-36\times36)
+-6(6\times98-36\times14)
++14(6\times36-14\times14)
+$$
 
-**Eliminate $b_1$ from (4) and (5):** multiply (4) by 8:
+Calculate:
 
-$$(40b_1+32b_2)-(40b_1+34b_2)=80-80 \;\;\Rightarrow\;\; -2b_2=0 \;\;\Rightarrow\;\; \boxed{b_2=0}$$
+$$
+=3(1372-1296)
+-6(588-504)
++14(216-196)
+$$
 
-**Back-substitute into (4):**
+$$
+=3(76)-6(84)+14(20)
+$$
 
-$$5b_1+4(0)=10 \;\;\Rightarrow\;\; \boxed{b_1=2}$$
+$$
+=228-504+280
+$$
 
-**Back-substitute into (1):**
+$$
+\boxed{|A|=4}
+$$
 
-$$5b_0+15(2)+11(0)=35 \;\;\Rightarrow\;\; 5b_0=5 \;\;\Rightarrow\;\; \boxed{b_0=1}$$
+Therefore:
 
-**Result:**
+$$
+\frac1{|A|}=\frac14
+$$
 
-$$\beta=\begin{bmatrix}b_0\\b_1\\b_2\end{bmatrix}=\begin{bmatrix}1\\2\\0\end{bmatrix}$$
+---
 
-This is exactly equivalent to computing $(X^TX)^{-1}X^TY$ directly — solving the linear system *is* what matrix inversion does under the hood, just without needing to write out the inverse explicitly.
+# 4. Find the cofactor matrix
 
-## 8. The Regression Equation
+This is the more tedious part.
 
-$$\hat Y=b_0+b_1X_1+b_2X_2=1+2X_1+0X_2 \;\;\Rightarrow\;\; \boxed{\hat Y=1+2X_1}$$
+For example, the first element of the cofactor matrix is:
 
-$X_2$'s coefficient is zero, meaning it adds nothing to the prediction once $X_1$ is included — in this dataset, every row satisfies $Y=1+2X_1$ exactly, so $X_2$ is redundant.
+$$
+C_{11}
+=
+\begin{vmatrix}
+14&36\\
+36&98
+\end{vmatrix}
+$$
 
-## 9. Making a Prediction
+Calculate:
 
-For $X_1=6,\ X_2=5$:
+$$
+C_{11}=14(98)-36(36)
+$$
 
-$$\hat Y=1+2(6)+0(5)=1+12=\boxed{13}$$
+$$
+=1372-1296
+$$
 
-## 10. The Full Process
+$$
+=76
+$$
 
-```
-        DATA
-          ↓
-   Build X and Y
-          ↓
-      Find Xᵀ
-          ↓
-    Compute XᵀX
-          ↓
-    Compute XᵀY
-          ↓
- β = (XᵀX)⁻¹XᵀY
-   (solved via elimination)
-          ↓
-   b₀, b₁, b₂ found
-          ↓
- Regression equation built
-          ↓
-     Prediction made
-```
+Another example:
 
-**Key formula:** $\beta=(X^TX)^{-1}X^TY$
+$$
+C_{12}
+=
+-\begin{vmatrix}
+6&36\\
+14&98
+\end{vmatrix}
+$$
 
-**Key idea:** Multiple linear regression solves for all coefficients $b_0, b_1, b_2, \dots$ simultaneously via the Normal Equation, minimizing the total squared prediction error across every predictor at once — the direct extension of what a single slope/intercept formula does for one predictor.
+$$
+=-(6(98)-36(14))
+$$
+
+$$
+=-(588-504)
+$$
+
+$$
+=-84
+$$
+
+Doing this for all 9 positions gives the cofactor matrix:
+
+$$
+C=
+\begin{bmatrix}
+76&-84&20\\
+-84&98&-24\\
+20&-24&6
+\end{bmatrix}
+$$
+
+---
+
+# 5. Transpose the cofactor matrix
+
+The **adjugate** is the transpose of the cofactor matrix:
+
+$$
+\operatorname{adj}(A)=C^T
+$$
+
+In this particular example, the matrix happens to be symmetric, so the transpose looks the same:
+
+$$
+\operatorname{adj}(A)=
+\begin{bmatrix}
+76&-84&20\\
+-84&98&-24\\
+20&-24&6
+\end{bmatrix}
+$$
+
+---
+
+# 6. Divide by the determinant
+
+Remember:
+
+$$
+A^{-1}=
+\frac{1}{|A|}\operatorname{adj}(A)
+$$
+
+We found:
+
+$$
+|A|=4
+$$
+
+Therefore:
+
+$$
+A^{-1}
+=
+\frac14
+\begin{bmatrix}
+76&-84&20\\
+-84&98&-24\\
+20&-24&6
+\end{bmatrix}
+$$
+
+Divide every element by 4:
+
+$$
+A^{-1}
+=
+\begin{bmatrix}
+19&-21&5\\
+-21&\frac{49}{2}&-6\\
+5&-6&\frac32
+\end{bmatrix}
+$$
+
+So:
+
+$$
+\boxed{
+(X^TX)^{-1}
+=
+\begin{bmatrix}
+19&-21&5\\
+-21&\frac{49}{2}&-6\\
+5&-6&\frac32
+\end{bmatrix}}
+$$
+
+---
+
+## 7. Then use it in the Normal Equation
+
+Now we have:
+
+$$
+\hat\beta=(X^TX)^{-1}X^Ty
+$$
+
+Substitute:
+
+$$
+\hat\beta=
+\begin{bmatrix}
+19&-21&5\\
+-21&\frac{49}{2}&-6\\
+5&-6&\frac32
+\end{bmatrix}
+\begin{bmatrix}
+38\\
+90\\
+234
+\end{bmatrix}
+$$
+
+This gives:
+
+$$
+\boxed{
+\hat\beta=
+\begin{bmatrix}
+2\\
+3\\
+1
+\end{bmatrix}}
+$$
+
+Therefore:
+
+$$
+\boxed{\hat y=2+3x+x^2}
+$$
+
+---
+
+### One thing to remember
+
+You **don't need to manually calculate matrix inverses every time** when doing ML.
+
+The important conceptual chain is:
+
+$$
+\boxed{
+X
+\rightarrow
+X^T X
+\rightarrow
+(X^TX)^{-1}
+\rightarrow
+X^Ty
+\rightarrow
+\hat\beta
+}
+$$
+
+And:
+
+$$
+\boxed{
+A^{-1}=\frac{\operatorname{adj}(A)}{\det(A)}
+}
+$$
+
+is the mathematical rule that explains **where the inverse comes from**.

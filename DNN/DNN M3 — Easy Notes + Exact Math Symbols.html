@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)file:///Users/mva063/Mahi-folder/Git-projects/DNN-M3-Easy-Notation-Exam-Notes.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DNN M3 — Easy Notes + Exact Math Symbols</title>
+  <style>
+    :root { --ink: #111; --muted: #444; --rule: #ccc; --box: #f4f4f4; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0 auto; padding: 22px 28px 48px; max-width: 820px;
+      font-family: "Times New Roman", Times, Georgia, serif;
+      font-size: 12pt; line-height: 1.45; color: var(--ink);
+    }
+    h1 { font-size: 17pt; margin: 0 0 4px; border-bottom: 2px solid #000; padding-bottom: 6px; }
+    h2 { font-size: 13.5pt; margin: 20px 0 8px; border-bottom: 1px solid var(--rule); padding-bottom: 3px; page-break-after: avoid; }
+    h3 { font-size: 12pt; margin: 14px 0 6px; page-break-after: avoid; }
+    p, li { margin: 5px 0; }
+    .meta { color: var(--muted); font-size: 10.5pt; margin-bottom: 14px; }
+    .box {
+      background: var(--box); border: 1px solid #bbb; padding: 9px 12px;
+      margin: 10px 0; page-break-inside: avoid;
+    }
+    .box strong { display: block; margin-bottom: 5px; }
+    .easy { background: #eef7ee; border-color: #8aad8a; }
+    .warn { background: #fff8e6; border-color: #c9a227; }
+    table {
+      width: 100%; border-collapse: collapse; margin: 8px 0 12px;
+      font-size: 11pt; page-break-inside: avoid;
+    }
+    th, td { border: 1px solid #333; padding: 5px 8px; text-align: left; }
+    th { background: #eee; text-align: center; }
+    td.num, th.num { text-align: center; }
+    .math {
+      white-space: pre-wrap; background: #fafafa; border: 1px solid #ddd;
+      padding: 8px 11px; margin: 6px 0 12px; font-size: 11pt;
+      line-height: 1.55; page-break-inside: avoid;
+    }
+    .step { font-weight: bold; margin-top: 10px; }
+    ul, ol { padding-left: 20px; }
+    .no-print {
+      margin-bottom: 16px; padding: 10px 12px; background: #eef4ff;
+      border: 1px solid #99b; font-family: system-ui, sans-serif; font-size: 13px;
+    }
+    .no-print button { font-size: 14px; padding: 7px 14px; cursor: pointer; }
+    @media print {
+      body { padding: 10mm 12mm; max-width: none; font-size: 10.5pt; }
+      .no-print { display: none !important; }
+      .box, .math, table { break-inside: avoid; }
+    }
+    @page { margin: 12mm; }
+  </style>
+</head>
+<body>
+  <div class="no-print">
+    Easy explanations + exact math for ŷ and gradients.
+    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <h1>DNN Module 3 — Linear Regression (Easy + Exact Math)</h1>
+  <p class="meta">BITS Pilani WILP · class content with exact symbols for prediction and gradients</p>
+
+  <div class="box easy">
+    <strong>Exact math symbols (use these in the exam)</strong>
+    <table>
+      <thead>
+        <tr><th>Exact math</th><th>Easy meaning</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ŷ</td><td>prediction (what the model outputs)</td></tr>
+        <tr><td>∂J/∂w₀</td><td>gradient for bias w₀ (how Loss changes if w₀ changes)</td></tr>
+        <tr><td>∂J/∂w₁</td><td>gradient for weight w₁ (how Loss changes if w₁ changes)</td></tr>
+        <tr><td>x</td><td>input (e.g. house size)</td></tr>
+        <tr><td>y</td><td>true answer (e.g. price)</td></tr>
+        <tr><td>w₀</td><td>bias</td></tr>
+        <tr><td>w₁</td><td>weight / slope</td></tr>
+        <tr><td>e = ŷ − y</td><td>error</td></tr>
+        <tr><td>J</td><td>Loss (how wrong overall)</td></tr>
+        <tr><td>η</td><td>learning rate (step size)</td></tr>
+        <tr><td>N</td><td>number of training rows</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box warn">
+    <strong>No sigmoid here</strong>
+    Activation is identity: f(z) = z.<br>
+    Sigmoid is for classification later — not for linear regression.
+  </div>
+
+  <h2>1. What is regression?</h2>
+  <p>Predict a <strong>number</strong> (price, temperature), not a class label.</p>
+  <ul>
+    <li><strong>x</strong> = input we know</li>
+    <li><strong>y</strong> = true number</li>
+    <li><strong>ŷ</strong> = model prediction (goal: make ŷ close to y)</li>
+  </ul>
+
+  <h2>2. Linear model</h2>
+  <div class="math">ŷ = w₀ + w₁ · x
+
+Easy words: prediction = bias + weight × input</div>
+  <p>With more features:</p>
+  <div class="math">ŷ = w₀ + w₁x₁ + w₂x₂ + w₃x₃ + ···</div>
+
+  <div class="box">
+    <strong>Neuron in easy words</strong>
+    Multiply inputs by weights → add them → identity activation (keep the number) → that is ŷ.
+  </div>
+
+  <h2>3. Activation = identity</h2>
+  <div class="math">f(z) = z
+
+After the weighted sum, keep the value as-is.
+Needed because targets can be any real number.</div>
+
+  <h2>4. Loss J</h2>
+  <div class="math">e = ŷ − y
+one row contribution uses (1/2) e²
+
+Class total loss:
+J = (1/N) Σ (1/2)(ŷ − y)²
+  = (1/(2N)) × (sum of squared errors)
+
+Goal: choose w₀, w₁ to make J small.</div>
+
+  <h2>5. Gradient descent (learning loop)</h2>
+  <ol>
+    <li>Compute ŷ for every row</li>
+    <li>Compute Loss J</li>
+    <li>Compute ∂J/∂w₀ and ∂J/∂w₁</li>
+    <li>Update weights</li>
+  </ol>
+
+  <div class="math">w₀ ← w₀ − η · (∂J/∂w₀)
+w₁ ← w₁ − η · (∂J/∂w₁)
+
+Why minus?
+  ∂J/∂w points uphill on Loss.
+  Subtract to walk downhill.</div>
+
+  <h3>Gradient formulas (exact math)</h3>
+  <div class="math">For each row: e = ŷ − y
+
+∂J/∂w₀ = (1/N) Σ e
+∂J/∂w₁ = (1/N) Σ (e · x)
+
+(Same as class matrix form: ∇J = (1/N) Xᵀ e )</div>
+
+  <h2>6. When to stop</h2>
+  <div class="box easy">
+    <strong>Stop if</strong>
+    1. Gradients almost zero: |∂J/∂w₀| and |∂J/∂w₁| very small<br>
+    2. Loss J barely changes between steps<br>
+    3. Max iterations reached (e.g. 1000)<br>
+    4. Validation loss rises (early stopping)
+  </div>
+  <ul>
+    <li>η too big → Loss jumps / explodes</li>
+    <li>η too small → very slow learning</li>
+    <li>Try η ∈ {0.001, 0.01, 0.1, 1.0}</li>
+  </ul>
+
+  <h2>7. Class worked example</h2>
+  <p>Predict price from size. η = 0.1 , N = 3.</p>
+  <table>
+    <thead>
+      <tr><th class="num">Row</th><th class="num">x (size)</th><th class="num">y (price)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="num">1</td><td class="num">1</td><td class="num">2</td></tr>
+      <tr><td class="num">2</td><td class="num">2</td><td class="num">4</td></tr>
+      <tr><td class="num">3</td><td class="num">3</td><td class="num">5</td></tr>
+    </tbody>
+  </table>
+  <p>Model: <strong>ŷ = w₀ + w₁ · x</strong></p>
+
+  <h3>Start</h3>
+  <div class="math">w₀ = 0
+w₁ = 0</div>
+
+  <p class="step">Step A — Predictions ŷ</p>
+  <div class="math">ŷ₁ = 0 + 0·1 = 0
+ŷ₂ = 0 + 0·2 = 0
+ŷ₃ = 0 + 0·3 = 0</div>
+
+  <p class="step">Step B — Errors e = ŷ − y</p>
+  <div class="math">e₁ = 0 − 2 = −2
+e₂ = 0 − 4 = −4
+e₃ = 0 − 5 = −5</div>
+
+  <p class="step">Step C — Loss J</p>
+  <div class="math">Σ e² = (−2)² + (−4)² + (−5)² = 4 + 16 + 25 = 45
+J = 45 / (2·3) = 45/6 = 7.5</div>
+
+  <p class="step">Step D — Gradients ∂J/∂w₀ and ∂J/∂w₁</p>
+  <div class="math">∂J/∂w₀ = (1/3)[(−2)+(−4)+(−5)]
+         = (1/3)(−11)
+         = −3.67
+
+∂J/∂w₁ = (1/3)[(−2)·1 + (−4)·2 + (−5)·3]
+         = (1/3)[(−2)+(−8)+(−15)]
+         = (1/3)(−25)
+         = −8.33</div>
+
+  <p class="step">Step E — Update</p>
+  <div class="math">w₀ ← 0 − 0.1 · (∂J/∂w₀) = 0 − 0.1·(−3.67) = 0.367
+w₁ ← 0 − 0.1 · (∂J/∂w₁) = 0 − 0.1·(−8.33) = 0.833</div>
+
+  <p class="step">Step F — New ŷ and new J</p>
+  <div class="math">ŷ₁ = 0.367 + 0.833·1 = 1.20
+ŷ₂ = 0.367 + 0.833·2 = 2.03
+ŷ₃ = 0.367 + 0.833·3 = 2.87
+
+new errors ≈ −0.80, −1.97, −2.13
+new J ≈ 1.51
+
+Loss fell: 7.5 → 1.51
+Repeat until stop rule.</div>
+
+  <h2>8. Evaluation (short)</h2>
+  <div class="math">MSE  = average of (ŷ − y)²
+RMSE = √MSE
+MAE  = average of |ŷ − y|
+
+R² ≈ 1 perfect; 0 = like predicting mean y; 0.7–0.9 often good
+Always check on test data (unseen rows).</div>
+
+  <h2>9. Exam memory card</h2>
+  <div class="box easy">
+    <strong>Write from memory</strong>
+    1. ŷ = w₀ + w₁ · x<br>
+    2. e = ŷ − y<br>
+    3. J = (1/(2N)) Σ e²<br>
+    4. ∂J/∂w₀ = (1/N) Σ e &nbsp;&nbsp; ; &nbsp;&nbsp; ∂J/∂w₁ = (1/N) Σ (e · x)<br>
+    5. w₀ ← w₀ − η·(∂J/∂w₀) &nbsp;&nbsp; ; &nbsp;&nbsp; w₁ ← w₁ − η·(∂J/∂w₁)<br>
+    6. Stop when gradients tiny / J flat / max steps<br>
+    7. Activation f(z)=z (identity), not sigmoid
+  </div>
+
+  <div class="no-print" style="margin-top:24px;">
+    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+
+</body></html>

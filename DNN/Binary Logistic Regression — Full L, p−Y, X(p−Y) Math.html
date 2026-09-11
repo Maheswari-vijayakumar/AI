@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<!-- saved from url=(0092)file:///Users/mva063/Mahi-folder/Git-projects/Binary-Logistic-Regression-All-Iterations.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Binary Logistic Regression — Full L, p−Y, X(p−Y) Math</title>
+  <style>
+    body { font-family: "Times New Roman", Times, Georgia, serif; max-width: 920px; margin: 0 auto; padding: 18px 22px 60px; font-size: 10.5pt; line-height: 1.42; color: #111; }
+    h1 { font-size: 15pt; border-bottom: 2px solid #000; padding-bottom: 6px; }
+    h2 { font-size: 12.5pt; margin-top: 18px; border-bottom: 1px solid #ccc; padding-bottom: 3px; page-break-after: avoid; }
+    h3 { font-size: 11pt; margin-top: 12px; page-break-after: avoid; }
+    h4 { font-size: 10.5pt; margin: 10px 0 4px; page-break-after: avoid; background: #eee; padding: 3px 6px; }
+    .meta { color: #444; font-size: 9.5pt; margin-bottom: 10px; }
+    .box { background: #f5f5f5; border: 1px solid #bbb; padding: 8px 10px; margin: 8px 0; page-break-inside: avoid; }
+    .ok { background: #eef7ee; border-color: #8aad8a; }
+    .zbox { background: #fff8e6; border: 1px solid #c9a227; padding: 8px 10px; margin: 8px 0; page-break-inside: avoid; }
+    .card { border: 1px solid #aaa; padding: 8px 10px; margin: 8px 0 12px; page-break-inside: avoid; background: #fff; }
+    .math { background: #fafafa; border: 1px solid #ddd; padding: 8px 10px; margin: 6px 0; page-break-inside: avoid; }
+    .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 2px; line-height: 1.1; }
+    .frac .num, .frac .den { padding: 0 3px; text-align: center; }
+    .frac .num { border-bottom: 1.4px solid currentColor; padding-bottom: 1px; margin-bottom: 1px; }
+    .eq { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin: 4px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 9pt; page-break-inside: avoid; }
+    th, td { border: 1px solid #333; padding: 3px 4px; text-align: center; }
+    th { background: #eee; }
+    .no-print { margin-bottom: 12px; padding: 10px; background: #eef4ff; border: 1px solid #99b; font-family: system-ui,sans-serif; font-size: 13px; }
+    .no-print button { font-size: 14px; padding: 7px 14px; cursor: pointer; }
+    @media print {
+      .no-print { display: none !important; }
+      body { padding: 7mm; font-size: 9pt; }
+      .card, .box, .math, .zbox, table { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="no-print">
+    Full math for <strong>L</strong>, <strong>p−Y</strong>, and <strong>X(p−Y)</strong> on every student.
+    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <h1>Binary Logistic Regression — Nothing Skipped (z, p, L, p−Y, X(p−Y))</h1>
+  <p class="meta">Start β₀=−5, β₁=1, α=0.1 · stacked fractions · every formula expanded</p>
+
+  <h2>0. Formulas (use every row, every iteration)</h2>
+  <div class="box">
+    <strong>1) Linear score</strong><br>
+    z = β₀ + β₁ · X
+  </div>
+  <div class="box">
+    <strong>2) Probability</strong>
+    <div class="eq">
+      <span>p = σ(z) =</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + e<sup>−z</sup></span></span>
+    </div>
+  </div>
+  <div class="box">
+    <strong>3) Loss L</strong><br>
+    Full formula: L = − [ Y·ln(p) + (1−Y)·ln(1−p) ]<br>
+    If Y = 1: L = −ln(p)<br>
+    If Y = 0: L = −ln(1 − p)<br><br>
+    <strong>Special help for Y=0 when p is tiny (like Student A):</strong><br>
+    L = −ln(1 − p)<br>
+    Write 1 − p = 1 − x, with x = p (small)<br>
+    Rule: ln(1 − x) ≈ −x &nbsp; when x is small<br>
+    So ln(1 − p) ≈ −p<br>
+    Therefore L = −ln(1 − p) ≈ −(−p) = p<br>
+    Example: p=0.018 → L ≈ 0.018
+  </div>
+  <div class="box">
+    <strong>4) Error terms</strong><br>
+    p − Y = p − Y &nbsp;&nbsp;(subtraction)<br>
+    X(p − Y) = X · (p − Y) &nbsp;&nbsp;(multiply by study hours)
+  </div>
+  <div class="box">
+    <strong>5) Batch averages + update</strong>
+    <div class="eq">
+      <span>J =</span><span class="frac"><span class="num">Σ L</span><span class="den">6</span></span>
+      <span>&nbsp; ∂J/∂β₀ =</span><span class="frac"><span class="num">Σ(p−Y)</span><span class="den">6</span></span>
+      <span>&nbsp; ∂J/∂β₁ =</span><span class="frac"><span class="num">Σ X(p−Y)</span><span class="den">6</span></span>
+    </div>
+    β₀ ← β₀ − 0.1·(∂J/∂β₀) &nbsp;&nbsp; β₁ ← β₁ − 0.1·(∂J/∂β₁)<br>
+    Ŷ = 1 if p ≥ 0.5 else 0
+  </div>
+
+  <h2>1. Dataset</h2>
+  <table>
+    <thead><tr><th>Student</th><th>X</th><th>Y</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td>1</td><td>0</td></tr>
+      <tr><td>B</td><td>2</td><td>0</td></tr>
+      <tr><td>C</td><td>3</td><td>0</td></tr>
+      <tr><td>D</td><td>4</td><td>1</td></tr>
+      <tr><td>E</td><td>5</td><td>1</td></tr>
+      <tr><td>F</td><td>6</td><td>1</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ===================== ITERATION 0 ===================== -->
+  <h2>2. Iteration 0 &nbsp; β₀ = −5 , β₁ = 1</h2>
+
+  <h4>Student A &nbsp; X=1 , Y=0</h4>
+  <div class="card">
+    <strong>z:</strong> z = −5 + 1·1 = −5 + 1 = <b>−4</b><br><br>
+    <strong>p:</strong>
+    <div class="eq">
+      <span>p =</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + e<sup>−(−4)</sup></span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + e<sup>4</sup></span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + 54.598</span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">55.598</span></span>
+      <span>= <b>0.017986</b></span>
+    </div>
+    <strong>L:</strong> Y=0 ⇒ L = −ln(1 − p)<br>
+    1 − p = 1 − 0.017986 = 0.982014<br>
+    So L = −ln(0.982014)<br><br>
+    <em>How do we get ln(0.982014) ≈ −0.018150?</em><br>
+    Write 0.982014 as close to 1:<br>
+    0.982014 = 1 − 0.017986<br>
+    Let x = 0.017986 ≈ 0.018 (this is small)<br><br>
+    Math rule for small x:<br>
+    ln(1 − x) ≈ −x<br><br>
+    Why? Because ln(1)=0, and if the number is only a tiny bit below 1,
+    ln is only a tiny bit below 0. The drop is about the same size as x.<br><br>
+    So:<br>
+    ln(0.982014) = ln(1 − 0.017986) ≈ −0.017986 ≈ −0.018150
+    (exact calculator value ≈ −0.018150)<br><br>
+    Then apply the minus from the loss formula:<br>
+    L = −ln(0.982014) = −(−0.018150) = <b>0.018150</b> ≈ 0.018<br><br>
+    Quick check without formula: p itself was ≈0.018 and Y=0, so loss is tiny ≈0.018. That matches.<br><br>
+    <strong>p − Y:</strong> 0.017986 − 0 = <b>0.017986</b><br>
+    <strong>X(p − Y):</strong> 1 · 0.017986 = <b>0.017986</b><br>
+    <strong>Ŷ:</strong> 0.017986 &lt; 0.5 → <b>0</b> ✓
+  </div>
+
+  <h4>Student B &nbsp; X=2 , Y=0</h4>
+  <div class="card">
+    <strong>z:</strong> z = −5 + 1·2 = −5 + 2 = <b>−3</b><br><br>
+    <strong>p:</strong>
+    <div class="eq">
+      <span>p =</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + e<sup>3</sup></span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + 20.086</span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">21.086</span></span>
+      <span>= <b>0.047426</b></span>
+    </div>
+    <strong>L:</strong> Y=0 ⇒ L = −ln(1 − p)<br>
+    1 − p = 1 − 0.047426 = 0.952574<br>
+    ln(0.952574) ≈ −0.048587<br>
+    L = −(−0.048587) = <b>0.048587</b><br><br>
+    <strong>p − Y:</strong> 0.047426 − 0 = <b>0.047426</b><br>
+    <strong>X(p − Y):</strong> 2 · 0.047426 = <b>0.094852</b><br>
+    <strong>Ŷ:</strong> 0.047426 &lt; 0.5 → <b>0</b> ✓
+  </div>
+
+  <h4>Student C &nbsp; X=3 , Y=0</h4>
+  <div class="card">
+    <strong>z:</strong> z = −5 + 1·3 = −5 + 3 = <b>−2</b><br><br>
+    <strong>p:</strong>
+    <div class="eq">
+      <span>p =</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + e<sup>2</sup></span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + 7.389</span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">8.389</span></span>
+      <span>= <b>0.119203</b></span>
+    </div>
+    <strong>L:</strong> Y=0 ⇒ L = −ln(1 − p)<br>
+    1 − p = 1 − 0.119203 = 0.880797<br>
+    ln(0.880797) ≈ −0.126928<br>
+    L = −(−0.126928) = <b>0.126928</b><br><br>
+    <strong>p − Y:</strong> 0.119203 − 0 = <b>0.119203</b><br>
+    <strong>X(p − Y):</strong> 3 · 0.119203 = <b>0.357609</b><br>
+    <strong>Ŷ:</strong> 0.119203 &lt; 0.5 → <b>0</b> ✓
+  </div>
+
+  <h4>Student D &nbsp; X=4 , Y=1</h4>
+  <div class="card">
+    <strong>z:</strong> z = −5 + 1·4 = −5 + 4 = <b>−1</b><br><br>
+    <strong>p:</strong>
+    <div class="eq">
+      <span>p =</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + e<sup>1</sup></span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + 2.718</span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">3.718</span></span>
+      <span>= <b>0.268941</b></span>
+    </div>
+    <strong>L:</strong> Y=1 ⇒ L = −ln(p) = −ln(0.268941)<br>
+    ln(0.268941) ≈ −1.313262<br>
+    L = −(−1.313262) = <b>1.313262</b><br><br>
+    <strong>p − Y:</strong> 0.268941 − 1 = <b>−0.731059</b><br>
+    <strong>X(p − Y):</strong> 4 · (−0.731059) = <b>−2.924234</b><br>
+    <strong>Ŷ:</strong> 0.268941 &lt; 0.5 → <b>0</b> ✗ (actual is 1)
+  </div>
+
+  <h4>Student E &nbsp; X=5 , Y=1</h4>
+  <div class="card">
+    <strong>z:</strong> z = −5 + 1·5 = −5 + 5 = <b>0</b><br><br>
+    <strong>p:</strong>
+    <div class="eq">
+      <span>p =</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + e<sup>0</sup></span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + 1</span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">2</span></span>
+      <span>= <b>0.500000</b></span>
+    </div>
+    <strong>L:</strong> Y=1 ⇒ L = −ln(p) = −ln(0.5)<br>
+    ln(0.5) = −ln(2) ≈ −0.693147<br>
+    L = −(−0.693147) = <b>0.693147</b><br><br>
+    <strong>p − Y:</strong> 0.500000 − 1 = <b>−0.500000</b><br>
+    <strong>X(p − Y):</strong> 5 · (−0.500000) = <b>−2.500000</b><br>
+    <strong>Ŷ:</strong> 0.5 ≥ 0.5 → <b>1</b> ✓
+  </div>
+
+  <h4>Student F &nbsp; X=6 , Y=1</h4>
+  <div class="card">
+    <strong>z:</strong> z = −5 + 1·6 = −5 + 6 = <b>1</b><br><br>
+    <strong>p:</strong>
+    <div class="eq">
+      <span>p =</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + e<sup>−1</sup></span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">1 + 0.368</span></span>
+      <span>=</span>
+      <span class="frac"><span class="num">1</span><span class="den">1.368</span></span>
+      <span>= <b>0.731059</b></span>
+    </div>
+    <strong>L:</strong> Y=1 ⇒ L = −ln(p) = −ln(0.731059)<br>
+    ln(0.731059) ≈ −0.313262<br>
+    L = −(−0.313262) = <b>0.313262</b><br><br>
+    <strong>p − Y:</strong> 0.731059 − 1 = <b>−0.268941</b><br>
+    <strong>X(p − Y):</strong> 6 · (−0.268941) = <b>−1.613649</b><br>
+    <strong>Ŷ:</strong> 0.731059 ≥ 0.5 → <b>1</b> ✓
+  </div>
+
+  <h3>Iteration 0 — collect + update</h3>
+  <div class="math">
+    Σ L = 0.018150+0.048587+0.126928+1.313262+0.693147+0.313262 = 2.513336
+    <div class="eq"><span>J =</span><span class="frac"><span class="num">2.513336</span><span class="den">6</span></span><span>= 0.418889</span></div>
+    Σ(p−Y) = 0.017986+0.047426+0.119203+(−0.731059)+(−0.500000)+(−0.268941) = −1.315385
+    <div class="eq"><span>∂J/∂β₀ =</span><span class="frac"><span class="num">−1.315385</span><span class="den">6</span></span><span>= −0.219231</span></div>
+    Σ X(p−Y) = 0.017986+0.094852+0.357609+(−2.924234)+(−2.500000)+(−1.613649) = −6.567436
+    <div class="eq"><span>∂J/∂β₁ =</span><span class="frac"><span class="num">−6.567436</span><span class="den">6</span></span><span>= −1.094573</span></div>
+    β₀ ← −5 − 0.1·(−0.219231) = −4.978077<br>
+    β₁ ← 1 − 0.1·(−1.094573) = 1.109457
+  </div>
+
+  <!-- ===================== ITERATION 1 ===================== -->
+  <h2>3. Iteration 1 &nbsp; β₀ = −4.978077 , β₁ = 1.109457</h2>
+
+  <h4>Student A &nbsp; X=1 , Y=0</h4>
+  <div class="card">
+    <strong>z:</strong> −4.978077 + 1.109457·1 = <b>−3.868620</b><br>
+    <strong>p:</strong> σ(−3.868620) = <b>0.020460</b><br>
+    <strong>L:</strong> Y=0 ⇒ L = −ln(1−0.020460) = −ln(0.979540) = <b>0.020672</b><br>
+    <strong>p−Y:</strong> 0.020460 − 0 = <b>0.020460</b><br>
+    <strong>X(p−Y):</strong> 1 · 0.020460 = <b>0.020460</b><br>
+    <strong>Ŷ:</strong> 0 ✓
+  </div>
+
+  <h4>Student B &nbsp; X=2 , Y=0</h4>
+  <div class="card">
+    <strong>z:</strong> −4.978077 + 1.109457·2 = −4.978077 + 2.218914 = <b>−2.759162</b><br>
+    <strong>p:</strong> σ(−2.759162) = <b>0.059571</b><br>
+    <strong>L:</strong> −ln(1−0.059571) = −ln(0.940429) = <b>0.061419</b><br>
+    <strong>p−Y:</strong> 0.059571 − 0 = <b>0.059571</b><br>
+    <strong>X(p−Y):</strong> 2 · 0.059571 = <b>0.119143</b><br>
+    <strong>Ŷ:</strong> 0 ✓
+  </div>
+
+  <h4>Student C &nbsp; X=3 , Y=0</h4>
+  <div class="card">
+    <strong>z:</strong> −4.978077 + 1.109457·3 = −4.978077 + 3.328372 = <b>−1.649705</b><br>
+    <strong>p:</strong> σ(−1.649705) = <b>0.161149</b><br>
+    <strong>L:</strong> −ln(1−0.161149) = −ln(0.838851) = <b>0.175722</b><br>
+    <strong>p−Y:</strong> 0.161149 − 0 = <b>0.161149</b><br>
+    <strong>X(p−Y):</strong> 3 · 0.161149 = <b>0.483446</b><br>
+    <strong>Ŷ:</strong> 0 ✓
+  </div>
+
+  <h4>Student D &nbsp; X=4 , Y=1</h4>
+  <div class="card">
+    <strong>z:</strong> −4.978077 + 1.109457·4 = −4.978077 + 4.437829 = <b>−0.540248</b><br>
+    <strong>p:</strong> σ(−0.540248) = <b>0.368130</b><br>
+    <strong>L:</strong> Y=1 ⇒ L = −ln(0.368130) = <b>0.999319</b><br>
+    <strong>p−Y:</strong> 0.368130 − 1 = <b>−0.631870</b><br>
+    <strong>X(p−Y):</strong> 4 · (−0.631870) = <b>−2.527480</b><br>
+    <strong>Ŷ:</strong> 0 ✗
+  </div>
+
+  <h4>Student E &nbsp; X=5 , Y=1</h4>
+  <div class="card">
+    <strong>z:</strong> −4.978077 + 1.109457·5 = −4.978077 + 5.547286 = <b>0.569209</b><br>
+    <strong>p:</strong> σ(0.569209) = <b>0.638581</b><br>
+    <strong>L:</strong> −ln(0.638581) = <b>0.448507</b><br>
+    <strong>p−Y:</strong> 0.638581 − 1 = <b>−0.361419</b><br>
+    <strong>X(p−Y):</strong> 5 · (−0.361419) = <b>−1.807096</b><br>
+    <strong>Ŷ:</strong> 1 ✓
+  </div>
+
+  <h4>Student F &nbsp; X=6 , Y=1</h4>
+  <div class="card">
+    <strong>z:</strong> −4.978077 + 1.109457·6 = −4.978077 + 6.656743 = <b>1.678667</b><br>
+    <strong>p:</strong> σ(1.678667) = <b>0.842728</b><br>
+    <strong>L:</strong> −ln(0.842728) = <b>0.171111</b><br>
+    <strong>p−Y:</strong> 0.842728 − 1 = <b>−0.157272</b><br>
+    <strong>X(p−Y):</strong> 6 · (−0.157272) = <b>−0.943633</b><br>
+    <strong>Ŷ:</strong> 1 ✓
+  </div>
+
+  <div class="math">
+    Σ L = 1.876751<br>
+    J =
+    <span class="frac"><span class="num">1.876751</span><span class="den">6</span></span>
+    = 0.312792<br>
+    Σ(p−Y)=−0.909382 → ∂J/∂β₀ =
+    <span class="frac"><span class="num">−0.909382</span><span class="den">6</span></span>
+    = −0.151564<br>
+    Σ X(p−Y)=−4.655160 → ∂J/∂β₁ =
+    <span class="frac"><span class="num">−4.655160</span><span class="den">6</span></span>
+    = −0.775860<br>
+    β₀ ← −4.962921 &nbsp; β₁ ← 1.187043
+  </div>
+
+  <!-- ===================== ITERATION 2 ===================== -->
+  <h2>4. Iteration 2 &nbsp; β₀ = −4.962921 , β₁ = 1.187043</h2>
+
+  <h4>Student A &nbsp; X=1 , Y=0</h4>
+  <div class="card">
+    z = −4.962921 + 1.187043·1 = <b>−3.775877</b><br>
+    p = σ(z) = <b>0.022404</b><br>
+    L = −ln(1−0.022404) = −ln(0.977596) = <b>0.022658</b><br>
+    p−Y = 0.022404 − 0 = <b>0.022404</b><br>
+    X(p−Y) = 1 · 0.022404 = <b>0.022404</b> &nbsp;|&nbsp; Ŷ=0 ✓
+  </div>
+  <h4>Student B &nbsp; X=2 , Y=0</h4>
+  <div class="card">
+    z = −4.962921 + 1.187043·2 = −4.962921 + 2.374086 = <b>−2.588834</b><br>
+    p = <b>0.069861</b><br>
+    L = −ln(1−0.069861) = −ln(0.930139) = <b>0.072421</b><br>
+    p−Y = 0.069861 − 0 = <b>0.069861</b><br>
+    X(p−Y) = 2 · 0.069861 = <b>0.139721</b> &nbsp;|&nbsp; Ŷ=0 ✓
+  </div>
+  <h4>Student C &nbsp; X=3 , Y=0</h4>
+  <div class="card">
+    z = −4.962921 + 1.187043·3 = −4.962921 + 3.561130 = <b>−1.401791</b><br>
+    p = <b>0.197532</b><br>
+    L = −ln(1−0.197532) = −ln(0.802468) = <b>0.220063</b><br>
+    p−Y = 0.197532 − 0 = <b>0.197532</b><br>
+    X(p−Y) = 3 · 0.197532 = <b>0.592596</b> &nbsp;|&nbsp; Ŷ=0 ✓
+  </div>
+  <h4>Student D &nbsp; X=4 , Y=1</h4>
+  <div class="card">
+    z = −4.962921 + 1.187043·4 = −4.962921 + 4.748173 = <b>−0.214747</b><br>
+    p = <b>0.446519</b><br>
+    L = −ln(0.446519) = <b>0.806274</b><br>
+    p−Y = 0.446519 − 1 = <b>−0.553481</b><br>
+    X(p−Y) = 4 · (−0.553481) = <b>−2.213926</b> &nbsp;|&nbsp; Ŷ=0 ✗
+  </div>
+  <h4>Student E &nbsp; X=5 , Y=1</h4>
+  <div class="card">
+    z = −4.962921 + 1.187043·5 = −4.962921 + 5.935216 = <b>0.972296</b><br>
+    p = <b>0.725577</b><br>
+    L = −ln(0.725577) = <b>0.320788</b><br>
+    p−Y = 0.725577 − 1 = <b>−0.274423</b><br>
+    X(p−Y) = 5 · (−0.274423) = <b>−1.372116</b> &nbsp;|&nbsp; Ŷ=1 ✓
+  </div>
+  <h4>Student F &nbsp; X=6 , Y=1</h4>
+  <div class="card">
+    z = −4.962921 + 1.187043·6 = −4.962921 + 7.122260 = <b>2.159339</b><br>
+    p = <b>0.896538</b><br>
+    L = −ln(0.896538) = <b>0.109214</b><br>
+    p−Y = 0.896538 − 1 = <b>−0.103462</b><br>
+    X(p−Y) = 6 · (−0.103462) = <b>−0.620770</b> &nbsp;|&nbsp; Ŷ=1 ✓
+  </div>
+  <div class="math">
+    J =
+    <span class="frac"><span class="num">1.551419</span><span class="den">6</span></span>
+    = 0.258570<br>
+    ∂J/∂β₀ =
+    <span class="frac"><span class="num">−0.641570</span><span class="den">6</span></span>
+    = −0.106928 &nbsp;;&nbsp;
+    ∂J/∂β₁ =
+    <span class="frac"><span class="num">−3.452091</span><span class="den">6</span></span>
+    = −0.575349<br>
+    β₀ ← −4.952228 &nbsp; β₁ ← 1.244578
+  </div>
+
+  <!-- ===================== ITERATION 3 SOLUTION ===================== -->
+  <h2>5. Iteration 3 — SOLUTION &nbsp; β₀ = −4.952228 , β₁ = 1.244578</h2>
+
+  <h4>Student A &nbsp; X=1 , Y=0</h4>
+  <div class="card">
+    z = −4.952228 + 1.244578·1 = <b>−3.707650</b><br>
+    p = <b>0.023948</b><br>
+    L = −ln(1−0.023948) = −ln(0.976052) = <b>0.024239</b><br>
+    p−Y = 0.023948 − 0 = <b>0.023948</b><br>
+    X(p−Y) = 1 · 0.023948 = <b>0.023948</b> &nbsp;|&nbsp; Ŷ=0 ✓
+  </div>
+  <h4>Student B &nbsp; X=2 , Y=0</h4>
+  <div class="card">
+    z = −4.952228 + 1.244578·2 = −4.952228 + 2.489156 = <b>−2.463071</b><br>
+    p = <b>0.078488</b><br>
+    L = −ln(1−0.078488) = −ln(0.921512) = <b>0.081739</b><br>
+    p−Y = 0.078488 − 0 = <b>0.078488</b><br>
+    X(p−Y) = 2 · 0.078488 = <b>0.156976</b> &nbsp;|&nbsp; Ŷ=0 ✓
+  </div>
+  <h4>Student C &nbsp; X=3 , Y=0</h4>
+  <div class="card">
+    z = −4.952228 + 1.244578·3 = −4.952228 + 3.733734 = <b>−1.218493</b><br>
+    p = <b>0.228202</b><br>
+    L = −ln(1−0.228202) = −ln(0.771798) = <b>0.259032</b><br>
+    p−Y = 0.228202 − 0 = <b>0.228202</b><br>
+    X(p−Y) = 3 · 0.228202 = <b>0.684605</b> &nbsp;|&nbsp; Ŷ=0 ✓
+  </div>
+  <h4>Student D &nbsp; X=4 , Y=1</h4>
+  <div class="card">
+    z = −4.952228 + 1.244578·4 = −4.952228 + 4.978313 = <b>0.026085</b><br>
+    p = <b>0.506521</b><br>
+    L = −ln(0.506521) = <b>0.680190</b><br>
+    p−Y = 0.506521 − 1 = <b>−0.493479</b><br>
+    X(p−Y) = 4 · (−0.493479) = <b>−1.973917</b> &nbsp;|&nbsp; Ŷ=1 ✓
+  </div>
+  <h4>Student E &nbsp; X=5 , Y=1</h4>
+  <div class="card">
+    z = −4.952228 + 1.244578·5 = −4.952228 + 6.222891 = <b>1.270663</b><br>
+    p = <b>0.780856</b><br>
+    L = −ln(0.780856) = <b>0.247364</b><br>
+    p−Y = 0.780856 − 1 = <b>−0.219144</b><br>
+    X(p−Y) = 5 · (−0.219144) = <b>−1.095719</b> &nbsp;|&nbsp; Ŷ=1 ✓
+  </div>
+  <h4>Student F &nbsp; X=6 , Y=1</h4>
+  <div class="card">
+    z = −4.952228 + 1.244578·6 = −4.952228 + 7.467469 = <b>2.515241</b><br>
+    p = <b>0.925203</b><br>
+    L = −ln(0.925203) = <b>0.077742</b><br>
+    p−Y = 0.925203 − 1 = <b>−0.074797</b><br>
+    X(p−Y) = 6 · (−0.074797) = <b>−0.448780</b> &nbsp;|&nbsp; Ŷ=1 ✓
+  </div>
+
+  <div class="box ok">
+    <strong>SOLVED — all Ŷ match Y</strong><br>
+    J =
+    <span class="frac"><span class="num">1.370306</span><span class="den">6</span></span>
+    = 0.228384<br>
+    β₀ ≈ −4.9522 , β₁ ≈ 1.2446<br>
+    Boundary X =
+    <span class="frac"><span class="num">−β₀</span><span class="den">β₁</span></span>
+    =
+    <span class="frac"><span class="num">4.952228</span><span class="den">1.244578</span></span>
+    ≈ 3.98
+  </div>
+
+  <div class="math">
+    ∂J/∂β₀ =
+    <span class="frac"><span class="num">−0.456782</span><span class="den">6</span></span>
+    = −0.076130 &nbsp;;&nbsp;
+    ∂J/∂β₁ =
+    <span class="frac"><span class="num">−2.652887</span><span class="den">6</span></span>
+    = −0.442148<br>
+    β₀ ← −4.944615 &nbsp; β₁ ← 1.288793
+  </div>
+
+  <!-- ===================== ITER 4-5 compact but with formulas ===================== -->
+  <h2>6. Iteration 4 &nbsp; β₀ = −4.944615 , β₁ = 1.288793</h2>
+  <p>Same formulas each row: z=β₀+β₁X → p=σ(z) → L=−ln(…) → (p−Y) → X(p−Y)</p>
+  <table>
+    <thead><tr><th>Stud</th><th>z = β₀+β₁X</th><th>p</th><th>L formula</th><th>L</th><th>p−Y</th><th>X(p−Y)</th><th>Ŷ</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td>−4.944615+1.288793·1=−3.655822</td><td>0.025189</td><td>−ln(1−p)</td><td>0.025512</td><td>0.025189−0=0.025189</td><td>1·0.025189=0.025189</td><td>0</td></tr>
+      <tr><td>B</td><td>−4.944615+1.288793·2=−2.367029</td><td>0.085722</td><td>−ln(1−p)</td><td>0.089620</td><td>0.085722−0=0.085722</td><td>2·0.085722=0.171443</td><td>0</td></tr>
+      <tr><td>C</td><td>−4.944615+1.288793·3=−1.078236</td><td>0.253840</td><td>−ln(1−p)</td><td>0.292815</td><td>0.253840−0=0.253840</td><td>3·0.253840=0.761520</td><td>0</td></tr>
+      <tr><td>D</td><td>−4.944615+1.288793·4=0.210557</td><td>0.552446</td><td>−ln(p)</td><td>0.593400</td><td>0.552446−1=−0.447554</td><td>4·(−0.447554)=−1.790218</td><td>1</td></tr>
+      <tr><td>E</td><td>−4.944615+1.288793·5=1.499350</td><td>0.817477</td><td>−ln(p)</td><td>0.201532</td><td>0.817477−1=−0.182523</td><td>5·(−0.182523)=−0.912613</td><td>1</td></tr>
+      <tr><td>F</td><td>−4.944615+1.288793·6=2.788143</td><td>0.942032</td><td>−ln(p)</td><td>0.059716</td><td>0.942032−1=−0.057968</td><td>6·(−0.057968)=−0.347810</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <div class="math">
+    J=
+    <span class="frac"><span class="num">1.262596</span><span class="den">6</span></span>
+    =0.210433 &nbsp;;
+    ∂J/∂β₀=
+    <span class="frac"><span class="num">−0.323294</span><span class="den">6</span></span>
+    =−0.053882 &nbsp;;
+    ∂J/∂β₁=
+    <span class="frac"><span class="num">−2.092487</span><span class="den">6</span></span>
+    =−0.348748<br>
+    β₀←−4.939226 &nbsp; β₁←1.323668
+  </div>
+
+  <h2>7. Iteration 5 &nbsp; β₀ = −4.939226 , β₁ = 1.323668</h2>
+  <table>
+    <thead><tr><th>Stud</th><th>z = β₀+β₁X</th><th>p</th><th>L formula</th><th>L</th><th>p−Y</th><th>X(p−Y)</th><th>Ŷ</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td>−4.939226+1.323668·1=−3.615559</td><td>0.026197</td><td>−ln(1−p)</td><td>0.026546</td><td>0.026197−0=0.026197</td><td>1·0.026197=0.026197</td><td>0</td></tr>
+      <tr><td>B</td><td>−4.939226+1.323668·2=−2.291891</td><td>0.091797</td><td>−ln(1−p)</td><td>0.096287</td><td>0.091797−0=0.091797</td><td>2·0.091797=0.183594</td><td>0</td></tr>
+      <tr><td>C</td><td>−4.939226+1.323668·3=−0.968223</td><td>0.275235</td><td>−ln(1−p)</td><td>0.321907</td><td>0.275235−0=0.275235</td><td>3·0.275235=0.825704</td><td>0</td></tr>
+      <tr><td>D</td><td>−4.939226+1.323668·4=0.355444</td><td>0.587937</td><td>−ln(p)</td><td>0.531135</td><td>0.587937−1=−0.412063</td><td>4·(−0.412063)=−1.648251</td><td>1</td></tr>
+      <tr><td>E</td><td>−4.939226+1.323668·5=1.679112</td><td>0.842787</td><td>−ln(p)</td><td>0.171041</td><td>0.842787−1=−0.157213</td><td>5·(−0.157213)=−0.786065</td><td>1</td></tr>
+      <tr><td>F</td><td>−4.939226+1.323668·6=3.002780</td><td>0.952700</td><td>−ln(p)</td><td>0.048456</td><td>0.952700−1=−0.047300</td><td>6·(−0.047300)=−0.283803</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <div class="math">
+    J=
+    <span class="frac"><span class="num">1.195373</span><span class="den">6</span></span>
+    =0.199229 &nbsp;; all predictions still correct
+  </div>
+
+  <h2>8. Memory card</h2>
+  <div class="box ok">
+    For EVERY student, EVERY iteration, write in this order:<br>
+    1. z = β₀ + β₁X<br>
+    2. p =
+    <span class="frac"><span class="num">1</span><span class="den">1+e<sup>−z</sup></span></span><br>
+    3. L = −ln(p) if Y=1 &nbsp;or&nbsp; −ln(1−p) if Y=0<br>
+    4. p−Y = p − Y<br>
+    5. X(p−Y) = X · (p−Y)<br>
+    Then average for J and gradients, then update β.
+  </div>
+
+  <div class="no-print" style="margin-top:16px;">
+    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+
+</body></html>
